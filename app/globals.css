@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+:root {
+  --linen-0: #fffdf8;
+  --linen-50: #f6efe3;
+  --linen-100: #eadfcb;
+  --olive-50: #ebf1ea;
+  --olive-100: #d7e3d4;
+  --olive-200: #b8c9b2;
+  --olive-500: #5d7659;
+  --olive-700: #344d38;
+  --olive-900: #203126;
+  --pimento-100: #efe1dc;
+  --pimento-200: #dec2b9;
+  --pimento-400: #b46a60;
+  --pimento-700: #7b3f39;
+  --brass-100: #f1e7cc;
+  --brass-200: #e0cc98;
+  --brass-300: #d1b471;
+  --brass-500: #b28b49;
+  --brass-700: #7e5f2d;
+  --charcoal-200: #d2cdc6;
+  --charcoal-700: #5b534b;
+  --charcoal-900: #25211d;
+}
+
+@theme inline {
+  --color-linen-0: var(--linen-0);
+  --color-linen-50: var(--linen-50);
+  --color-linen-100: var(--linen-100);
+  --color-olive-50: var(--olive-50);
+  --color-olive-100: var(--olive-100);
+  --color-olive-200: var(--olive-200);
+  --color-olive-500: var(--olive-500);
+  --color-olive-700: var(--olive-700);
+  --color-olive-900: var(--olive-900);
+  --color-pimento-100: var(--pimento-100);
+  --color-pimento-200: var(--pimento-200);
+  --color-pimento-400: var(--pimento-400);
+  --color-pimento-700: var(--pimento-700);
+  --color-brass-100: var(--brass-100);
+  --color-brass-200: var(--brass-200);
+  --color-brass-300: var(--brass-300);
+  --color-brass-500: var(--brass-500);
+  --color-brass-700: var(--brass-700);
+  --color-charcoal-200: var(--charcoal-200);
+  --color-charcoal-700: var(--charcoal-700);
+  --color-charcoal-900: var(--charcoal-900);
+  --font-sans: var(--font-body);
+  --font-serif: var(--font-display);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--linen-0);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(209, 180, 113, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(180, 106, 96, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 22%),
+    var(--linen-50);
+  color: var(--charcoal-900);
+  font-family: var(--font-body), sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: rgba(180, 106, 96, 0.28);
+  color: var(--charcoal-900);
+}
+
+:focus-visible {
+  outline: 2px solid var(--olive-700);
+  outline-offset: 3px;
+}
+
+.rich-text {
+  color: var(--charcoal-700);
+  font-size: 1.03rem;
+  line-height: 1.85;
+}
+
+.rich-text > * + * {
+  margin-top: 1.25rem;
+}
+
+.rich-text h2,
+.rich-text h3 {
+  font-family: var(--font-display), serif;
+  color: var(--olive-900);
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.rich-text h2 {
+  margin-top: 3rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.rich-text h3 {
+  margin-top: 2rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+.rich-text p,
+.rich-text li,
+.rich-text blockquote {
+  max-width: 68ch;
+}
+
+.rich-text ul,
+.rich-text ol {
+  padding-left: 1.35rem;
+}
+
+.rich-text ul {
+  list-style: disc;
+}
+
+.rich-text ol {
+  list-style: decimal;
+}
+
+.rich-text li + li {
+  margin-top: 0.55rem;
+}
+
+.rich-text a {
+  color: var(--olive-700);
+  text-decoration: underline;
+  text-decoration-color: rgba(52, 77, 56, 0.32);
+  text-underline-offset: 0.2rem;
+}
+
+.rich-text strong {
+  color: var(--charcoal-900);
+}
+
+.rich-text blockquote {
+  border-left: 2px solid rgba(52, 77, 56, 0.18);
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+.rich-text code {
+  border-radius: 0.4rem;
+  background: rgba(255, 255, 255, 0.82);
+  padding: 0.15rem 0.35rem;
+  font-size: 0.95em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
