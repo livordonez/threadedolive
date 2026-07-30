@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { BrandMark } from "@/components/brand-mark";
-import { siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
+import type { NavigationItem } from "@/sanity/lib/types";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") {
@@ -15,7 +15,13 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function SiteHeader() {
+export function SiteHeader({
+  siteName,
+  navigation,
+}: {
+  siteName: string;
+  navigation: NavigationItem[];
+}) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,16 +36,16 @@ export function SiteHeader() {
           <BrandMark className="h-10" />
           <div className="leading-tight">
             <span className="block font-serif text-2xl tracking-[-0.04em]">
-              {siteConfig.name}
+              {siteName}
             </span>
             <span className="block text-[0.67rem] font-semibold uppercase tracking-[0.24em] text-charcoal-700">
-              Fiber arts portfolio
+              Story-led fiber archive
             </span>
           </div>
         </Link>
 
         <nav className="hidden items-center gap-2 md:flex" aria-label="Primary">
-          {siteConfig.nav.map((item) => {
+          {navigation.map((item) => {
             const active = isActive(pathname, item.href);
 
             return (
@@ -80,7 +86,7 @@ export function SiteHeader() {
         )}
       >
         <nav className="flex flex-col gap-2" aria-label="Mobile">
-          {siteConfig.nav.map((item) => {
+          {navigation.map((item) => {
             const active = isActive(pathname, item.href);
 
             return (

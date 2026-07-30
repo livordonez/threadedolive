@@ -1,44 +1,86 @@
 # Threaded Olive
 
-Threaded Olive is a portfolio-first fiber arts website with a built-in Studio Journal. The current v1 is centered on crochet and makes room for sewing, knitting, embroidery, and needlepoint.
+Threaded Olive is a Sanity-backed handmade portfolio built with Next.js. This phase focuses on the content foundation: a photo-led homepage, story-driven project pages, an editable About page, flexible standalone pages, and an embedded Sanity Studio at `/studio`.
 
 ## Stack
 
 - Next.js App Router
 - TypeScript
 - Tailwind CSS
-- Local MDX content for portfolio projects and journal posts
+- Sanity Studio embedded in the Next.js app
+- `next-sanity` with Cache Components-enabled live revalidation for published content
+
+## Sanity setup
+
+The app expects these environment variables:
+
+```bash
+cp .env.example .env.local
+```
+
+Then complete the interactive Sanity project setup inside this repo:
+
+```bash
+npx sanity@latest init
+```
+
+During the prompts:
+
+- Sign in to your Sanity account
+- Create or connect the project named `Threaded Olive`
+- Use the `production` dataset
+- Keep the embedded Studio route at `/studio`
+
+After setup, add the generated project ID to `.env.local`.
+
+If Sanity asks for local CORS access for the embedded Studio, run:
+
+```bash
+npx sanity cors add http://localhost:3000 --credentials
+```
 
 ## Local development
 
+Run the site and embedded Studio together with one command:
+
 ```bash
-npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Then open:
 
-## Content
-
-- Portfolio projects live in `content/projects/*.mdx`
-- Studio Journal posts live in `content/journal/*.mdx`
-- Frontmatter expectations and image notes live in `content/README.md`
-
-The placeholder image objects already support a future `src`, `width`, and `height`, so you can swap in real photography later without changing the page components.
+- Site: `http://localhost:3000`
+- Studio: `http://localhost:3000/studio`
 
 ## Primary routes
 
 - `/`
-- `/portfolio`
-- `/portfolio/[slug]`
-- `/journal`
-- `/journal/[slug]`
+- `/makes/[slug]`
 - `/about`
-- `/contact`
+- `/[slug]`
+- `/studio`
+
+Legacy routes redirect:
+
+- `/portfolio` -> `/`
+- `/portfolio/[slug]` -> `/makes/[slug]`
+- `/journal` -> `/`
+- `/journal/[slug]` -> `/`
+- `/contact` -> `/about`
+
+## Content model
+
+Sanity Studio includes:
+
+- `Project`
+- `About` singleton
+- `Flexible Page`
+- `Site Settings` singleton
 
 ## Verification
 
 ```bash
+npm run typecheck
 npm run lint
 npm run build
 ```

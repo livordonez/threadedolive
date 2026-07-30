@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Manrope, Newsreader } from "next/font/google";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { SkipLink } from "@/components/skip-link";
 import { rootMetadata, rootViewport } from "@/lib/site";
 import "./globals.css";
 
@@ -33,12 +30,7 @@ export default function RootLayout({
       className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col text-charcoal-900">
-        <SkipLink />
-        <SiteHeader />
-        <main id="main-content" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
+        {children}
       </body>
     </html>
   );

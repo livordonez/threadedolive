@@ -4,42 +4,14 @@ export const siteConfig = {
   name: "Threaded Olive",
   tagline: "Handmade slowly. Threaded thoughtfully.",
   description:
-    "A fiber arts portfolio centered on crochet, with explorations in sewing, knitting, embroidery, and needlepoint.",
+    "A handmade archive for thoughtful fiber projects, stories behind the make, and evolving studio pages.",
   url: "https://threadedolive.example",
-  email: "hello@threadedolive.example",
-  nav: [
-    { href: "/", label: "Home" },
-    { href: "/portfolio", label: "Portfolio" },
-    { href: "/journal", label: "Studio Journal" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+  defaultNavigation: [
+    { href: "/", label: "Home", order: 0 },
+    { href: "/about", label: "About", order: 10 },
   ],
-  socials: [
-    {
-      href: "https://example.com/threaded-olive-instagram",
-      label: "Instagram placeholder",
-    },
-    {
-      href: "https://example.com/threaded-olive-pinterest",
-      label: "Pinterest placeholder",
-    },
-    {
-      href: "mailto:hello@threadedolive.example",
-      label: "Email placeholder",
-    },
-  ],
-  contactTopics: [
-    "Questions about techniques or materials",
-    "Collaborations and editorial conversations",
-    "General notes from fellow makers",
-    "Future commission inquiries",
-  ],
-  futureFormSteps: [
-    "Choose a form service such as Formspree, Basin, or a custom Next.js route.",
-    "Replace the placeholder submit button with a real POST target.",
-    "Add spam protection and a success/error state before going live.",
-  ],
-  analyticsPlaceholderEnv: "NEXT_PUBLIC_ANALYTICS_ID",
+  placeholderInstagramUrl: "https://instagram.com/threadedolive",
+  placeholderPinterestUrl: "https://pinterest.com/threadedolive",
 } as const;
 
 export const rootMetadata: Metadata = {

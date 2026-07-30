@@ -14,9 +14,9 @@ export default function NotFound() {
         Threaded Olive is still here and ready to explore.
       </p>
       <div className="flex flex-wrap justify-center gap-4">
-        <LinkButton href="/portfolio">Explore the portfolio</LinkButton>
-        <LinkButton href="/journal" variant="outline">
-          Read the journal
+        <LinkButton href="/">Explore the homepage</LinkButton>
+        <LinkButton href="/about" variant="outline">
+          Visit About
         </LinkButton>
       </div>
     </section>
