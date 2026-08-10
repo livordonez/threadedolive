@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { BrandMark } from "@/components/brand-mark";
 import type { NavigationItem, SiteSettings } from "@/lib/cms-types";
@@ -18,6 +18,15 @@ function isActive(pathname: string, href: string) {
 export function SiteHeader({ settings, navigation }: { settings: SiteSettings; navigation: NavigationItem[] }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === "Escape") setIsOpen(false);
+    }
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [isOpen]);
 
   if (pathname.startsWith("/admin")) return null;
   return (
@@ -39,7 +48,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
           </div>
         </Link>
 
-        <nav className="hidden items-center gap-2 md:flex" aria-label="Primary">
+        <nav className="hidden items-center gap-1 lg:flex xl:gap-2" aria-label="Primary">
           {navigation.map((item) => {
             const active = isActive(pathname, item.href);
 
@@ -49,7 +58,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-semibold uppercase tracking-[0.14em] transition-colors duration-200 motion-reduce:transition-none",
+                  "rounded-full px-3 py-2 text-sm font-semibold uppercase tracking-[0.1em] transition-colors duration-200 motion-reduce:transition-none xl:px-4 xl:tracking-[0.14em]",
                   active
                     ? "bg-olive-900 text-linen-0"
                     : "text-olive-900 hover:bg-white/70",
@@ -64,19 +73,19 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
 
         <button
           type="button"
-          className="inline-flex rounded-full border border-olive-900/15 px-4 py-2 text-sm font-semibold uppercase tracking-[0.16em] text-olive-900 md:hidden"
+          className="inline-flex min-h-11 items-center rounded-full border border-olive-900/15 px-4 py-2 text-sm font-semibold uppercase tracking-[0.16em] text-olive-900 lg:hidden"
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
           onClick={() => setIsOpen((current) => !current)}
         >
-          Menu
+          {isOpen ? "Close" : "Menu"}
         </button>
       </div>
 
       <div
         id="mobile-navigation"
         className={cn(
-          "border-t border-olive-900/10 bg-linen-0 px-6 py-5 md:hidden",
+          "border-t border-olive-900/10 bg-linen-0 px-6 py-5 lg:hidden",
           isOpen ? "block" : "hidden",
         )}
       >

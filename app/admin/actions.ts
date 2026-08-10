@@ -343,9 +343,32 @@ export async function saveNavigationAction(formData: FormData) {
   await requireAdmin();
   const items = parseJson<NavigationItem[]>(formData.get("items"), []);
   const supabase = await createSupabaseServerClient();
-  await Promise.all(items.map((item, index) => supabase.from("navigation_items").update({
-    label: String(item.label).slice(0, 80), visible: Boolean(item.visible), display_order: index,
-  }).eq("id", item.id)));
+  const results = await Promise.all(items.map((item, index) => {
+    const values = {
+      label: String(item.label).slice(0, 80),
+      visible: Boolean(item.visible),
+      display_order: index,
+    };
+    if (item.id.startsWith("fallback-")) {
+      return supabase.from("navigation_items").upsert({
+        ...values,
+        href: item.href,
+        page_id: null,
+      }, { onConflict: "href" });
+    }
+    return supabase.from("navigation_items").update(values).eq("id", item.id);
+  }));
+  if (results.some(({ error }) => error)) {
+    throw new Error("Could not save the navigation.");
+  }
+  const { error: markerError } = await supabase.from("navigation_items").upsert({
+    label: "Navigation configured",
+    href: "/__navigation-configured",
+    visible: true,
+    display_order: items.length,
+    page_id: null,
+  }, { onConflict: "href" });
+  if (markerError) throw new Error("Could not finish saving the navigation.");
   revalidatePath("/", "layout");
   redirect("/admin/navigation?saved=1");
 }

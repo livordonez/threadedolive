@@ -54,3 +54,11 @@ Photography should remain the dominant visual content. A strong photograph norma
 - Do not add a late global anchor color or text-decoration rule. Link utilities provide intentional contrast and underlines, including the light active-navigation text on dark olive.
 - Keep the shared `:focus-visible` outline intact and verify keyboard focus whenever link or navigation styling changes.
 - Decorative textile details and motifs stay hidden from assistive technology unless they communicate information not already expressed in text.
+
+## Core navigation behavior
+
+Makes, Muses, and Moments are foundational archives, not optional feature links. `getNavigation()` fills in missing core routes when an older or partially migrated Supabase project lacks their rows. The admin Navigation screen also receives these fallback entries; saving it materializes them as ordinary database rows through an `href` upsert.
+
+Admin saves also write an internal `/__navigation-configured` marker row. The data layer always filters that marker out of the interface. Its presence distinguishes an intentionally hidden item from a missing legacy row despite public row-level security hiding both, so later labels, order, and visibility choices remain authoritative.
+
+The complete inline navigation starts at 1024px. Smaller widths use the menu panel so the brand and five core links never compete for horizontal space. The menu closes after a selection and when the Escape key is pressed.

@@ -10,6 +10,15 @@ import type {
   SiteSettings,
 } from "@/lib/cms-types";
 
+const coreNavigation: NavigationItem[] = [
+  { id: "fallback-home", label: "Home", href: "/", visible: true, display_order: 0, page_id: null },
+  { id: "fallback-makes", label: "Makes", href: "/makes", visible: true, display_order: 1, page_id: null },
+  { id: "fallback-muses", label: "Muses", href: "/muses", visible: true, display_order: 2, page_id: null },
+  { id: "fallback-moments", label: "Moments", href: "/moments", visible: true, display_order: 3, page_id: null },
+  { id: "fallback-about", label: "About", href: "/about", visible: true, display_order: 4, page_id: null },
+];
+const navigationConfiguredHref = "/__navigation-configured";
+
 export const defaultSettings: SiteSettings = {
   id: "default",
   site_name: "Threaded Olive",
@@ -30,6 +39,31 @@ export const defaultAbout: AboutContent = {
 
 function rows<T>(data: unknown): T[] {
   return (data ?? []) as T[];
+}
+
+function withCoreNavigation(items: NavigationItem[]) {
+  const hasConfigurationMarker = items.some((item) => item.href === navigationConfiguredHref);
+  const publicItems = items.filter((item) => item.href !== navigationConfiguredHref);
+  if (hasConfigurationMarker) {
+    return [...publicItems].sort((a, b) => a.display_order - b.display_order);
+  }
+
+  const byHref = new Map(publicItems.map((item) => [item.href, item]));
+  const hasEveryCoreItem = coreNavigation.every((item) => byHref.has(item.href));
+  if (hasEveryCoreItem) return [...publicItems].sort((a, b) => a.display_order - b.display_order);
+
+  const coreHrefs = new Set(coreNavigation.map((item) => item.href));
+  const completedCore = coreNavigation.map((fallback) => ({
+    ...fallback,
+    ...byHref.get(fallback.href),
+    display_order: fallback.display_order,
+  }));
+  const additionalItems = publicItems
+    .filter((item) => !coreHrefs.has(item.href))
+    .sort((a, b) => a.display_order - b.display_order)
+    .map((item, index) => ({ ...item, display_order: coreNavigation.length + index }));
+
+  return [...completedCore, ...additionalItems];
 }
 
 export async function getPublishedMakes() {
@@ -173,18 +207,9 @@ export async function getSettings() {
 }
 
 export async function getNavigation(includeHidden = false) {
-  if (!isSupabaseConfigured()) {
-    return [
-      { id: "home", label: "Home", href: "/", visible: true, display_order: 0, page_id: null },
-      { id: "makes", label: "Makes", href: "/makes", visible: true, display_order: 1, page_id: null },
-      { id: "muses", label: "Muses", href: "/muses", visible: true, display_order: 2, page_id: null },
-      { id: "moments", label: "Moments", href: "/moments", visible: true, display_order: 3, page_id: null },
-      { id: "about", label: "About", href: "/about", visible: true, display_order: 4, page_id: null },
-    ] as NavigationItem[];
-  }
+  if (!isSupabaseConfigured()) return coreNavigation;
   const supabase = await createSupabaseServerClient();
-  let query = supabase.from("navigation_items").select("*").order("display_order");
-  if (!includeHidden) query = query.eq("visible", true);
-  const { data } = await query;
-  return rows<NavigationItem>(data);
+  const { data } = await supabase.from("navigation_items").select("*").order("display_order");
+  const navigation = withCoreNavigation(rows<NavigationItem>(data));
+  return includeHidden ? navigation : navigation.filter((item) => item.visible);
 }
