@@ -1,44 +1,36 @@
 # Threaded Olive
 
-Threaded Olive is a portfolio-first fiber arts website with a built-in Studio Journal. The current v1 is centered on crochet and makes room for sewing, knitting, embroidery, and needlepoint.
+A photography-first fiber arts archive with its own private, single-owner editor. Content lives in Supabase rather than repository files.
 
-## Stack
+## What is included
 
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- Local MDX content for portfolio projects and journal posts
+- A three-part public archive: Makes at `/makes`, inspiration in Muses at `/muses`, and journal writing in Moments at `/moments`.
+- Private editor at `/admin` for makes, muses, moments, flexible pages, about content, navigation, site settings, and photograph uploads.
+- Draft, publish, unpublish, preview, ordering, cover-photo selection, alt text, and seven intentionally small flexible-page section types.
+- Supabase Auth, Postgres row-level security, and Storage policies. Every server mutation checks the authenticated admin again.
 
-## Local development
+## Local setup
 
-```bash
-npm install
-npm run dev
-```
+This project requires Node 20.9 or newer; Node 22 is selected by `.nvmrc`.
 
-Open `http://localhost:3000`.
+1. Create a Supabase project.
+2. In the Supabase SQL editor, run every SQL file in [`supabase/migrations`](supabase/migrations) in filename order.
+3. In Supabase Authentication, disable new-user signups. Create the one owner user from the dashboard (email and password).
+4. Copy that user's UUID, then run this once in the SQL editor:
 
-## Content
+   ```sql
+   insert into public.admin_users (user_id) values ('YOUR-USER-UUID');
+   ```
 
-- Portfolio projects live in `content/projects/*.mdx`
-- Studio Journal posts live in `content/journal/*.mdx`
-- Frontmatter expectations and image notes live in `content/README.md`
+5. Copy `.env.example` to `.env.local` and add the project URL and publishable anon key. Do not add a service-role key; this app does not need one.
+6. Run `npm install`, then `npm run dev` and open `http://localhost:3000/admin`.
 
-The placeholder image objects already support a future `src`, `width`, and `height`, so you can swap in real photography later without changing the page components.
+The migration makes the image bucket public for serving published photographs, but only the authenticated admin may upload, change, or delete files. Draft rows remain private through row-level security.
 
-## Primary routes
+## Deployment
 
-- `/`
-- `/portfolio`
-- `/portfolio/[slug]`
-- `/journal`
-- `/journal/[slug]`
-- `/about`
-- `/contact`
+Add the same two public Supabase environment variables to the deployment platform. The anon key is designed for browser use; authorization comes from database policies and the signed-in session. Never add Supabase's service-role credential to this project.
 
-## Verification
+## Previous content
 
-```bash
-npm run lint
-npm run build
-```
+The original MDX project and journal files remain under `content/` as an archive for manual reference while real content is entered through the editor. They are no longer public routes or runtime content sources.

@@ -1,0 +1,12 @@
+import Link from "next/link";
+import { createMakeAction, createMomentAction, createMuseAction, createPageAction } from "@/app/admin/actions";
+import { getAllMakes, getAllMoments, getAllMuses, getAllPages } from "@/lib/cms-data";
+
+export default async function DashboardPage() {
+  const [makes, muses, moments, pages] = await Promise.all([getAllMakes(), getAllMuses(), getAllMoments(), getAllPages()]);
+  const publishedMakes = makes.filter((item) => item.status === "published").length;
+  const drafts = makes.length - publishedMakes + muses.filter((item) => item.status === "draft").length + moments.filter((item) => item.status === "draft").length + pages.filter((item) => item.status === "draft").length;
+  return <div className="mx-auto max-w-5xl space-y-8"><header><p className="admin-eyebrow">Welcome back</p><h1 className="admin-title">Your studio at a glance</h1><p className="admin-help mt-3">Update the site here—no repository edits needed.</p></header><div className="grid gap-4 sm:grid-cols-4"><Stat label="Makes" value={publishedMakes} /><Stat label="Muses" value={muses.length} /><Stat label="Moments" value={moments.length} /><Stat label="Drafts" value={drafts} /></div><div className="grid gap-5 md:grid-cols-3"><Quick title="Makes" help="Share a finished object and its story." create={createMakeAction} createLabel="New Make" href="/admin/makes" /><Quick title="Muses" help="Pin something that is inspiring you." create={createMuseAction} createLabel="New Muse" href="/admin/muses" /><Quick title="Moments" help="Write a little about your day." create={createMomentAction} createLabel="New Moment" href="/admin/moments" /><Quick title="Pages" help={`${pages.length} flexible page${pages.length === 1 ? "" : "s"}.`} create={createPageAction} createLabel="New Page" href="/admin/pages" /></div></div>;
+}
+function Stat({ label, value }: { label: string; value: number }) { return <div className="admin-panel"><p className="admin-eyebrow">{label}</p><p className="mt-3 font-serif text-5xl text-olive-900">{value}</p></div>; }
+function Quick({ title, help, create, createLabel, href }: { title: string; help: string; create: () => Promise<void>; createLabel: string; href: string }) { return <section className="admin-panel"><h2 className="admin-section-title">{title}</h2><p className="admin-help mt-2">{help}</p><div className="mt-5 flex flex-wrap gap-2"><form action={create}><button className="admin-button">{createLabel}</button></form><Link href={href} className="admin-button-secondary">View</Link></div></section>; }

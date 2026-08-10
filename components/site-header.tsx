@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { BrandMark } from "@/components/brand-mark";
-import { siteConfig } from "@/lib/site";
+import type { NavigationItem, SiteSettings } from "@/lib/cms-types";
 import { cn } from "@/lib/utils";
 
 function isActive(pathname: string, href: string) {
@@ -15,31 +15,32 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function SiteHeader() {
+export function SiteHeader({ settings, navigation }: { settings: SiteSettings; navigation: NavigationItem[] }) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  if (pathname.startsWith("/admin")) return null;
   return (
-    <header className="sticky top-0 z-40 border-b border-olive-900/10 bg-linen-50/85 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-6 py-4 sm:px-10 lg:px-12">
+    <header className="site-textile-header sticky top-0 z-40 border-b border-olive-900/15 backdrop-blur-md">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-10 lg:px-12">
         <Link
           href="/"
-          className="flex items-center gap-3 text-olive-900"
+          className="flex items-center gap-3 text-olive-900 sm:gap-4"
           onClick={() => setIsOpen(false)}
         >
-          <BrandMark className="h-10" />
+          <BrandMark className="h-14 sm:h-20" />
           <div className="leading-tight">
-            <span className="block font-serif text-2xl tracking-[-0.04em]">
-              {siteConfig.name}
+            <span className="block font-serif text-xl tracking-[-0.04em] sm:text-3xl">
+              {settings.site_name}
             </span>
             <span className="block text-[0.67rem] font-semibold uppercase tracking-[0.24em] text-charcoal-700">
-              Fiber arts portfolio
+              Fiber arts archive
             </span>
           </div>
         </Link>
 
         <nav className="hidden items-center gap-2 md:flex" aria-label="Primary">
-          {siteConfig.nav.map((item) => {
+          {navigation.map((item) => {
             const active = isActive(pathname, item.href);
 
             return (
@@ -80,7 +81,7 @@ export function SiteHeader() {
         )}
       >
         <nav className="flex flex-col gap-2" aria-label="Mobile">
-          {siteConfig.nav.map((item) => {
+          {navigation.map((item) => {
             const active = isActive(pathname, item.href);
 
             return (

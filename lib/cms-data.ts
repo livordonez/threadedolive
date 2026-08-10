@@ -1,0 +1,190 @@
+import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+import type {
+  AboutContent,
+  FlexiblePage,
+  Make,
+  Moment,
+  Muse,
+  NavigationItem,
+  SiteSettings,
+} from "@/lib/cms-types";
+
+export const defaultSettings: SiteSettings = {
+  id: "default",
+  site_name: "Threaded Olive",
+  short_description: "A thoughtful archive of handmade fiber arts.",
+  instagram_url: "https://www.instagram.com/liv_ordonez/",
+  pinterest_url: "https://www.pinterest.com/liv_ordonez/",
+  footer_text: "Made slowly and shared thoughtfully.",
+};
+
+export const defaultAbout: AboutContent = {
+  id: "default",
+  bio: "",
+  story: "",
+  images: [],
+  instagram_url: "https://www.instagram.com/liv_ordonez/",
+  pinterest_url: "https://www.pinterest.com/liv_ordonez/",
+};
+
+function rows<T>(data: unknown): T[] {
+  return (data ?? []) as T[];
+}
+
+export async function getPublishedMakes() {
+  if (!isSupabaseConfigured()) return [] as Make[];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("makes")
+    .select("*")
+    .eq("status", "published")
+    .order("display_order")
+    .order("published_at", { ascending: false });
+  return rows<Make>(data);
+}
+
+export async function getMakeBySlug(slug: string, includeDraft = false) {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSupabaseServerClient();
+  let query = supabase.from("makes").select("*").eq("slug", slug);
+  if (!includeDraft) query = query.eq("status", "published");
+  const { data } = await query.maybeSingle();
+  return data as Make | null;
+}
+
+export async function getAllMakes() {
+  if (!isSupabaseConfigured()) return [] as Make[];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("makes")
+    .select("*")
+    .order("display_order")
+    .order("updated_at", { ascending: false });
+  return rows<Make>(data);
+}
+
+export async function getPublishedMuses() {
+  if (!isSupabaseConfigured()) return [] as Muse[];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("muses").select("*").eq("status", "published").order("display_order").order("published_at", { ascending: false });
+  return rows<Muse>(data);
+}
+
+export async function getAllMuses() {
+  if (!isSupabaseConfigured()) return [] as Muse[];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("muses").select("*").order("display_order").order("updated_at", { ascending: false });
+  return rows<Muse>(data);
+}
+
+export async function getMuseById(id: string) {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("muses").select("*").eq("id", id).maybeSingle();
+  return data as Muse | null;
+}
+
+export async function getPublishedMoments() {
+  if (!isSupabaseConfigured()) return [] as Moment[];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("moments").select("*").eq("status", "published").order("moment_date", { ascending: false });
+  return rows<Moment>(data);
+}
+
+export async function getAllMoments() {
+  if (!isSupabaseConfigured()) return [] as Moment[];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("moments").select("*").order("moment_date", { ascending: false });
+  return rows<Moment>(data);
+}
+
+export async function getMomentById(id: string) {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("moments").select("*").eq("id", id).maybeSingle();
+  return data as Moment | null;
+}
+
+export async function getMomentBySlug(slug: string, includeDraft = false) {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSupabaseServerClient();
+  let query = supabase.from("moments").select("*").eq("slug", slug);
+  if (!includeDraft) query = query.eq("status", "published");
+  const { data } = await query.maybeSingle();
+  return data as Moment | null;
+}
+
+export async function getPublishedPage(slug: string) {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase
+    .from("pages")
+    .select("*")
+    .eq("slug", slug)
+    .eq("status", "published")
+    .maybeSingle();
+  return data as FlexiblePage | null;
+}
+
+export async function getPageBySlug(slug: string) {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("pages").select("*").eq("slug", slug).maybeSingle();
+  return data as FlexiblePage | null;
+}
+
+export async function getPageById(id: string) {
+  if (!isSupabaseConfigured()) return null;
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("pages").select("*").eq("id", id).maybeSingle();
+  return data as FlexiblePage | null;
+}
+
+export async function getAllPages() {
+  if (!isSupabaseConfigured()) return [] as FlexiblePage[];
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("pages").select("*").order("updated_at", { ascending: false });
+  return rows<FlexiblePage>(data);
+}
+
+export async function getAbout() {
+  if (!isSupabaseConfigured()) return defaultAbout;
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("about_content").select("*").maybeSingle();
+  const about = data as AboutContent | null;
+  return about ? {
+    ...about,
+    instagram_url: about.instagram_url || defaultAbout.instagram_url,
+    pinterest_url: about.pinterest_url || defaultAbout.pinterest_url,
+  } : defaultAbout;
+}
+
+export async function getSettings() {
+  if (!isSupabaseConfigured()) return defaultSettings;
+  const supabase = await createSupabaseServerClient();
+  const { data } = await supabase.from("site_settings").select("*").maybeSingle();
+  const settings = data as SiteSettings | null;
+  return settings ? {
+    ...settings,
+    instagram_url: settings.instagram_url || defaultSettings.instagram_url,
+    pinterest_url: settings.pinterest_url || defaultSettings.pinterest_url,
+  } : defaultSettings;
+}
+
+export async function getNavigation(includeHidden = false) {
+  if (!isSupabaseConfigured()) {
+    return [
+      { id: "home", label: "Home", href: "/", visible: true, display_order: 0, page_id: null },
+      { id: "makes", label: "Makes", href: "/makes", visible: true, display_order: 1, page_id: null },
+      { id: "muses", label: "Muses", href: "/muses", visible: true, display_order: 2, page_id: null },
+      { id: "moments", label: "Moments", href: "/moments", visible: true, display_order: 3, page_id: null },
+      { id: "about", label: "About", href: "/about", visible: true, display_order: 4, page_id: null },
+    ] as NavigationItem[];
+  }
+  const supabase = await createSupabaseServerClient();
+  let query = supabase.from("navigation_items").select("*").order("display_order");
+  if (!includeHidden) query = query.eq("visible", true);
+  const { data } = await query;
+  return rows<NavigationItem>(data);
+}

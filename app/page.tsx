@@ -1,187 +1,124 @@
-import { JournalCard } from "@/components/journal-card";
-import { LinkButton } from "@/components/link-button";
-import { MediaPlaceholder } from "@/components/media-placeholder";
-import { Pill } from "@/components/pill";
-import { ProjectCard } from "@/components/project-card";
-import { SectionHeading } from "@/components/section-heading";
-import { getJournalSummaries, getProjectSummaries } from "@/lib/content";
-import { siteConfig } from "@/lib/site";
-import { crafts } from "@/lib/types";
+import Image from "next/image";
+import Link from "next/link";
+import { BrandMark } from "@/components/brand-mark";
+import { LaceOverlay, ScallopedEdge } from "@/components/textile-details";
+import { getAbout, getPublishedMakes, getSettings } from "@/lib/cms-data";
 
-export default async function Home() {
-  const [projects, posts] = await Promise.all([
-    getProjectSummaries(),
-    getJournalSummaries(),
+const pillars = [
+  ["Makes", "/makes", "What I’ve made"],
+  ["Muses", "/muses", "What is inspiring me"],
+  ["Moments", "/moments", "Notes from my days"],
+] as const;
+
+export default async function HomePage() {
+  const [settings, about, makes] = await Promise.all([
+    getSettings(),
+    getAbout(),
+    getPublishedMakes(),
   ]);
-  const featuredProjects = projects.filter((project) => project.featured);
-  const heroProjects = (featuredProjects.length >= 3 ? featuredProjects : projects).slice(
-    0,
-    3,
-  );
-  const recentPosts = (posts.filter((post) => post.featured).length >= 3
-    ? posts.filter((post) => post.featured)
-    : posts
-  ).slice(0, 3);
+  const featured = makes.slice(0, 5);
 
   return (
-    <div className="mx-auto flex w-full max-w-7xl flex-col gap-24 px-6 py-12 sm:px-10 lg:px-12 lg:py-16">
-      <section className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-        <div className="space-y-8">
-          <Pill tone="pimento">Portfolio first</Pill>
-          <div className="space-y-6">
-            <h1 className="max-w-3xl font-serif text-6xl leading-[0.92] tracking-[-0.06em] text-olive-900 sm:text-7xl lg:text-[5.7rem]">
-              {siteConfig.name}
+    <div>
+      <section className="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:px-10 lg:px-12 lg:pb-20 lg:pt-14">
+        <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.9fr]">
+          <header className="max-w-4xl">
+            <p className="text-xs font-bold uppercase tracking-[0.26em] text-pimento-700">
+              A handmade archive
+            </p>
+            <h1 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.055em] text-olive-900 sm:text-7xl">
+              Made by hand,
+              <br />
+              <em className="font-normal">kept with care.</em>
             </h1>
-            <p className="max-w-2xl text-2xl leading-tight text-charcoal-900 sm:text-3xl">
-              {siteConfig.tagline}
-            </p>
-            <p className="max-w-2xl text-lg leading-9 text-charcoal-700">
-              {siteConfig.description}
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            {crafts.map((craft) => (
-              <Pill key={craft} tone={craft === "Crochet" ? "olive" : "linen"}>
-                {craft}
-              </Pill>
-            ))}
-          </div>
-
-          <div className="flex flex-wrap gap-4">
-            <LinkButton href="/portfolio">Explore the Portfolio</LinkButton>
-            <LinkButton href="/journal" variant="outline">
-              Enter the Studio Journal
-            </LinkButton>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-[1.75rem] border border-olive-900/10 bg-white/70 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-pimento-700">
-                Projects
+            {settings.short_description ? (
+              <p className="mt-6 max-w-xl text-lg leading-8 text-charcoal-700">
+                {settings.short_description}
               </p>
-              <p className="mt-3 font-serif text-4xl tracking-[-0.05em] text-olive-900">
-                {projects.length}
-              </p>
-            </div>
-            <div className="rounded-[1.75rem] border border-olive-900/10 bg-white/70 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-pimento-700">
-                Journal notes
-              </p>
-              <p className="mt-3 font-serif text-4xl tracking-[-0.05em] text-olive-900">
-                {posts.length}
-              </p>
-            </div>
-            <div className="rounded-[1.75rem] border border-olive-900/10 bg-white/70 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-pimento-700">
-                Primary practice
-              </p>
-              <p className="mt-3 font-serif text-4xl tracking-[-0.05em] text-olive-900">
-                Crochet
-              </p>
-            </div>
+            ) : null}
+          </header>
+          <div className="relative mx-auto w-full max-w-xl py-2 lg:justify-self-end" aria-hidden="true">
+            <div className="absolute inset-x-[12%] bottom-[8%] h-1/2 rounded-full bg-brass-100/65 blur-3xl" />
+            <BrandMark className="relative h-auto w-full" />
           </div>
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-[1.05fr_0.95fr]">
-          {heroProjects[0] ? (
-            <MediaPlaceholder
-              image={heroProjects[0].featuredImage}
-              aspect="portrait"
-              className="sm:row-span-2"
-              priority
-            />
+        <section
+          aria-label="Recent makes"
+          className={`mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-12 ${featured.length ? "lg:grid-rows-2" : ""}`}
+        >
+          {featured.map((make, index) => {
+            const image = make.images[0];
+            const size = index === 0 ? "lg:col-span-7 lg:row-span-2" : "lg:col-span-5";
+            return (
+              <Link
+                key={make.id}
+                href={`/makes/${make.slug}`}
+                className={`group relative min-h-72 overflow-hidden rounded-[1.5rem] bg-olive-100 ${size}`}
+              >
+                {image ? (
+                  <Image
+                    src={image.url}
+                    alt={image.alt || make.title}
+                    fill
+                    priority={index < 2}
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.015] motion-reduce:transition-none"
+                    sizes={index === 0 ? "(max-width:1024px) 100vw, 58vw" : "(max-width:1024px) 100vw, 42vw"}
+                  />
+                ) : (
+                  <div className={`${index % 2 ? "mustard-textile" : "bright-textile-placeholder"} absolute inset-0`} />
+                )}
+                <div className="absolute inset-x-4 bottom-4 rounded-xl bg-linen-0/90 px-4 py-3 backdrop-blur-sm">
+                  <p className="font-serif text-2xl text-olive-900">{make.title}</p>
+                </div>
+              </Link>
+            );
+          })}
+          {!featured.length ? (
+            <div className="bright-textile-placeholder relative col-span-full grid min-h-[30rem] place-items-center overflow-hidden rounded-[1.5rem]">
+              <p className="rounded-full bg-linen-0/90 px-6 py-4 font-serif text-2xl text-olive-900">
+                Photography will gather here as makes are published.
+              </p>
+            </div>
           ) : null}
-          <div className="space-y-5">
-            {heroProjects.slice(1).map((project) => (
-              <MediaPlaceholder
-                key={project.slug}
-                image={project.featuredImage}
-                aspect="landscape"
-              />
-            ))}
-            <div className="rounded-[2rem] border border-olive-900/10 bg-olive-900 p-7 text-linen-0 shadow-[0_24px_60px_rgba(37,33,29,0.12)]">
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-brass-100">
-                From the maker
-              </p>
-              <p className="mt-4 font-serif text-3xl tracking-[-0.04em]">
-                A handmade archive with room for process, mistakes, and
-                curiosity.
-              </p>
-            </div>
+        </section>
+      </section>
+
+      <ScallopedEdge className="bg-olive-100" />
+      <section className="relative bg-olive-100 px-6 py-16 sm:px-10 lg:py-20">
+        <div className="relative isolate mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
+          <div className="relative mx-auto w-full max-w-sm">
+            <LaceOverlay className="-right-8 -top-8" />
+            {about.images[0] ? (
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[45%_45%_1.5rem_1.5rem]">
+                <Image src={about.images[0].url} alt={about.images[0].alt} fill className="object-cover" sizes="400px" />
+              </div>
+            ) : (
+              <div className="cream-ticking-textile aspect-[4/5] rounded-[45%_45%_1.5rem_1.5rem]" />
+            )}
+          </div>
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[0.24em] text-pimento-700">Meet the maker</p>
+            <h2 className="mt-3 font-serif text-5xl tracking-[-0.05em] text-olive-900 sm:text-6xl">Hi, I’m Olivia.</h2>
+            <p className="mt-6 max-w-2xl whitespace-pre-line text-lg leading-9 text-charcoal-700">
+              {about.bio || "Threaded Olive is where I keep the projects, ideas, and everyday moments that shape my creative life."}
+            </p>
+            <Link href="/about" className="mt-6 inline-block text-sm font-bold text-olive-700 underline decoration-olive-700/30 underline-offset-4">
+              More about me →
+            </Link>
           </div>
         </div>
       </section>
+      <ScallopedEdge flip className="bg-olive-100" />
 
-      <section className="space-y-8">
-        <SectionHeading
-          eyebrow="Featured projects"
-          title="The portfolio leads with finished work, not a storefront."
-          description="Each project page holds the materials, techniques, and story behind the piece, with crochet at the center and neighboring crafts around it."
-          action={{ href: "/portfolio", label: "View all projects" }}
-        />
-        <div className="grid gap-6 lg:grid-cols-3">
-          {featuredProjects.slice(0, 3).map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-10 rounded-[2.5rem] border border-olive-900/10 bg-white/75 p-8 shadow-[0_24px_60px_rgba(37,33,29,0.06)] lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
-        <MediaPlaceholder
-          image={{
-            label: "Portrait or studio portrait placeholder",
-            alt: "Placeholder for a future portrait or studio photograph",
-            tone: "linen",
-          }}
-          aspect="portrait"
-        />
-        <div className="space-y-6">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-pimento-700">
-            Meet the maker
-          </p>
-          <h2 className="font-serif text-5xl leading-none tracking-[-0.05em] text-olive-900">
-            Threaded Olive is built for a thoughtful, evolving practice.
-          </h2>
-          <p className="text-lg leading-9 text-charcoal-700">
-            Crochet anchors the work, but the studio leaves room for sewing,
-            knitting, embroidery, and the early learning curve of needlepoint.
-            The site is designed to hold finished objects and the quieter notes
-            around them with equal care.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="rounded-[1.5rem] border border-olive-900/10 bg-linen-0 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-pimento-700">
-                Brand note
-              </p>
-              <p className="mt-3 text-base leading-8 text-charcoal-700">
-                The placeholder mark references three olives threaded onto a
-                sewing needle, arranged like a martini garnish.
-              </p>
-            </div>
-            <div className="rounded-[1.5rem] border border-olive-900/10 bg-linen-0 p-5">
-              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-pimento-700">
-                Future-ready
-              </p>
-              <p className="mt-3 text-base leading-8 text-charcoal-700">
-                Local MDX content keeps updates approachable now while leaving a
-                clean path toward a CMS later.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="space-y-8">
-        <SectionHeading
-          eyebrow="Studio Journal"
-          title="Recent notes from the worktable."
-          description="The journal is for progress, lessons, materials, and whatever the hands are learning next."
-          action={{ href: "/journal", label: "Browse the journal" }}
-        />
-        <div className="grid gap-6 lg:grid-cols-3">
-          {recentPosts.map((post) => (
-            <JournalCard key={post.slug} post={post} />
+      <section className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-10 lg:px-12 lg:py-20">
+        <div className="border-y border-olive-900/15">
+          {pillars.map(([title, href, description]) => (
+            <Link key={href} href={href} className="grid gap-2 border-b border-olive-900/15 py-7 last:border-0 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline">
+              <h2 className="font-serif text-4xl tracking-[-0.04em] text-olive-900">{title}</h2>
+              <p className="text-charcoal-700">{description}</p>
+              <span className="text-sm font-bold text-olive-700">Explore →</span>
+            </Link>
           ))}
         </div>
       </section>

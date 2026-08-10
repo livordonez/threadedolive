@@ -1,0 +1,22 @@
+import Image from "next/image";
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import { FabricSwatch } from "@/components/textile-details";
+import { getAdmin } from "@/lib/admin-auth";
+import { getMakeBySlug } from "@/lib/cms-data";
+
+export default async function MakePage({ params, searchParams }: { params: Promise<{ slug: string }>; searchParams: Promise<{ preview?: string }> }) {
+  const [{ slug }, query] = await Promise.all([params, searchParams]);
+  const mayPreview = query.preview === "1" && Boolean(await getAdmin());
+  const make = await getMakeBySlug(slug, mayPreview);
+  if (!make) notFound();
+  const mainImage = make.images[0];
+  const gallery = make.images.slice(1);
+  const formattedDate = make.completion_date ? new Intl.DateTimeFormat("en", { month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${make.completion_date}T00:00:00Z`)) : "";
+  const metadata = [
+    ["Pattern", make.pattern], ["Pattern designer", make.pattern_designer], ["Fabric / yarn", make.materials],
+    ["Size / tools", make.tool_size], ["Modifications", make.modifications], ["Date made", formattedDate],
+  ].filter(([, value]) => value);
+
+  return <article className="mx-auto w-full max-w-7xl px-6 py-10 sm:px-10 lg:px-12 lg:py-16">{mayPreview ? <div className="mb-6 rounded-xl bg-brass-100 px-4 py-3 text-sm font-semibold text-olive-900">Private draft preview</div> : null}<Link href="/makes" className="text-xs font-bold uppercase tracking-[0.2em] text-olive-700">← Back to Makes</Link><header className="mt-8 grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center"><div className="order-2 lg:order-1">{make.craft_type ? <p className="text-xs font-bold uppercase tracking-[0.2em] text-pimento-700">{make.craft_type}</p> : null}<h1 className="mt-5 font-serif text-5xl leading-none tracking-[-0.055em] text-olive-900 sm:text-7xl">{make.title}</h1>{make.story ? <p className="mt-7 whitespace-pre-line text-lg leading-9 text-charcoal-700">{make.story}</p> : null}</div><div className="order-1 relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-olive-100 lg:order-2">{mainImage ? <Image src={mainImage.url} alt={mainImage.alt || make.title} fill priority className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" /> : <div className="bright-textile-placeholder grid h-full place-items-center text-sm font-semibold text-olive-900"><span className="rounded-full bg-linen-0/85 px-5 py-3">Photo coming soon</span></div>}</div></header>{metadata.length || make.pattern_link ? <section className="cream-ticking-textile mt-16 rounded-[1.75rem] border border-olive-900/10 p-7 sm:p-9"><div className="grid gap-8 lg:grid-cols-[10rem_1fr]"><FabricSwatch image={gallery[0] ?? mainImage} /><div><p className="text-xs font-bold uppercase tracking-[0.22em] text-pimento-700">Project particulars</p><h2 className="mt-2 font-serif text-4xl tracking-[-0.04em] text-olive-900">The fabric swatch</h2><dl className="mt-7 grid gap-x-10 gap-y-6 sm:grid-cols-2">{metadata.map(([label, value]) => <div key={label}><dt className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-pimento-700">{label}</dt><dd className="mt-2 whitespace-pre-line leading-7 text-charcoal-700">{value}</dd></div>)}{make.pattern_link ? <div><dt className="text-[0.68rem] font-bold uppercase tracking-[0.18em] text-pimento-700">Pattern link</dt><dd className="mt-2"><a href={make.pattern_link} className="font-bold text-olive-700 underline underline-offset-4">View the pattern ↗</a></dd></div> : null}</dl></div></div></section> : null}{gallery.length ? <section className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{gallery.map((image, index) => <div key={image.path} className={`relative overflow-hidden rounded-[1.5rem] bg-olive-100 ${index % 3 === 0 ? "aspect-[4/5]" : "aspect-square"}`}><Image src={image.url} alt={image.alt} fill className="object-cover" sizes="(max-width: 640px) 100vw, 33vw" /></div>)}</section> : null}{make.process_notes || make.lessons ? <section className="mt-16 grid gap-10 border-t border-olive-900/15 pt-12 md:grid-cols-2">{make.process_notes ? <div><h2 className="font-serif text-3xl text-olive-900">Process notes</h2><p className="mt-4 whitespace-pre-line leading-8 text-charcoal-700">{make.process_notes}</p></div> : null}{make.lessons ? <div><h2 className="font-serif text-3xl text-olive-900">What I learned</h2><p className="mt-4 whitespace-pre-line leading-8 text-charcoal-700">{make.lessons}</p></div> : null}</section> : null}</article>;
+}
