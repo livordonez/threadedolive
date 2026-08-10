@@ -47,3 +47,10 @@ Do not use every treatment on one page.
 Review affected pages at 375, 430, 768, 1024, and 1440 pixels when practical. Check composition—not only the absence of runtime errors—including alignment, crop quality, paragraph width, title wrapping, overflow, decorative anchoring, focus visibility, and footer/navigation behavior.
 
 Photography should remain the dominant visual content. A strong photograph normally needs less decoration.
+
+## Accessibility invariants
+
+- `app/layout.tsx` owns the single public `<main>` landmark. Page components must not nest another `<main>` inside it.
+- Do not add a late global anchor color or text-decoration rule. Link utilities provide intentional contrast and underlines, including the light active-navigation text on dark olive.
+- Keep the shared `:focus-visible` outline intact and verify keyboard focus whenever link or navigation styling changes.
+- Decorative textile details and motifs stay hidden from assistive technology unless they communicate information not already expressed in text.
