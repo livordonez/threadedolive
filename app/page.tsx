@@ -23,10 +23,10 @@ export default async function HomePage() {
       <section className="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:px-10 lg:px-12 lg:pb-20 lg:pt-14">
         <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.9fr]">
           <header className="max-w-4xl">
-            <p className="text-xs font-bold uppercase tracking-[0.26em] text-pimento-700">
+            <p className="stitch-label text-pimento-700">
               A handmade archive
             </p>
-            <h1 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.055em] text-olive-900 sm:text-7xl">
+            <h1 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.035em] text-olive-900 sm:text-7xl">
               Made by hand,
               <br />
               <em className="font-normal">kept with care.</em>
@@ -98,7 +98,7 @@ export default async function HomePage() {
             )}
           </div>
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.24em] text-pimento-700">Meet the maker</p>
+            <p className="stitch-label text-pimento-700">Meet the maker</p>
             <h2 className="mt-3 font-serif text-5xl tracking-[-0.05em] text-olive-900 sm:text-6xl">Hi, I’m Olivia.</h2>
             <p className="mt-6 max-w-2xl whitespace-pre-line text-lg leading-9 text-charcoal-700">
               {about.bio || "Threaded Olive is where I keep the projects, ideas, and everyday moments that shape my creative life."}

@@ -19,5 +19,5 @@ export function LaceOverlay({ className }: { className?: string }) {
 }
 
 export function FabricSwatch({ image, label = "Project fabric" }: { image?: CmsImage; label?: string }) {
-  return <figure className="w-36"><PinkedEdge className="relative aspect-square bg-olive-200 shadow-sm">{image ? <Image src={image.url} alt={image.alt || label} fill className="object-cover" sizes="144px" /> : <div className="mustard-textile h-full" />}</PinkedEdge><figcaption className="mt-2 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-charcoal-700">{label}</figcaption></figure>;
+  return <figure className="w-36"><PinkedEdge className="relative aspect-square bg-olive-200 shadow-sm">{image ? <Image src={image.url} alt={image.alt || label} fill className="object-cover" sizes="144px" /> : <div className="mustard-textile h-full" />}</PinkedEdge><figcaption className="stitch-label mt-2 text-charcoal-700">{label}</figcaption></figure>;
 }

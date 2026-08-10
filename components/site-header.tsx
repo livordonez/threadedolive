@@ -33,7 +33,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
             <span className="block font-serif text-xl tracking-[-0.04em] sm:text-3xl">
               {settings.site_name}
             </span>
-            <span className="block text-[0.67rem] font-semibold uppercase tracking-[0.24em] text-charcoal-700">
+            <span className="stitch-label block text-charcoal-700">
               Fiber arts archive
             </span>
           </div>

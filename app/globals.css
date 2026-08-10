@@ -22,6 +22,9 @@
   --charcoal-200: #d2cdc6;
   --charcoal-700: #5b534b;
   --charcoal-900: #25211d;
+  --page-gutter: clamp(1.5rem, 4vw, 3rem);
+  --content-wide: 80rem;
+  --content-reading: 68ch;
 }
 
 @theme inline {
@@ -46,8 +49,8 @@
   --color-charcoal-200: var(--charcoal-200);
   --color-charcoal-700: var(--charcoal-700);
   --color-charcoal-900: var(--charcoal-900);
-  --font-sans: var(--font-body);
-  --font-serif: var(--font-display);
+  --font-sans: var(--font-editorial);
+  --font-serif: var(--font-editorial);
 }
 
 * {
@@ -68,7 +71,8 @@ body {
     linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 22%),
     var(--linen-50);
   color: var(--charcoal-900);
-  font-family: var(--font-body), sans-serif;
+  font-family: var(--font-editorial), Georgia, serif;
+  font-size: 1.0625rem;
 }
 
 .site-textile-header {
@@ -129,6 +133,22 @@ body {
   background-position: center;
   background-repeat: repeat;
   background-size: auto, 420px 420px;
+}
+
+.stitch-label {
+  font-family: var(--font-stitch), monospace;
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.stitch-motif {
+  display: block;
+  flex: none;
+  overflow: visible;
+  image-rendering: pixelated;
 }
 
 /* Textile punctuation: reusable, lightweight, and intentionally occasional. */
@@ -223,7 +243,7 @@ img {
 
 .rich-text {
   color: var(--charcoal-700);
-  font-size: 1.03rem;
+  font-size: 1.125rem;
   line-height: 1.85;
 }
 
@@ -252,7 +272,7 @@ img {
 .rich-text p,
 .rich-text li,
 .rich-text blockquote {
-  max-width: 68ch;
+  max-width: var(--content-reading);
 }
 
 .rich-text ul,
@@ -347,7 +367,7 @@ textarea.admin-input {
 .admin-status-draft { border-radius: 999px; padding: 0.45rem 0.75rem; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; }
 .admin-status-published { background: var(--olive-100); color: var(--olive-900); }
 .admin-status-draft { background: var(--linen-100); color: var(--charcoal-700); }
-.public-prose { max-width: 70ch; color: var(--charcoal-700); font-size: 1.05rem; line-height: 1.9; }
+.public-prose { max-width: var(--content-reading); color: var(--charcoal-700); font-size: 1.125rem; line-height: 1.85; }
 
 @media (prefers-reduced-motion: reduce) {
   html {

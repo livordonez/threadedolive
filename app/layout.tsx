@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Newsreader } from "next/font/google";
+import { EB_Garamond, Silkscreen } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SkipLink } from "@/components/skip-link";
@@ -7,17 +7,19 @@ import { rootMetadata, rootViewport } from "@/lib/site";
 import { getNavigation, getSettings } from "@/lib/cms-data";
 import "./globals.css";
 
-const bodyFont = Manrope({
-  variable: "--font-body",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-});
-
-const displayFont = Newsreader({
-  variable: "--font-display",
+const editorialFont = EB_Garamond({
+  variable: "--font-editorial",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
+  display: "swap",
+});
+
+const stitchFont = Silkscreen({
+  variable: "--font-stitch",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = rootMetadata;
@@ -32,7 +34,8 @@ export default async function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}
+      data-scroll-behavior="smooth"
+      className={`${editorialFont.variable} ${stitchFont.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col text-charcoal-900">
         <SkipLink />

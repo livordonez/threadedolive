@@ -34,3 +34,9 @@ Add the same two public Supabase environment variables to the deployment platfor
 ## Previous content
 
 The original MDX project and journal files remain under `content/` as an archive for manual reference while real content is entered through the editor. They are no longer public routes or runtime content sources.
+
+## Visual system
+
+The public site uses self-hosted EB Garamond as its primary editorial typeface and Silkscreen only for tiny cross-stitch-inspired labels. Textile edges and the standard cat, books, yarn, and olive motifs are reusable design primitives rather than page-specific decoration.
+
+Read [`docs/design-direction.md`](docs/design-direction.md) before substantial visual work. It documents the durable hierarchy, typography, textile primitives, motif conventions, and responsive QA expectations that keep the site from drifting into a busier craft-store aesthetic.
