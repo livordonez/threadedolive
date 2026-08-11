@@ -63,6 +63,10 @@ Photography should remain the dominant visual content. A strong photograph norma
 
 The three core archives intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is an unboxed multi-column pinboard that preserves uploaded image proportions and allows text-only notes. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in white card shells; textile swatches, when needed, belong only to empty or missing-media states rather than around every piece of content.
 
+## Moment stories
+
+`components/moment-story.tsx` owns the journal-entry composition. Keep its sequence stable: semantic date and title, one optional frayed excerpt, the first image as a generous hero, reading-width journal text, then proportion-aware gallery images. Text-only Moments must retain the same hierarchy without substituting a decorative image placeholder. Fraying is reserved for the introductory excerpt and should not spread to the body or gallery.
+
 ## Accessibility invariants
 
 - `app/layout.tsx` owns the single public `<main>` landmark. Page components must not nest another `<main>` inside it.

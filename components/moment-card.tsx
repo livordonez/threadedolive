@@ -36,7 +36,10 @@ export function MomentCard({
         ) : null}
 
         <div className="max-w-2xl">
-          <time className="stitch-label text-pimento-700">
+          <time
+            dateTime={moment.moment_date}
+            className="stitch-label text-pimento-700"
+          >
             {formatCalendarDate(moment.moment_date)}
           </time>
           <h2 className="mt-2 font-serif text-3xl leading-[1.05] tracking-[-0.025em] text-olive-900 sm:text-4xl">
