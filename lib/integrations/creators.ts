@@ -18,10 +18,11 @@ export type CreatorCardData = FavoriteFollow & {
 export function detectCreatorPlatform(value: string): CreatorPlatform {
   try {
     const host = new URL(value).hostname.replace(/^www\./, "");
-    if (host === "youtube.com" || host === "youtu.be") return "YouTube";
-    if (host === "instagram.com") return "Instagram";
-    if (host === "tiktok.com") return "TikTok";
-    if (host === "pinterest.com") return "Pinterest";
+    const belongsTo = (domain: string) => host === domain || host.endsWith(`.${domain}`);
+    if (belongsTo("youtube.com") || host === "youtu.be") return "YouTube";
+    if (belongsTo("instagram.com")) return "Instagram";
+    if (belongsTo("tiktok.com")) return "TikTok";
+    if (belongsTo("pinterest.com")) return "Pinterest";
   } catch {
     return "Website";
   }
@@ -30,10 +31,15 @@ export function detectCreatorPlatform(value: string): CreatorPlatform {
 
 export function creatorHandle(value: string, platform: CreatorPlatform) {
   try {
-    const segment = new URL(value).pathname.split("/").filter(Boolean)[0];
+    const segments = new URL(value).pathname.split("/").filter(Boolean);
+    const segment = segments[0];
     if (!segment) return undefined;
     if (platform === "YouTube" && segment.startsWith("@")) return segment;
-    if (["Instagram", "TikTok", "Pinterest"].includes(platform)) return `@${segment.replace(/^@/, "")}`;
+    if (platform === "TikTok") {
+      const profile = segments.find((part) => part.startsWith("@"));
+      return profile || undefined;
+    }
+    if (["Instagram", "Pinterest"].includes(platform)) return `@${segment.replace(/^@/, "")}`;
   } catch {
     return undefined;
   }

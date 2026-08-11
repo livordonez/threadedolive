@@ -276,16 +276,16 @@ export async function createFavoriteFollowAction(state: AdminActionState, formDa
   void state; void formData;
   await requireAdmin();
   const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.from("favorite_follows").insert({
+  const { data, error } = await supabase.from("favorite_follows").insert({
     name: "New favorite follow",
     visible: false,
-  });
-  if (error) return failed(
+  }).select("id").single();
+  if (error || !data) return failed(
     "create-favorite-follow",
     databaseMessage(error, "Could not add a favorite follow. Please try again.", "Favorite Follows are not set up yet. Run the latest Supabase migration, then try again."),
     error,
   );
-  redirect("/admin/muses?followCreated=1#favorite-follows");
+  redirect(`/admin/muses?followCreated=${data.id}#favorite-follows`);
 }
 
 export async function saveFavoriteFollowAction(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
@@ -306,6 +306,7 @@ export async function saveFavoriteFollowAction(_: AdminActionState, formData: Fo
   if (readError) return failed("read-favorite-follow", "This favorite follow could not be loaded. Reload and try again.", readError);
 
   const avatar = cleanCreatorAvatar(parseJson(formData.get("avatar"), []));
+  const visible = formData.get("visible") === "on";
   const { error } = await supabase.from("favorite_follows").update({
     name,
     url,
@@ -314,7 +315,7 @@ export async function saveFavoriteFollowAction(_: AdminActionState, formData: Fo
     handle: text(formData, "handle").slice(0, 160),
     youtube_channel_id: text(formData, "youtube_channel_id").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 100),
     display_order: Number(text(formData, "display_order")) || 0,
-    visible: formData.get("visible") === "on",
+    visible,
     updated_at: new Date().toISOString(),
   }).eq("id", id).select("id").single();
   if (error) return failed(
@@ -327,7 +328,7 @@ export async function saveFavoriteFollowAction(_: AdminActionState, formData: Fo
     avatar ? [avatar] : [],
   );
   revalidatePath("/muses");
-  redirect("/admin/muses?followsSaved=1#favorite-follows");
+  redirect(`/admin/muses?followsSaved=${visible ? "public" : "hidden"}#favorite-follows`);
 }
 
 export async function deleteFavoriteFollowAction(_: AdminActionState, formData: FormData): Promise<AdminActionState> {

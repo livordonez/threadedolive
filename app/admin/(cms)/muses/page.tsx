@@ -45,7 +45,8 @@ export default async function MusesAdminPage({
       <FavoriteFollowsEditor
         follows={favoriteFollowData.follows}
         configured={favoriteFollowData.configured}
-        saved={Boolean(query.followsSaved || query.followCreated)}
+        newFollowId={query.followCreated}
+        savedStatus={query.followsSaved}
       />
     </div>
   );

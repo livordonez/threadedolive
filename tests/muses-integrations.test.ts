@@ -46,6 +46,9 @@ test("derives creator platforms and handles from profile URLs", () => {
   assert.equal(creatorHandle("https://www.youtube.com/@HiSydGraham", "YouTube"), "@HiSydGraham");
   assert.equal(detectCreatorPlatform("https://www.instagram.com/bethanyciotola/"), "Instagram");
   assert.equal(creatorHandle("https://www.instagram.com/bethanyciotola/", "Instagram"), "@bethanyciotola");
+  assert.equal(detectCreatorPlatform("https://vm.tiktok.com/ZMexample/"), "TikTok");
+  assert.equal(creatorHandle("https://www.tiktok.com/@threadedolive", "TikTok"), "@threadedolive");
+  assert.equal(creatorHandle("https://www.tiktok.com/t/ZMexample/", "TikTok"), undefined);
   assert.equal(detectCreatorPlatform("https://example.com/liv"), "Website");
 });
 

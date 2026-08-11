@@ -18,11 +18,13 @@ function avatarImages(follow: FavoriteFollowRecord): CmsImage[] {
 export function FavoriteFollowsEditor({
   follows,
   configured,
-  saved,
+  newFollowId,
+  savedStatus,
 }: {
   follows: FavoriteFollowRecord[];
   configured: boolean;
-  saved: boolean;
+  newFollowId?: string;
+  savedStatus?: string;
 }) {
   return (
     <section id="favorite-follows" className="space-y-5 border-t border-olive-900/15 pt-8">
@@ -33,7 +35,21 @@ export function FavoriteFollowsEditor({
           <p className="admin-help mt-2 max-w-2xl">
             Add a name and profile link, then upload a recognizable avatar. Platform and handle are inferred from the link; the optional fields let you override or enrich the card.
           </p>
-          {saved ? <p className="mt-2 text-sm font-semibold text-olive-700">Favorite follow saved.</p> : null}
+          {newFollowId ? (
+            <p className="mt-2 text-sm font-semibold text-olive-700">
+              New follow added. Fill in the profile, then save it to publish it.
+            </p>
+          ) : null}
+          {savedStatus === "public" ? (
+            <p className="mt-2 text-sm font-semibold text-olive-700">
+              Saved and visible on the public Muses page.
+            </p>
+          ) : null}
+          {savedStatus === "hidden" ? (
+            <p className="mt-2 text-sm font-semibold text-pimento-700">
+              Saved as hidden. Turn on “Show on the public Muses page” and save again to publish it.
+            </p>
+          ) : null}
         </div>
         {configured ? <CreateActionForm action={createFavoriteFollowAction} label="Add Favorite Follow" /> : null}
       </header>
@@ -48,6 +64,12 @@ export function FavoriteFollowsEditor({
         {follows.map((follow) => (
           <AdminActionForm key={follow.id} action={saveFavoriteFollowAction} className="admin-panel space-y-5">
             <input type="hidden" name="id" value={follow.id} />
+            <div className="flex items-center justify-between gap-4">
+              <h3 className="font-serif text-2xl text-olive-900">{follow.name}</h3>
+              <span className={follow.visible ? "admin-status-published" : "admin-status-draft"}>
+                {follow.visible ? "Public" : "Hidden"}
+              </span>
+            </div>
             <div className="grid gap-5 md:grid-cols-2">
               <label className="admin-label">
                 Creator name
@@ -74,9 +96,13 @@ export function FavoriteFollowsEditor({
                 Display order
                 <input name="display_order" type="number" defaultValue={follow.display_order} className="admin-input mt-2" />
               </label>
-              <label className="flex items-center gap-3 self-end pb-3 text-sm font-semibold">
-                <input name="visible" type="checkbox" defaultChecked={follow.visible} className="h-5 w-5 accent-olive-700" />
-                Show on the public Muses page
+              <label className={`flex items-center gap-3 self-end rounded-xl border p-3 text-sm font-semibold ${
+                follow.visible || follow.id === newFollowId
+                  ? "border-olive-700/25 bg-olive-50 text-olive-900"
+                  : "border-pimento-700/20 bg-pimento-50 text-pimento-700"
+              }`}>
+                <input name="visible" type="checkbox" defaultChecked={follow.visible || follow.id === newFollowId} className="h-5 w-5 accent-olive-700" />
+                Show on the public Muses page after saving
               </label>
             </div>
 
