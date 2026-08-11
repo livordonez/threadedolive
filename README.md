@@ -72,6 +72,4 @@ Creator records live in `data/favorite-follows.ts`. To add someone, add one obje
 
 ### Brand motifs
 
-Cat, granny square, and martini are the only canonical Threaded Olive mini illustrations. Their durable location is `public/images/brand-motifs/`; usage and source-file rules are recorded in that directory's README. Keep the supplied colors, transparency, proportions, orientation, format, and crisp pixel edges unchanged. Use motifs as occasional signatures, not as gap fillers, and do not casually introduce another miniature illustration style.
-
-The final three source artwork files were not included with the August 11, 2026 implementation brief. Competing generated SVG motifs were removed rather than passed off as the final assets. To finish asset adoption, place the supplied cat, granny-square, and martini files in `public/images/brand-motifs/` under the documented names; then add a small reusable renderer only where the finished page composition benefits from one.
+Cat, granny square, and martini are the only canonical Threaded Olive mini illustrations. Their original PNG files live in `public/images/brand-motifs/`, and `components/brand-motif.tsx` provides the shared decorative renderer. Keep the supplied colors, transparency, proportions, orientation, format, glow, and crisp pixel edges unchanged. Use motifs as occasional signatures, not as gap fillers, and do not casually introduce another miniature illustration style.

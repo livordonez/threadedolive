@@ -1,9 +1,9 @@
 # Canonical mini illustrations
 
-Place the final supplied artwork in this directory using these durable names:
+The final supplied artwork lives in this directory under these durable names:
 
-- `cat.<original-extension>`
-- `granny-square.<original-extension>`
-- `martini.<original-extension>`
+- `cat.png`
+- `granny-square.png`
+- `martini.png`
 
-Keep the supplied format, transparency, colors, proportions, orientation, and pixel edges intact. The source artwork was not included in the August 11, 2026 implementation attachment, so no substitute files were generated.
+`components/brand-motif.tsx` is the shared decorative renderer. Keep the supplied PNG format, transparency, colors, proportions, orientation, glow, and pixel edges intact. Responsive resizing is the only visual transformation applied by the site.

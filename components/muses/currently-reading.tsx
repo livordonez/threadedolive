@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { BrandMotif } from "@/components/brand-motif";
 import type { ReadingBook } from "@/lib/integrations/goodreads";
 
 function displayDate(value?: string) {
@@ -20,6 +21,7 @@ export function CurrentlyReading({ books }: { books: ReadingBook[] }) {
           <p className="mt-4 text-lg leading-8 text-charcoal-700">
             The books keeping me company lately, pulled from my reading shelf.
           </p>
+          <BrandMotif motif="cat" className="-ml-10 -mt-3 w-40" />
         </header>
 
         {books.length ? (

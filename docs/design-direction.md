@@ -35,7 +35,7 @@ Do not use every treatment on one page.
 
 ## Brand motifs
 
-Cat, granny square, and martini are the complete miniature illustration vocabulary. Final source artwork belongs in `public/images/brand-motifs/` and must remain visually unmodified. Do not redraw, recolor, rotate, filter, soften, or reinterpret it. Preserve the supplied file format where reasonable and render raster pixel art with crisp edges.
+Cat, granny square, and martini are the complete miniature illustration vocabulary. The source PNGs live in `public/images/brand-motifs/` and `components/brand-motif.tsx` owns their shared rendering. Keep them visually unmodified. Do not redraw, recolor, rotate, filter, soften, or reinterpret them. Preserve their PNG format and render the pixel artwork with crisp edges.
 
 - Keep motifs small, like signatures, marginalia, or dingbats.
 - Prefer a semantic relationship: granny square near making and textiles, cat near reading or personal notes, and martini near lifestyle or playful moments.
@@ -43,8 +43,6 @@ Cat, granny square, and martini are the complete miniature illustration vocabula
 - Do not introduce replacement books, yarn, olive, or miscellaneous miniature illustrations.
 - Keep archive empty states primarily typographic when a final motif does not clearly improve the composition.
 - Decorative motifs stay hidden from assistive technology unless they communicate information not already present in nearby text.
-
-The August 11, 2026 brief did not include the three source files, so their destination contains placement instructions rather than fabricated stand-ins.
 
 ## Visual QA
 

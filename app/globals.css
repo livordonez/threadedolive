@@ -144,6 +144,10 @@ body {
   text-transform: uppercase;
 }
 
+.brand-motif {
+  image-rendering: pixelated;
+}
+
 /* Textile punctuation: reusable, lightweight, and intentionally occasional. */
 .scalloped-edge {
   height: 1.4rem;

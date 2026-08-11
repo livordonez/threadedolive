@@ -1,10 +1,11 @@
 import Image from "next/image";
+import { BrandMotif } from "@/components/brand-motif";
 import type { FavoriteFollow } from "@/data/favorite-follows";
 
 export function FavoriteFollows({ follows }: { follows: FavoriteFollow[] }) {
   return (
     <section aria-labelledby="favorite-follows-title" className="border-t border-olive-900/15 pt-8 sm:pt-10">
-      <header className="max-w-2xl">
+      <header className="relative max-w-3xl pr-0 sm:pr-28">
         <p className="stitch-label text-pimento-700">People to know</p>
         <h2 id="favorite-follows-title" className="mt-3 font-serif text-4xl tracking-[-0.04em] text-olive-900 sm:text-5xl">
           Favorite Follows
@@ -12,6 +13,10 @@ export function FavoriteFollows({ follows }: { follows: FavoriteFollow[] }) {
         <p className="mt-4 text-lg leading-8 text-charcoal-700">
           A short list of people whose work keeps me looking, learning, and making.
         </p>
+        <BrandMotif
+          motif="martini"
+          className="absolute -right-10 -top-9 hidden w-36 sm:block"
+        />
       </header>
 
       <div className="mt-8 border-y border-olive-900/15">
