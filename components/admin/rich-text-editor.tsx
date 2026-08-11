@@ -29,12 +29,14 @@ export function RichTextEditor({
   placeholder: string;
 }) {
   const editor = useRef<HTMLDivElement>(null);
+  const hiddenInput = useRef<HTMLInputElement>(null);
   const { pending } = useFormStatus();
-  const [value, setValue] = useState(() => encodeRichText(initialHtml));
   const [active, setActive] = useState<Partial<Record<FormatCommand, boolean>>>({});
 
   const syncValue = useCallback(() => {
-    setValue(encodeRichText(editor.current?.innerHTML ?? ""));
+    if (hiddenInput.current) {
+      hiddenInput.current.value = encodeRichText(editor.current?.innerHTML ?? "");
+    }
   }, []);
 
   const updateActiveFormats = useCallback(() => {
@@ -62,7 +64,12 @@ export function RichTextEditor({
   return (
     <div className="md:col-span-2">
       <label id={`${name}-label`} className="admin-label">{label}</label>
-      <input type="hidden" name={name} value={value} />
+      <input
+        ref={hiddenInput}
+        type="hidden"
+        name={name}
+        defaultValue={encodeRichText(initialHtml)}
+      />
       <div className="mt-2 overflow-hidden rounded-xl border border-olive-900/15 bg-white focus-within:border-olive-700/50 focus-within:ring-2 focus-within:ring-olive-700/10">
         <div
           role="toolbar"
