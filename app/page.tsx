@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ArchiveEmptyState } from "@/components/archive-empty-state";
 import { BrandMark } from "@/components/brand-mark";
 import { LaceOverlay, ScallopedEdge } from "@/components/textile-details";
 import { getAbout, getPublishedMakes, getSettings } from "@/lib/cms-data";
@@ -75,11 +76,12 @@ export default async function HomePage() {
             );
           })}
           {!featured.length ? (
-            <div className="bright-textile-placeholder relative col-span-full grid min-h-[30rem] place-items-center overflow-hidden rounded-[1.5rem]">
-              <p className="rounded-full bg-linen-0/90 px-6 py-4 font-serif text-2xl text-olive-900">
-                Photography will gather here as makes are published.
-              </p>
-            </div>
+            <ArchiveEmptyState
+              label="Photography will gather here as makes are published."
+              motif="yarn"
+              className="col-span-full mt-0"
+              swatchClassName="bright-textile-placeholder"
+            />
           ) : null}
         </section>
       </section>

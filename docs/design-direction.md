@@ -40,6 +40,7 @@ Do not use every treatment on one page.
 - Keep motifs small, like marginalia or dingbats.
 - Prefer a semantic relationship: books for reading/inspiration, yarn for making, olive for general branding, and the cat for occasional personality.
 - Use `ArchiveEmptyState` for the shared motif-backed empty-state treatment.
+- Empty archives use textile imagery only inside a small pinked swatch. Keep the surrounding state typographic and spacious so a temporary lack of photography does not turn a full-width fabric texture into the page's dominant visual.
 - Decorative motifs should remain hidden from assistive technology. Give a motif a `title` only when it carries meaning that is not already present in nearby text.
 
 ## Visual QA
