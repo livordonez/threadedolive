@@ -27,6 +27,11 @@ This project requires Node 20.9 or newer; Node 22 is selected by `.nvmrc`.
 
 The migration makes the image bucket public for serving published photographs, but only the authenticated admin may upload, change, or delete files. Draft rows remain private through row-level security.
 
+If an existing project reports that `public.muses` or `public.moments` is missing,
+run [`20260811000000_repair_muses_and_moments.sql`](supabase/migrations/20260811000000_repair_muses_and_moments.sql)
+in the Supabase SQL editor. It is idempotent and can safely be run after the earlier
+migrations.
+
 ## Deployment
 
 Add the same two public Supabase environment variables to the deployment platform. The anon key is designed for browser use; authorization comes from database policies and the signed-in session. Never add Supabase's service-role credential to this project.

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { deletePageAction, savePageAction } from "@/app/admin/actions";
+import { AdminActionForm, DeleteActionButton } from "@/components/admin/action-form";
 import { ImageUploader } from "@/components/admin/image-uploader";
 import type { FlexiblePage, PageSection } from "@/lib/cms-types";
 
@@ -17,7 +18,7 @@ export function PageEditor({ page }: { page: FlexiblePage }) {
   function move(index: number, direction: -1 | 1) { const target = index + direction; if (target < 0 || target >= sections.length) return; const next = [...sections]; [next[index], next[target]] = [next[target], next[index]]; setSections(next); }
 
   return (
-    <form action={savePageAction} className="space-y-8">
+    <AdminActionForm action={savePageAction} className="space-y-8">
       <input type="hidden" name="id" value={page.id} /><input type="hidden" name="status" value={page.status} /><input type="hidden" name="sections" value={JSON.stringify(sections)} />
       <div className="admin-panel grid gap-5 md:grid-cols-2">
         <label className="admin-label md:col-span-2">Page title<input name="title" defaultValue={page.title} required className="admin-input mt-2" /></label>
@@ -31,8 +32,8 @@ export function PageEditor({ page }: { page: FlexiblePage }) {
         {!sections.length ? <div className="rounded-2xl border border-dashed border-olive-900/20 p-8 text-center text-sm text-charcoal-700">This page has no sections yet.</div> : null}
         <div className="flex flex-wrap gap-2 rounded-2xl bg-olive-50 p-4"><span className="mr-2 self-center text-sm font-bold">Add Section</span>{sectionChoices.map(([type, label]) => <button key={type} type="button" onClick={() => add(type)} className="admin-mini bg-white">+ {label}</button>)}</div>
       </section>
-      <div className="sticky bottom-4 z-20 flex flex-wrap gap-3 rounded-2xl border border-olive-900/10 bg-white/95 p-4 shadow-xl"><button name="intent" value="draft" className="admin-button-secondary">Save Draft</button>{page.status === "published" ? <><button name="intent" value="publish" className="admin-button">Save Changes</button><button name="intent" value="unpublish" className="admin-button-secondary">Unpublish</button></> : <button name="intent" value="publish" className="admin-button">Publish</button>}<a href={`/${page.slug}?preview=1`} target="_blank" className="admin-button-secondary">Preview</a><button formAction={deletePageAction} onClick={(event) => { if (!confirm("Delete this page permanently?")) event.preventDefault(); }} className="ml-auto text-sm font-semibold text-pimento-700">Delete</button></div>
-    </form>
+      <div className="sticky bottom-4 z-20 flex flex-wrap gap-3 rounded-2xl border border-olive-900/10 bg-white/95 p-4 shadow-xl"><button name="intent" value="draft" className="admin-button-secondary">Save Draft</button>{page.status === "published" ? <><button name="intent" value="publish" className="admin-button">Save Changes</button><button name="intent" value="unpublish" className="admin-button-secondary">Unpublish</button></> : <button name="intent" value="publish" className="admin-button">Publish</button>}<a href={`/${page.slug}?preview=1`} target="_blank" rel="noreferrer" className="admin-button-secondary">Preview</a><DeleteActionButton action={deletePageAction} confirmMessage="Delete this page permanently?" /></div>
+    </AdminActionForm>
   );
 }
 

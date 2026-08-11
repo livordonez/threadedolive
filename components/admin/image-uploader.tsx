@@ -23,24 +23,34 @@ export function ImageUploader({
   async function upload(files: FileList | null) {
     if (!files?.length) return;
     setUploading(true); setError("");
+    const uploadedPaths: string[] = [];
     try {
       const supabase = createSupabaseBrowserClient();
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user }, error: authError } = await supabase.auth.getUser();
+      if (authError) throw new Error("Your session could not be verified. Please sign in again.");
       if (!user) throw new Error("Your session has expired. Please sign in again.");
       const additions: CmsImage[] = [];
+      const allowedTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
       for (const file of Array.from(files).slice(0, Math.max(0, max - images.length))) {
-        if (!file.type.startsWith("image/") || file.size > 15 * 1024 * 1024) throw new Error("Choose JPG, PNG, WebP, or AVIF images under 15 MB.");
+        if (!allowedTypes.has(file.type) || file.size > 15 * 1024 * 1024) throw new Error("Choose JPG, PNG, WebP, or AVIF images under 15 MB.");
         const extension = file.name.split(".").pop()?.toLowerCase().replace(/[^a-z0-9]/g, "") || "jpg";
         const path = `${user.id}/${crypto.randomUUID()}.${extension}`;
         const { error: uploadError } = await supabase.storage.from("threaded-olive").upload(path, file, { contentType: file.type, upsert: false });
         if (uploadError) throw uploadError;
+        uploadedPaths.push(path);
         const { data } = supabase.storage.from("threaded-olive").getPublicUrl(path);
         additions.push({ url: data.publicUrl, path, alt: file.name.replace(/\.[^.]+$/, "").replace(/[-_]/g, " ") });
       }
       commit([...images, ...additions]);
       if (input.current) input.current.value = "";
     } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "The upload did not finish.");
+      if (uploadedPaths.length) {
+        const supabase = createSupabaseBrowserClient();
+        const { error: cleanupError } = await supabase.storage.from("threaded-olive").remove(uploadedPaths);
+        if (cleanupError) console.error("Could not clean up an incomplete upload", cleanupError);
+      }
+      const message = caught instanceof Error ? caught.message : "The upload did not finish.";
+      setError(message.includes("row-level security") ? "The upload was blocked. Sign in again and retry." : message);
     } finally { setUploading(false); }
   }
 
