@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LinkButton } from "@/components/link-button";
+import { ArrowRightIcon } from "@/components/ui-icons";
 
 const moreLinks = [
   ["Makes", "/makes"],
@@ -29,7 +30,7 @@ export default function NotFound() {
                     href={href}
                     className="font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
                   >
-                    {label} →
+                    <span className="inline-flex items-center gap-1.5">{label} <ArrowRightIcon /></span>
                   </Link>
                 </li>
               ))}

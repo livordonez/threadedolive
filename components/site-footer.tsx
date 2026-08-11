@@ -15,7 +15,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
     <footer className="site-textile-footer lace-footer border-t border-olive-900/15">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-12 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-12">
         <div className="space-y-4">
-          <div className="flex items-center gap-3 text-olive-900">
+          <div className="flex flex-col items-start gap-3 text-olive-900 min-[360px]:flex-row min-[360px]:items-center">
             <BrandMark
               className="h-24 w-auto sm:h-32"
               sizes="(min-width: 640px) 192px, 144px"

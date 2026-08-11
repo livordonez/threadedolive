@@ -62,7 +62,9 @@ The public Muses composition lives in `app/muses/page.tsx`, with focused section
 
 ### People I love following
 
-Creator records live in `data/favorite-follows.ts`. To add someone, add one object with `name`, `platform`, and `url`; `description` and `image` are optional. Use a direct, permitted image URL if adding a portrait, and add its hostname narrowly to `images.remotePatterns` in `next.config.ts`. The section treats the creator name and note as primary and the platform as small metadata.
+Creator records live in `data/favorite-follows.ts`. A new entry only requires `name` and `url`; the platform and social handle are derived from the URL. Add a locally cached `avatar` whenever possible so the creator remains recognizable without a live social-media image request. `description`, `handle`, and `youtubeChannelId` are optional.
+
+When a YouTube channel ID is present, `lib/integrations/creators.ts` reads YouTube's public channel feed server-side and caches the latest-video preview for six hours. If the feed or thumbnail fails, the card falls back to the creator avatar. Other platforms use the avatar-first profile card rather than a login-dependent embed. Missing avatars fall back to initials without showing a broken image. Current creator portraits live in `public/images/creators/`.
 
 ### On my nightstand
 

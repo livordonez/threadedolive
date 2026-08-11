@@ -18,6 +18,11 @@ const nextConfig: NextConfig = {
         hostname: "i.gr-assets.com",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "i.ytimg.com",
+        pathname: "/**",
+      },
     ],
   },
 };

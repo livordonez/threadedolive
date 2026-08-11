@@ -4,13 +4,15 @@ import { RecentPins } from "@/components/muses/recent-pins";
 import { favoriteFollows } from "@/data/favorite-follows";
 import { getPublishedMuses } from "@/lib/cms-data";
 import { getCurrentlyReading } from "@/lib/integrations/goodreads";
+import { getCreatorCards } from "@/lib/integrations/creators";
 import { getRecentPins, type Pin } from "@/lib/integrations/pinterest";
 
 export default async function MusesPage() {
-  const [feedPins, books, muses] = await Promise.all([
+  const [feedPins, books, muses, creators] = await Promise.all([
     getRecentPins(),
     getCurrentlyReading(),
     getPublishedMuses(),
+    getCreatorCards(favoriteFollows),
   ]);
   const cmsPins: Pin[] = muses
     .filter((muse) => Boolean(muse.images[0]))
@@ -37,7 +39,7 @@ export default async function MusesPage() {
 
       <div className="mt-14 space-y-20 sm:mt-16 sm:space-y-24 lg:space-y-28">
         <RecentPins pins={pins} />
-        <FavoriteFollows follows={favoriteFollows} />
+        <FavoriteFollows follows={creators} />
         <CurrentlyReading books={books} />
       </div>
     </div>

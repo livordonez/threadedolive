@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FabricSwatch } from "@/components/textile-details";
+import { ArrowLeftIcon, ExternalLinkIcon } from "@/components/ui-icons";
 import type { Make } from "@/lib/cms-types";
 
 type ProjectDetail = {
@@ -64,7 +65,7 @@ function ProjectDetails({
                     href={patternLink}
                     className="font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
                   >
-                    Go to pattern ↗
+                    <span className="inline-flex items-center gap-1.5">Go to pattern <ExternalLinkIcon /></span>
                   </a>
                 </dd>
               </div>
@@ -95,7 +96,7 @@ export function MakeStory({ make, isPreview = false }: { make: Make; isPreview?:
         href="/makes"
         className="stitch-label text-olive-700 underline decoration-olive-700/25 underline-offset-4"
       >
-        ← Back to Makes
+        <span className="inline-flex items-center gap-1.5"><ArrowLeftIcon /> Back to Makes</span>
       </Link>
 
       <header className="mt-8 grid gap-9 lg:grid-cols-[0.82fr_1.18fr] lg:items-end lg:gap-14">

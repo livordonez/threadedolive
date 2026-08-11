@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { parseGoodreadsFeed } from "../lib/integrations/goodreads";
 import { parsePinterestFeed } from "../lib/integrations/pinterest";
+import { creatorHandle, detectCreatorPlatform, parseYouTubeFeed } from "../lib/integrations/creators";
 
 test("normalizes Pinterest RSS and removes duplicate images", () => {
   const xml = `<rss><channel>
@@ -38,4 +39,21 @@ test("normalizes Goodreads currently-reading RSS", () => {
       dateStarted: "Sun, 09 Aug 2026 17:26:30 -0700",
     },
   ]);
+});
+
+test("derives creator platforms and handles from profile URLs", () => {
+  assert.equal(detectCreatorPlatform("https://www.youtube.com/@HiSydGraham"), "YouTube");
+  assert.equal(creatorHandle("https://www.youtube.com/@HiSydGraham", "YouTube"), "@HiSydGraham");
+  assert.equal(detectCreatorPlatform("https://www.instagram.com/bethanyciotola/"), "Instagram");
+  assert.equal(creatorHandle("https://www.instagram.com/bethanyciotola/", "Instagram"), "@bethanyciotola");
+  assert.equal(detectCreatorPlatform("https://example.com/liv"), "Website");
+});
+
+test("normalizes the latest entry from a YouTube channel feed", () => {
+  const xml = `<feed><entry><yt:videoId>abc123</yt:videoId><title>Sewing &amp; crochet</title></entry></feed>`;
+  assert.deepEqual(parseYouTubeFeed(xml), {
+    title: "Sewing & crochet",
+    url: "https://www.youtube.com/watch?v=abc123",
+    image: "https://i.ytimg.com/vi/abc123/hqdefault.jpg",
+  });
 });

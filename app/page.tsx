@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ArchiveEmptyState } from "@/components/archive-empty-state";
 import { BrandMark } from "@/components/brand-mark";
 import { LaceOverlay, ScallopedEdge } from "@/components/textile-details";
+import { ArrowRightIcon } from "@/components/ui-icons";
 import { getAbout, getPublishedMakes, getSettings } from "@/lib/cms-data";
 
 const pillars = [
@@ -106,8 +107,8 @@ export default async function HomePage() {
             <p className="mt-6 max-w-2xl whitespace-pre-line text-lg leading-9 text-charcoal-700">
               {about.bio || "A place for what I’m making, wearing, reading, and loving lately."}
             </p>
-            <Link href="/about" className="mt-6 inline-block text-sm font-bold text-olive-700 underline decoration-olive-700/30 underline-offset-4">
-              More about me →
+            <Link href="/about" className="mt-6 inline-flex items-center gap-1.5 text-sm font-bold text-olive-700 underline decoration-olive-700/30 underline-offset-4">
+              More about me <ArrowRightIcon />
             </Link>
           </div>
         </div>
@@ -120,7 +121,7 @@ export default async function HomePage() {
             <Link key={href} href={href} className="grid gap-2 border-b border-olive-900/15 py-7 last:border-0 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline">
               <h2 className="font-serif text-4xl tracking-[-0.04em] text-olive-900">{title}</h2>
               <p className="text-charcoal-700">{description}</p>
-              <span className="text-sm font-bold text-olive-700">Take a look →</span>
+              <span className="inline-flex items-center gap-1.5 text-sm font-bold text-olive-700">Take a look <ArrowRightIcon /></span>
             </Link>
           ))}
         </div>

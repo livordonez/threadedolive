@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { BrandMotif } from "@/components/brand-motif";
+import { ExternalLinkIcon } from "@/components/ui-icons";
 import type { ReadingBook } from "@/lib/integrations/goodreads";
 
 function displayDate(value?: string) {
@@ -61,7 +62,7 @@ export function CurrentlyReading({ books }: { books: ReadingBook[] }) {
                       rel="noreferrer"
                       className="mt-4 inline-flex min-h-11 items-center font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
                     >
-                      See on Goodreads <span aria-hidden="true">&nbsp;↗</span>
+                      <span className="inline-flex items-center gap-1.5">See on Goodreads <ExternalLinkIcon /></span>
                       <span className="sr-only"> on Goodreads (opens in a new tab)</span>
                     </a>
                   </div>

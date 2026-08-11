@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { FrayedEdge } from "@/components/textile-details";
+import { ArrowLeftIcon } from "@/components/ui-icons";
 import type { CmsImage, Moment } from "@/lib/cms-types";
 import { richTextHtml } from "@/lib/rich-text";
 import { formatCalendarDate } from "@/lib/utils";
@@ -37,7 +38,7 @@ export function MomentStory({
         href="/moments"
         className="stitch-label text-olive-700 underline decoration-olive-700/25 underline-offset-4"
       >
-        ← Back to Moments
+        <span className="inline-flex items-center gap-1.5"><ArrowLeftIcon /> Back to Moments</span>
       </Link>
 
       <header className="mt-9 grid gap-5 border-b border-olive-900/15 pb-10 sm:pb-12 lg:grid-cols-[9rem_minmax(0,1fr)] lg:gap-12">
@@ -125,7 +126,7 @@ export function MomentStory({
           href="/moments"
           className="font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
         >
-          ← Back to Moments
+          <span className="inline-flex items-center gap-1.5"><ArrowLeftIcon /> Back to Moments</span>
         </Link>
       </footer>
     </article>

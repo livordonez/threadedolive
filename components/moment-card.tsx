@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { Moment } from "@/lib/cms-types";
 import { formatCalendarDate } from "@/lib/utils";
+import { ArrowRightIcon } from "@/components/ui-icons";
 
 export function MomentCard({
   moment,
@@ -50,8 +51,8 @@ export function MomentCard({
               {moment.excerpt}
             </p>
           ) : null}
-          <p className="mt-4 font-semibold text-olive-700 sm:hidden">
-            Keep reading →
+          <p className="mt-4 inline-flex items-center gap-1.5 font-semibold text-olive-700 sm:hidden">
+            Keep reading <ArrowRightIcon />
           </p>
         </div>
 
@@ -59,7 +60,7 @@ export function MomentCard({
           aria-hidden="true"
           className="hidden text-2xl text-olive-700 transition-transform duration-200 group-hover:translate-x-1 motion-reduce:transition-none sm:block"
         >
-          →
+          <ArrowRightIcon />
         </span>
       </Link>
     </article>

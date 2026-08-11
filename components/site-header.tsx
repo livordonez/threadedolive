@@ -34,19 +34,19 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-10 lg:px-12">
         <Link
           href="/"
-          className="flex items-center gap-3 text-olive-900 sm:gap-4"
+          className="flex min-w-0 items-center gap-2 text-olive-900 sm:gap-4"
           onClick={() => setIsOpen(false)}
         >
           <BrandMark
-            className="h-14 w-auto sm:h-20"
+            className="h-12 w-auto sm:h-20"
             loading="eager"
             sizes="(min-width: 640px) 120px, 84px"
           />
           <div className="leading-tight">
-            <span className="block font-serif text-xl tracking-[-0.04em] sm:text-3xl">
+            <span className="block whitespace-nowrap font-serif text-lg tracking-[-0.04em] sm:text-3xl">
               {settings.site_name}
             </span>
-            <span className="stitch-label block text-charcoal-700">
+            <span className="stitch-label block text-charcoal-700 max-[379px]:hidden">
               Things I make &amp; love
             </span>
           </div>

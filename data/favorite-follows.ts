@@ -1,22 +1,24 @@
 export type FavoriteFollow = {
   name: string;
-  platform: "Instagram" | "YouTube" | "Website";
   url: string;
-  image?: string;
+  avatar?: string;
   description?: string;
+  handle?: string;
+  youtubeChannelId?: string;
 };
 
 export const favoriteFollows: FavoriteFollow[] = [
   {
     name: "Syd Graham",
-    platform: "YouTube",
     url: "https://www.youtube.com/@HiSydGraham",
+    avatar: "/images/creators/syd-graham.jpg",
     description: "Patterns, photography, and a quietly personal approach to making.",
+    youtubeChannelId: "UCeD1USYxuRnh3yfiydz6cTQ",
   },
   {
     name: "Bethany Ciotola",
-    platform: "Instagram",
     url: "https://www.instagram.com/bethanyciotola/?hl=en",
+    avatar: "/images/creators/bethany-ciotola.jpg",
     description: "A favorite source of everyday visual inspiration.",
   },
 ];

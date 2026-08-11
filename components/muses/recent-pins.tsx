@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Pin } from "@/lib/integrations/pinterest";
+import { ExternalLinkIcon } from "@/components/ui-icons";
 
 const pinLayouts = [
   "sm:col-span-4 sm:row-span-5",
@@ -31,7 +32,7 @@ export function RecentPins({ pins }: { pins: Pin[] }) {
             rel="noreferrer"
             className="mt-5 inline-flex min-h-11 items-center font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
           >
-            More on Pinterest <span aria-hidden="true">&nbsp;↗</span>
+            <span className="inline-flex items-center gap-1.5">More on Pinterest <ExternalLinkIcon /></span>
             <span className="sr-only"> (opens in a new tab)</span>
           </a>
         </header>
