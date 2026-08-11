@@ -59,6 +59,10 @@ Photography should remain the dominant visual content. A strong photograph norma
 
 `app/not-found.tsx` and `components/page-loading.tsx` share the public site's editorial spacing and restrained textile language. Keep loading UI static and lightweight, with a polite status for assistive technology. Not-found actions must point to the live Home, Makes, Muses, and Moments routes; do not revive retired portfolio or journal paths.
 
+## Archive indexes
+
+The three core archives intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is an unboxed multi-column pinboard that preserves uploaded image proportions and allows text-only notes. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in white card shells; textile swatches, when needed, belong only to empty or missing-media states rather than around every piece of content.
+
 ## Accessibility invariants
 
 - `app/layout.tsx` owns the single public `<main>` landmark. Page components must not nest another `<main>` inside it.

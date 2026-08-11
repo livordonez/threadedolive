@@ -15,12 +15,21 @@ const monthYearFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
+const calendarDateFormatter = new Intl.DateTimeFormat("en-US", {
+  dateStyle: "long",
+  timeZone: "UTC",
+});
+
 export function formatLongDate(value: string) {
   return longDateFormatter.format(new Date(value));
 }
 
 export function formatMonthYear(value: string) {
   return monthYearFormatter.format(new Date(value));
+}
+
+export function formatCalendarDate(value: string) {
+  return calendarDateFormatter.format(new Date(`${value}T00:00:00Z`));
 }
 
 export function isCraft(value: unknown): value is Craft {
