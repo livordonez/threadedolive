@@ -32,6 +32,10 @@ run [`20260811000000_repair_muses_and_moments.sql`](supabase/migrations/20260811
 in the Supabase SQL editor. It is idempotent and can safely be run after the earlier
 migrations.
 
+Moment bodies are stored as versioned, sanitized rich text in the existing `body`
+column. The editor supports bold, italic, underline, and bulleted lists; legacy
+plain-text Moments are converted for display without requiring a database migration.
+
 ## Deployment
 
 Add the same two public Supabase environment variables to the deployment platform. The anon key is designed for browser use; authorization comes from database policies and the signed-in session. Never add Supabase's service-role credential to this project.

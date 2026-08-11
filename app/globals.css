@@ -325,6 +325,27 @@ textarea.admin-input {
   resize: vertical;
 }
 
+.admin-rich-text:empty::before {
+  color: color-mix(in srgb, var(--charcoal-700) 62%, transparent);
+  content: attr(data-placeholder);
+  pointer-events: none;
+}
+
+.admin-rich-text p + p,
+.admin-rich-text ul + p,
+.admin-rich-text p + ul {
+  margin-top: 0.85rem;
+}
+
+.admin-rich-text ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.admin-rich-text li + li {
+  margin-top: 0.3rem;
+}
+
 .admin-label {
   display: block;
   color: var(--charcoal-900);

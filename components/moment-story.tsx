@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { FrayedEdge } from "@/components/textile-details";
 import type { CmsImage, Moment } from "@/lib/cms-types";
+import { richTextHtml } from "@/lib/rich-text";
 import { formatCalendarDate } from "@/lib/utils";
 
 function imageAspect(image: CmsImage): CSSProperties | undefined {
@@ -19,6 +20,7 @@ export function MomentStory({
   isPreview?: boolean;
 }) {
   const [mainImage, ...gallery] = moment.images;
+  const bodyHtml = richTextHtml(moment.body);
 
   return (
     <article className="mx-auto w-full max-w-7xl px-6 py-10 sm:px-10 lg:px-12 lg:py-16">
@@ -74,7 +76,7 @@ export function MomentStory({
         </div>
       ) : null}
 
-      {moment.body ? (
+      {bodyHtml ? (
         <section className="mt-12 grid gap-5 border-t border-olive-900/15 pt-10 sm:mt-16 sm:pt-12 lg:grid-cols-[9rem_minmax(0,1fr)] lg:gap-12">
           <div>
             <p className="stitch-label text-pimento-700">In the journal</p>
@@ -82,9 +84,7 @@ export function MomentStory({
               A moment kept
             </h2>
           </div>
-          <div className="public-prose whitespace-pre-line">
-            {moment.body}
-          </div>
+          <div className="rich-text" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
         </section>
       ) : null}
 
