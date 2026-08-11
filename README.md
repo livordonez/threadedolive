@@ -1,4 +1,4 @@
-# Threaded Olive
+# The Threaded Olive
 
 A personal creative blog for the things Liv makes, wears, reads, and loves, with its own private single-owner editor. Content lives in Supabase rather than repository files.
 
@@ -54,19 +54,19 @@ Read [`docs/design-direction.md`](docs/design-direction.md) before substantial v
 
 The public Muses composition lives in `app/muses/page.tsx`, with focused sections in `components/muses/`. External responses are parsed and normalized in `lib/integrations/`; the components never depend on Pinterest or Goodreads response fields directly.
 
-### Recent Pins
+### Recently Pinned
 
 `components/muses/recent-pins.tsx` renders up to nine images as an editorial collage. `lib/integrations/pinterest.ts` reads Liv's public Pinterest profile RSS feed server-side. The feed directly reflects recently saved public Pins and does not require an access token. Responses revalidate every six hours through the Next.js data cache. If the feed is unavailable or empty, published CMS Muses with images become the fallback; if neither source has images, the section shows a quiet link to Pinterest instead of an error or broken containers.
 
 `MUSES_PINTEREST_RSS_URL` can override the default feed URL. Keep it server-only. Pinterest's authenticated API is intentionally not used: the public RSS source is sufficient for this personal collection and avoids credential lifecycle and browser-side requests.
 
-### People I love following
+### My Favorite Follows
 
 Creator records live in `data/favorite-follows.ts`. A new entry only requires `name` and `url`; the platform and social handle are derived from the URL. Add a locally cached `avatar` whenever possible so the creator remains recognizable without a live social-media image request. `description`, `handle`, and `youtubeChannelId` are optional.
 
 When a YouTube channel ID is present, `lib/integrations/creators.ts` reads YouTube's public channel feed server-side and caches the latest-video preview for six hours. If the feed or thumbnail fails, the card falls back to the creator avatar. Other platforms use the avatar-first profile card rather than a login-dependent embed. Missing avatars fall back to initials without showing a broken image. Current creator portraits live in `public/images/creators/`.
 
-### On my nightstand
+### From the Nightstand
 
 `components/muses/currently-reading.tsx` displays the normalized records returned by `lib/integrations/goodreads.ts`. The integration reads the public RSS feed for Liv's `currently-reading` shelf, supports multiple books, and revalidates hourly. Goodreads authentication and its retired public API are not required. If Goodreads is unavailable or the shelf is empty, the page renders a deliberate empty state.
 

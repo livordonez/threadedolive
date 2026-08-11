@@ -57,7 +57,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
 
           <div className="space-y-3">
             <p className="stitch-label text-pimento-700">
-              A little note
+              Thanks for visiting
             </p>
             <p className="text-sm leading-7 text-charcoal-700">
               {settings.footer_text}

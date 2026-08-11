@@ -28,9 +28,9 @@ export default async function MusesPage() {
   return (
     <div className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
       <header className="max-w-3xl">
-        <p className="stitch-label text-pimento-700">Things I’m into lately</p>
+        <p className="stitch-label text-pimento-700">Muses</p>
         <h1 className="mt-4 font-serif text-6xl tracking-[-0.035em] text-olive-900 sm:text-7xl">
-          Muses
+          Things That Inspire Me
         </h1>
         <p className="mt-5 max-w-2xl text-xl leading-8 text-charcoal-700">
           Pins, people, books, and whatever else has my attention.

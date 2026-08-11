@@ -21,11 +21,11 @@ function formatCompletionDate(value: string | null) {
 
 function getProjectDetails(make: Make): ProjectDetail[] {
   return [
-    { label: "The pattern", value: make.pattern },
+    { label: "The Pattern", value: make.pattern },
     { label: "By", value: make.pattern_designer },
-    { label: "What I used", value: make.materials },
-    { label: "Size / tools", value: make.tool_size },
-    { label: "Changes I made", value: make.modifications },
+    { label: "Materials Used", value: make.materials },
+    { label: "Size / Tools", value: make.tool_size },
+    { label: "Changes I Made", value: make.modifications },
     { label: "Finished", value: formatCompletionDate(make.completion_date) },
   ].filter((detail) => detail.value);
 }
@@ -44,9 +44,9 @@ function ProjectDetails({
       <div className="grid gap-9 md:grid-cols-[10rem_minmax(0,1fr)] md:items-start lg:gap-14">
         <FabricSwatch image={swatchImage} label="A closer look" />
         <div>
-          <p className="stitch-label text-pimento-700">The details</p>
+          <p className="stitch-label text-pimento-700">Project notes</p>
           <h2 className="mt-2 max-w-2xl font-serif text-4xl leading-tight tracking-[-0.03em] text-olive-900 sm:text-5xl">
-            What I used &amp; changed
+            The Details
           </h2>
           <dl className="mt-8 grid gap-x-12 gap-y-7 sm:grid-cols-2">
             {details.map((detail) => (
@@ -130,9 +130,9 @@ export function MakeStory({ make, isPreview = false }: { make: Make; isPreview?:
       {make.story ? (
         <section className="mt-16 grid gap-6 border-t border-olive-900/15 pt-10 lg:mt-20 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-12 lg:pt-12">
           <div>
-            <p className="stitch-label text-pimento-700">A little background</p>
+            <p className="stitch-label text-pimento-700">The story</p>
             <h2 className="mt-2 font-serif text-3xl leading-tight tracking-[-0.025em] text-olive-900">
-              About this make
+              The Story behind the Make
             </h2>
           </div>
           <p className="max-w-[var(--content-reading)] whitespace-pre-line text-xl leading-9 text-charcoal-700">
@@ -183,8 +183,8 @@ export function MakeStory({ make, isPreview = false }: { make: Make; isPreview?:
           ) : null}
           {make.lessons ? (
             <div>
-              <p className="stitch-label text-pimento-700">For next time</p>
-              <h2 className="mt-2 font-serif text-3xl text-olive-900">What I learned</h2>
+              <p className="stitch-label text-pimento-700">What I learned</p>
+              <h2 className="mt-2 font-serif text-3xl text-olive-900">Notes for Other Creators</h2>
               <p className="mt-4 max-w-[var(--content-reading)] whitespace-pre-line text-lg leading-8 text-charcoal-700">
                 {make.lessons}
               </p>

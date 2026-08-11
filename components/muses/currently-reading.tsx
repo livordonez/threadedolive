@@ -17,7 +17,7 @@ export function CurrentlyReading({ books }: { books: ReadingBook[] }) {
         <header className="max-w-sm">
           <p className="stitch-label text-pimento-700">Reading lately</p>
           <h2 id="currently-reading-title" className="mt-3 font-serif text-4xl tracking-[-0.04em] text-olive-900 sm:text-5xl">
-            On my nightstand
+            From the Nightstand
           </h2>
           <p className="mt-4 text-lg leading-8 text-charcoal-700">
             What I’m reading right now.

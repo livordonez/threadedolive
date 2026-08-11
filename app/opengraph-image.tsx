@@ -99,7 +99,7 @@ export default function OpenGraphImage() {
                 color: "#7b3f39",
               }}
             >
-              Threaded Olive
+              The Threaded Olive
             </div>
             <div
               style={{

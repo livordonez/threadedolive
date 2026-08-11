@@ -31,23 +31,23 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
   if (pathname.startsWith("/admin")) return null;
   return (
     <header className="site-textile-header sticky top-0 z-40 border-b border-olive-900/15 backdrop-blur-md">
-      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-5 py-3 sm:px-10 lg:px-12">
+      <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-10 lg:px-12">
         <Link
           href="/"
-          className="flex min-w-0 items-center gap-2 text-olive-900 sm:gap-4"
+          className="flex min-w-0 items-center gap-1.5 text-olive-900 sm:gap-4"
           onClick={() => setIsOpen(false)}
         >
           <BrandMark
-            className="h-12 w-auto sm:h-20"
+            className="h-10 w-auto sm:h-20"
             loading="eager"
             sizes="(min-width: 640px) 120px, 84px"
           />
           <div className="leading-tight">
-            <span className="block whitespace-nowrap font-serif text-lg tracking-[-0.04em] sm:text-3xl">
+            <span className="block whitespace-nowrap font-serif text-base tracking-[-0.04em] sm:text-3xl">
               {settings.site_name}
             </span>
-            <span className="stitch-label block text-charcoal-700 max-[379px]:hidden">
-              Things I make &amp; love
+            <span className="stitch-label hidden text-charcoal-700 sm:block">
+              My creativity catch-all space
             </span>
           </div>
         </Link>
@@ -77,7 +77,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
 
         <button
           type="button"
-          className="inline-flex min-h-11 items-center rounded-full border border-olive-900/15 px-4 py-2 text-sm font-semibold uppercase tracking-[0.16em] text-olive-900 lg:hidden"
+          className="inline-flex min-h-11 items-center rounded-full border border-olive-900/15 px-3 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-olive-900 sm:px-4 sm:tracking-[0.16em] lg:hidden"
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
           onClick={() => setIsOpen((current) => !current)}

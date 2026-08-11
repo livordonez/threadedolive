@@ -14,14 +14,13 @@ const coreNavigation: NavigationItem[] = [
   { id: "fallback-home", label: "Home", href: "/", visible: true, display_order: 0, page_id: null },
   { id: "fallback-makes", label: "Makes", href: "/makes", visible: true, display_order: 1, page_id: null },
   { id: "fallback-muses", label: "Muses", href: "/muses", visible: true, display_order: 2, page_id: null },
-  { id: "fallback-moments", label: "Moments", href: "/moments", visible: true, display_order: 3, page_id: null },
-  { id: "fallback-about", label: "About", href: "/about", visible: true, display_order: 4, page_id: null },
+  { id: "fallback-about", label: "About", href: "/about", visible: true, display_order: 3, page_id: null },
 ];
 const navigationConfiguredHref = "/__navigation-configured";
 
 export const defaultSettings: SiteSettings = {
   id: "default",
-  site_name: "Threaded Olive",
+  site_name: "The Threaded Olive",
   short_description: "Things I make, wear, read & love.",
   instagram_url: "https://www.instagram.com/liv_ordonez/",
   pinterest_url: "https://www.pinterest.com/liv_ordonez/",
@@ -201,6 +200,7 @@ export async function getSettings() {
   const settings = data as SiteSettings | null;
   return settings ? {
     ...settings,
+    site_name: settings.site_name === "Threaded Olive" ? defaultSettings.site_name : settings.site_name,
     short_description:
       settings.short_description === "A thoughtful archive of handmade fiber arts."
         ? defaultSettings.short_description
@@ -215,5 +215,7 @@ export async function getNavigation(includeHidden = false) {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.from("navigation_items").select("*").order("display_order");
   const navigation = withCoreNavigation(rows<NavigationItem>(data));
-  return includeHidden ? navigation : navigation.filter((item) => item.visible);
+  return includeHidden
+    ? navigation
+    : navigation.filter((item) => item.visible && item.href !== "/moments");
 }

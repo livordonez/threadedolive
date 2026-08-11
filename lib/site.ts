@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 export const siteConfig = {
-  name: "Threaded Olive",
+  name: "The Threaded Olive",
   tagline: "Things I make, wear, read & love.",
   description:
     "A personal creative journal about making things, getting dressed, reading, and everything around it.",

@@ -8,9 +8,9 @@ export default async function AboutPage() {
   return (
     <article className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
       <header className="max-w-3xl">
-        <p className="stitch-label text-pimento-700">A little about me</p>
+        <p className="stitch-label text-pimento-700">About</p>
         <h1 className="mt-4 font-serif text-5xl tracking-[-0.035em] text-olive-900 sm:text-7xl">
-          Hi, I’m Liv.
+          A Bit About Myself
         </h1>
       </header>
 
@@ -44,27 +44,22 @@ export default async function AboutPage() {
         </div>
 
         <div className="space-y-10 lg:pt-8">
-          {about.bio ? (
-            <section>
-              <h2 className="font-serif text-3xl text-olive-900">About me</h2>
+          <section>
+            <h2 className="font-serif text-3xl text-olive-900">Hi, I’m Liv</h2>
+            {about.bio ? (
               <p className="mt-4 whitespace-pre-line text-xl leading-9 text-charcoal-700">
                 {about.bio}
               </p>
-            </section>
-          ) : null}
-
-          {!about.bio && !about.story ? (
-            <section>
-              <h2 className="font-serif text-4xl text-olive-900">Welcome to my corner.</h2>
+            ) : (
               <p className="mt-4 max-w-xl text-xl leading-9 text-charcoal-700">
                 This is where I keep notes on what I’m making, wearing, reading, and loving lately.
               </p>
-            </section>
-          ) : null}
+            )}
+          </section>
 
           {about.story ? (
             <section>
-              <h2 className="font-serif text-3xl text-olive-900">How Threaded Olive started</h2>
+              <h2 className="font-serif text-3xl text-olive-900">How The Threaded Olive Started</h2>
               <p className="mt-4 whitespace-pre-line text-xl leading-9 text-charcoal-700">
                 {about.story}
               </p>

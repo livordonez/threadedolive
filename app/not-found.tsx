@@ -22,7 +22,7 @@ export default function NotFound() {
 
         <div className="mt-8 flex flex-col items-start gap-7 sm:flex-row sm:items-center">
           <LinkButton href="/">Return home</LinkButton>
-          <nav aria-label="More from Threaded Olive">
+          <nav aria-label="More from The Threaded Olive">
             <ul className="flex flex-wrap gap-x-5 gap-y-3">
               {moreLinks.map(([label, href]) => (
                 <li key={href}>

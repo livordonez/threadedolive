@@ -1,4 +1,4 @@
-# Threaded Olive design direction
+# The Threaded Olive design direction
 
 Threaded Olive is Liv’s personal creative blog and evolving digital scrapbook. It should feel warm, tactile, quiet, and handmade while remaining spacious, legible, and photography-first.
 
@@ -62,7 +62,7 @@ Photography should remain the dominant visual content. A strong photograph norma
 
 ## Main sections
 
-The three main sections intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is one editorial page composed from recent pins, favorite people, and current reading; external data stays visually subordinate to Threaded Olive's typography and pacing. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in generic white card shells.
+The main sections intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is one editorial page composed from recently pinned images, favorite follows, and the nightstand; external data stays visually subordinate to The Threaded Olive's typography and pacing. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in generic white card shells.
 
 Creator links use avatar-first, fully clickable cards. Platform and handle come from the profile URL; optional YouTube feed data may add a latest-video preview. Cards must always retain an initials fallback, a visible focus state, and a one-column phone layout. Do not add native social embeds or platform chrome.
 
@@ -79,7 +79,7 @@ Creator links use avatar-first, fully clickable cards. Platform and handle come 
 
 ## Core navigation behavior
 
-Makes, Muses, and Moments are foundational sections, not optional feature links. `getNavigation()` fills in missing core routes when an older or partially migrated Supabase project lacks their rows. The admin Navigation screen also receives these fallback entries; saving it materializes them as ordinary database rows through an `href` upsert.
+Home, Makes, Muses, and About form the concise public navigation. `getNavigation()` fills in missing core routes when an older or partially migrated Supabase project lacks their rows. Moments remains available as an editorial section without occupying the primary navigation. The admin Navigation screen retains database entries for management; saving it materializes fallback entries as ordinary rows through an `href` upsert.
 
 Admin saves also write an internal `/__navigation-configured` marker row. The data layer always filters that marker out of the interface. Its presence distinguishes an intentionally hidden item from a missing legacy row despite public row-level security hiding both, so later labels, order, and visibility choices remain authoritative.
 

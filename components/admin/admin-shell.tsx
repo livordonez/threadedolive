@@ -19,7 +19,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
       <aside className="admin-textile-bg border-b border-olive-900/10 px-5 py-5 text-linen-0 lg:min-h-screen lg:border-b-0 lg:border-r lg:px-6 lg:py-8">
         <Link href="/admin" className="flex items-center gap-3">
           <BrandMark className="h-10 w-auto text-linen-0" loading="eager" sizes="60px" />
-          <div><p className="font-serif text-2xl">Threaded Olive</p><p className="text-[0.65rem] uppercase tracking-[0.22em] text-brass-100">Editor</p></div>
+          <div><p className="font-serif text-2xl">The Threaded Olive</p><p className="text-[0.65rem] uppercase tracking-[0.22em] text-brass-100">Editor</p></div>
         </Link>
         <nav className="mt-7 flex gap-2 overflow-x-auto pb-2 lg:flex-col" aria-label="Editor navigation">
           {links.map(([label, href]) => (

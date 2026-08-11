@@ -38,7 +38,7 @@ export function FavoriteFollows({ follows }: { follows: CreatorCardData[] }) {
       <header className="relative max-w-3xl pr-0 sm:pr-28">
         <p className="stitch-label text-pimento-700">Around the internet</p>
         <h2 id="favorite-follows-title" className="mt-3 max-w-2xl font-serif text-4xl leading-[1.02] tracking-[-0.04em] text-olive-900 sm:text-5xl">
-          People I love following
+          My Favorite Follows
         </h2>
         <p className="mt-4 max-w-2xl text-lg leading-8 text-charcoal-700">
           People whose work keeps me looking, learning, and making.

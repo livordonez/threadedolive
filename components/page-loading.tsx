@@ -9,7 +9,7 @@ export default function PageLoading() {
     >
       <div role="status" className="max-w-3xl">
         <p className="stitch-label text-pimento-700">Just a moment</p>
-        <span className="sr-only">Loading Threaded Olive.</span>
+        <span className="sr-only">Loading The Threaded Olive.</span>
         <div aria-hidden="true" className="mt-5 space-y-4">
           <div className="h-12 w-full max-w-lg bg-olive-900/[0.08] sm:h-16" />
           <div className="h-3 w-full max-w-xl bg-charcoal-700/[0.08]" />

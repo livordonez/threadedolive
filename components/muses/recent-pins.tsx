@@ -21,7 +21,7 @@ export function RecentPins({ pins }: { pins: Pin[] }) {
         <header className="max-w-sm sm:sticky sm:top-28 sm:self-start">
           <p className="stitch-label text-pimento-700">On the pinboard</p>
           <h2 id="recent-pins-title" className="mt-3 font-serif text-4xl tracking-[-0.04em] text-olive-900 sm:text-5xl">
-            Recent pins
+            Recently Pinned
           </h2>
           <p className="mt-4 text-lg leading-8 text-charcoal-700">
             Colors, shapes, clothes, rooms, and small details I want to remember.

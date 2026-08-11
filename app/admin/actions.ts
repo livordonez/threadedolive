@@ -420,7 +420,7 @@ export async function saveSettingsAction(_: AdminActionState, formData: FormData
   const id = text(formData, "id");
   if (!validId(id)) return failed("save-settings", "Site settings are not connected to the database. Check the database setup, then reload.");
   const { error } = await supabase.from("site_settings").update({
-    site_name: text(formData, "site_name") || "Threaded Olive",
+    site_name: text(formData, "site_name") || "The Threaded Olive",
     short_description: text(formData, "short_description"),
     instagram_url: safeUrl(text(formData, "instagram_url")), pinterest_url: safeUrl(text(formData, "pinterest_url")),
     footer_text: text(formData, "footer_text"), updated_at: new Date().toISOString(),
