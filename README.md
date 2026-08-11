@@ -4,7 +4,7 @@ A personal creative blog for the things Liv makes, wears, reads, and loves, with
 
 ## What is included
 
-- Three main sections: Makes at `/makes`, things Liv loves in Muses at `/muses`, and everyday notes in Moments at `/moments`.
+- Concise public navigation for Home, Makes, Muses, and About. Existing Moments content remains available at `/moments` without occupying the primary navigation.
 - Private editor at `/admin` for makes, muses, moments, flexible pages, about content, navigation, site settings, and photograph uploads.
 - Draft, publish, unpublish, preview, ordering, cover-photo selection, alt text, and seven intentionally small flexible-page section types.
 - Supabase Auth, Postgres row-level security, and Storage policies. Every server mutation checks the authenticated admin again.
@@ -40,13 +40,15 @@ plain-text Moments are converted for display without requiring a database migrat
 
 Add the same two public Supabase environment variables to the deployment platform. The anon key is designed for browser use; authorization comes from database policies and the signed-in session. Never add Supabase's service-role credential to this project.
 
+Canonical, Open Graph, manifest, and Twitter metadata use `https://threadedolive.vercel.app` from `lib/site.ts`. Update that single value if the production site moves to a custom domain.
+
 ## Previous content
 
-The original MDX project and journal files remain under `content/` for manual reference while real content is entered through the editor. They are no longer public routes or runtime content sources.
+The original MDX project and journal files remain under `content/` for manual reference while real content is entered through the editor. They are no longer public routes or runtime content sources; the obsolete MDX rendering components have been removed so they cannot drift into a second design system.
 
 ## Visual system
 
-The public site uses self-hosted EB Garamond as its primary editorial typeface and Silkscreen only for tiny cross-stitch-inspired labels. Textile edges are reusable design primitives rather than page-specific decoration.
+The public site uses EB Garamond through `next/font` as its primary editorial typeface and Silkscreen only for tiny cross-stitch-inspired labels. The canvas is deliberately flat: solid color, fine rules, restrained textile texture, and no added gradients or decorative shadows. Pinked and frayed edges are reserved for the few places where they communicate material or notebook context.
 
 Read [`docs/design-direction.md`](docs/design-direction.md) before substantial visual work. It documents the durable hierarchy, typography, textile primitives, motif conventions, and responsive QA expectations that keep the site from drifting into a busier craft-store aesthetic.
 
@@ -62,9 +64,11 @@ The public Muses composition lives in `app/muses/page.tsx`, with focused section
 
 ### My Favorite Follows
 
-Creator records live in `data/favorite-follows.ts`. A new entry only requires `name` and `url`; the platform and social handle are derived from the URL. Add a locally cached `avatar` whenever possible so the creator remains recognizable without a live social-media image request. `description`, `handle`, and `youtubeChannelId` are optional.
+Favorite Follows are managed from **Admin → Muses → Favorite Follows**. Choose **Add Favorite Follow**, enter a creator name and full profile link, upload one recognizable profile image, and enable **Show on the public Muses page** when it is ready. Display order controls the sequence. Platform and social handle are derived from the profile link; the short note and handle override are optional.
 
-When a YouTube channel ID is present, `lib/integrations/creators.ts` reads YouTube's public channel feed server-side and caches the latest-video preview for six hours. If the feed or thumbnail fails, the card falls back to the creator avatar. Other platforms use the avatar-first profile card rather than a login-dependent embed. Missing avatars fall back to initials without showing a broken image. Current creator portraits live in `public/images/creators/`.
+The database-backed workflow requires [`20260811030000_favorite_follows.sql`](supabase/migrations/20260811030000_favorite_follows.sql). The migration creates the table and policies and seeds Syd Graham and Bethany Ciotola with the existing local portraits. If the table has not been migrated or the database is unavailable, the public page retains those two records from `data/favorite-follows.ts`; the admin shows a migration notice instead of a broken form.
+
+For YouTube, the optional channel ID enables `lib/integrations/creators.ts` to read the official public channel feed server-side and cache the latest-video preview for six hours. If the feed or thumbnail fails, the card falls back to the creator avatar. Other platforms use the avatar-first profile card rather than a login-dependent embed. Missing avatars fall back to initials without showing a broken image. Current seeded portraits live in `public/images/creators/`; future admin uploads use the existing protected Supabase Storage workflow.
 
 ### From the Nightstand
 
@@ -74,4 +78,4 @@ When a YouTube channel ID is present, `lib/integrations/creators.ts` reads YouTu
 
 ### Brand motifs
 
-Cat, granny square, and martini are the only canonical Threaded Olive mini illustrations. Their original PNG files live in `public/images/brand-motifs/`, and `components/brand-motif.tsx` provides the shared decorative renderer. Keep the supplied colors, transparency, proportions, orientation, format, glow, and crisp pixel edges unchanged. Use motifs as occasional signatures, not as gap fillers, and do not casually introduce another miniature illustration style.
+Cat, granny square, and martini are the canonical Threaded Olive mini illustrations. Their original PNG files live in `public/images/brand-motifs/`, and `components/brand-motif.tsx` provides the shared decorative renderer. The yarn-and-needle brand mark lives separately in `public/images/threaded-olive-logo-v3.webp` and belongs in the masthead rather than as general page decoration. Keep the supplied colors, transparency, proportions, orientation, format, and crisp pixel edges unchanged; do not add shadows, glows, or filters. Use motifs as occasional signatures, not as gap fillers.

@@ -44,6 +44,19 @@ export type Muse = {
   updated_at: string;
 };
 
+export type FavoriteFollowRecord = {
+  id: string;
+  name: string;
+  url: string;
+  avatar: CmsImage | null;
+  description: string;
+  handle: string;
+  youtube_channel_id: string;
+  display_order: number;
+  visible: boolean;
+  updated_at: string;
+};
+
 export type Moment = {
   id: string;
   slug: string;

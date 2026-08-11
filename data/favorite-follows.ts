@@ -7,6 +7,8 @@ export type FavoriteFollow = {
   youtubeChannelId?: string;
 };
 
+// Public fallback for local development and databases that have not run the
+// Favorite Follows migration. The migration seeds matching editable records.
 export const favoriteFollows: FavoriteFollow[] = [
   {
     name: "Syd Graham",

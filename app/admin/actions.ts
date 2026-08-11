@@ -21,6 +21,17 @@ function safeUrl(value: unknown) {
   } catch { return ""; }
 }
 
+function webUrl(value: unknown) {
+  const candidate = safeUrl(value);
+  if (!candidate) return "";
+  try {
+    const protocol = new URL(candidate).protocol;
+    return protocol === "https:" || protocol === "http:" ? candidate : "";
+  } catch {
+    return "";
+  }
+}
+
 function slug(data: FormData) {
   const value = text(data, "slug")
     .toLowerCase()
@@ -79,9 +90,31 @@ function cleanImages(value: unknown): CmsImage[] {
   });
 }
 
+function cleanCreatorAvatar(value: unknown): CmsImage | null {
+  if (!Array.isArray(value) || !value[0] || typeof value[0] !== "object") return null;
+  const image = value[0] as Partial<CmsImage>;
+  const url = typeof image.url === "string" ? image.url : "";
+  const path = typeof image.path === "string" ? image.path : "";
+  const isLocalCreatorImage = url.startsWith("/images/creators/") && path.startsWith("local:");
+  const isManagedUpload = url.startsWith("https://") && url.includes("/storage/v1/object/public/threaded-olive/") && Boolean(path);
+  if (!isLocalCreatorImage && !isManagedUpload) return null;
+  return {
+    url,
+    path,
+    alt: typeof image.alt === "string" ? image.alt.slice(0, 300) : "",
+    width: typeof image.width === "number" ? image.width : undefined,
+    height: typeof image.height === "number" ? image.height : undefined,
+  };
+}
+
+function isManagedUpload(image: CmsImage) {
+  return image.path && image.url.includes("/storage/v1/object/public/threaded-olive/");
+}
+
 async function removeUnusedImages(previous: CmsImage[], next: CmsImage[]) {
   const removed = previous
     .filter((image) => !next.some((candidate) => candidate.path === image.path))
+    .filter(isManagedUpload)
     .map((image) => image.path);
   if (removed.length) {
     const supabase = await createSupabaseServerClient();
@@ -237,6 +270,82 @@ export async function deleteMuseAction(_: AdminActionState, formData: FormData):
     if (storageError) console.error("[admin:delete-muse-images]", storageError);
   }
   revalidatePath("/muses"); redirect("/admin/muses");
+}
+
+export async function createFavoriteFollowAction(state: AdminActionState, formData: FormData): Promise<AdminActionState> {
+  void state; void formData;
+  await requireAdmin();
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.from("favorite_follows").insert({
+    name: "New favorite follow",
+    visible: false,
+  });
+  if (error) return failed(
+    "create-favorite-follow",
+    databaseMessage(error, "Could not add a favorite follow. Please try again.", "Favorite Follows are not set up yet. Run the latest Supabase migration, then try again."),
+    error,
+  );
+  redirect("/admin/muses?followCreated=1#favorite-follows");
+}
+
+export async function saveFavoriteFollowAction(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
+  await requireAdmin();
+  const id = text(formData, "id");
+  if (!validId(id)) return failed("save-favorite-follow", "This favorite follow could not be identified. Reload and try again.");
+  const name = text(formData, "name").slice(0, 160);
+  const url = webUrl(text(formData, "url"));
+  if (!name) return failed("save-favorite-follow", "Add the creator’s name before saving.");
+  if (!url) return failed("save-favorite-follow", "Add a complete http or https profile link before saving.");
+
+  const supabase = await createSupabaseServerClient();
+  const { data: previous, error: readError } = await supabase
+    .from("favorite_follows")
+    .select("avatar")
+    .eq("id", id)
+    .single();
+  if (readError) return failed("read-favorite-follow", "This favorite follow could not be loaded. Reload and try again.", readError);
+
+  const avatar = cleanCreatorAvatar(parseJson(formData.get("avatar"), []));
+  const { error } = await supabase.from("favorite_follows").update({
+    name,
+    url,
+    avatar: avatar ?? {},
+    description: text(formData, "description").slice(0, 500),
+    handle: text(formData, "handle").slice(0, 160),
+    youtube_channel_id: text(formData, "youtube_channel_id").replace(/[^a-zA-Z0-9_-]/g, "").slice(0, 100),
+    display_order: Number(text(formData, "display_order")) || 0,
+    visible: formData.get("visible") === "on",
+    updated_at: new Date().toISOString(),
+  }).eq("id", id).select("id").single();
+  if (error) return failed(
+    "save-favorite-follow",
+    databaseMessage(error, "Could not save this favorite follow. Your changes are still in the form.", "Favorite Follows are not set up yet. Run the latest Supabase migration, then try again."),
+    error,
+  );
+  await removeUnusedImages(
+    previous?.avatar ? [previous.avatar as CmsImage] : [],
+    avatar ? [avatar] : [],
+  );
+  revalidatePath("/muses");
+  redirect("/admin/muses?followsSaved=1#favorite-follows");
+}
+
+export async function deleteFavoriteFollowAction(_: AdminActionState, formData: FormData): Promise<AdminActionState> {
+  await requireAdmin();
+  const id = text(formData, "id");
+  if (!validId(id)) return failed("delete-favorite-follow", "This favorite follow could not be identified. Reload and try again.");
+  const supabase = await createSupabaseServerClient();
+  const { data, error: readError } = await supabase.from("favorite_follows").select("avatar").eq("id", id).single();
+  if (readError) return failed("read-favorite-follow-for-delete", "Could not prepare this favorite follow for deletion. Please try again.", readError);
+  const { error } = await supabase.from("favorite_follows").delete().eq("id", id);
+  if (error) return failed("delete-favorite-follow", "Could not delete this favorite follow. Nothing was removed.", error);
+  const avatar = data?.avatar as CmsImage | undefined;
+  if (avatar && isManagedUpload(avatar)) {
+    const { error: storageError } = await supabase.storage.from("threaded-olive").remove([avatar.path]);
+    if (storageError) console.error("[admin:delete-favorite-follow-avatar]", storageError);
+  }
+  revalidatePath("/muses");
+  redirect("/admin/muses#favorite-follows");
 }
 
 export async function createMomentAction(state: AdminActionState, formData: FormData): Promise<AdminActionState> {

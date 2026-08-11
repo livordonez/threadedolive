@@ -1,8 +1,10 @@
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { favoriteFollows, type FavoriteFollow } from "@/data/favorite-follows";
 import type {
   AboutContent,
   FlexiblePage,
+  FavoriteFollowRecord,
   Make,
   Moment,
   Muse,
@@ -109,6 +111,47 @@ export async function getAllMuses() {
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.from("muses").select("*").order("display_order").order("updated_at", { ascending: false });
   return rows<Muse>(data);
+}
+
+function toFavoriteFollow(record: FavoriteFollowRecord): FavoriteFollow {
+  return {
+    name: record.name,
+    url: record.url,
+    avatar: record.avatar?.url,
+    description: record.description || undefined,
+    handle: record.handle || undefined,
+    youtubeChannelId: record.youtube_channel_id || undefined,
+  };
+}
+
+export async function getFavoriteFollows() {
+  if (!isSupabaseConfigured()) return favoriteFollows;
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("favorite_follows")
+    .select("*")
+    .eq("visible", true)
+    .order("display_order")
+    .order("created_at");
+  if (error) return favoriteFollows;
+  return rows<FavoriteFollowRecord>(data).map(toFavoriteFollow);
+}
+
+export async function getAllFavoriteFollows(): Promise<{
+  follows: FavoriteFollowRecord[];
+  configured: boolean;
+}> {
+  if (!isSupabaseConfigured()) return { follows: [], configured: false };
+  const supabase = await createSupabaseServerClient();
+  const { data, error } = await supabase
+    .from("favorite_follows")
+    .select("*")
+    .order("display_order")
+    .order("created_at");
+  return {
+    follows: error ? [] : rows<FavoriteFollowRecord>(data),
+    configured: !error,
+  };
 }
 
 export async function getMuseById(id: string) {
