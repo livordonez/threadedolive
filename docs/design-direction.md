@@ -55,6 +55,10 @@ Photography should remain the dominant visual content. A strong photograph norma
 - Every `BrandMark` instance needs an accurate `sizes` value. Above-the-fold header and admin marks load eagerly, the large homepage mark is eager with high fetch priority, and the footer mark remains lazy.
 - Keep the local raster logo optimized by `next/image`. Do not reintroduce the deprecated `priority` prop or bypass optimization with `unoptimized`.
 
+## Public edge states
+
+`app/not-found.tsx` and `components/page-loading.tsx` share the public site's editorial spacing and restrained textile language. Keep loading UI static and lightweight, with a polite status for assistive technology. Not-found actions must point to the live Home, Makes, Muses, and Moments routes; do not revive retired portfolio or journal paths.
+
 ## Accessibility invariants
 
 - `app/layout.tsx` owns the single public `<main>` landmark. Page components must not nest another `<main>` inside it.
