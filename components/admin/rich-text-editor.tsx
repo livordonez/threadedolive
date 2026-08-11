@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef } from "react";
 import { useFormStatus } from "react-dom";
 import { encodeRichText } from "@/lib/rich-text-format";
 
@@ -30,8 +30,15 @@ export function RichTextEditor({
 }) {
   const editor = useRef<HTMLDivElement>(null);
   const hiddenInput = useRef<HTMLInputElement>(null);
+  const initialHtmlRef = useRef(initialHtml);
   const { pending } = useFormStatus();
-  const [active, setActive] = useState<Partial<Record<FormatCommand, boolean>>>({});
+
+  const setEditor = useCallback((node: HTMLDivElement | null) => {
+    editor.current = node;
+    if (node) {
+      node.innerHTML = initialHtmlRef.current;
+    }
+  }, []);
 
   const syncValue = useCallback(() => {
     if (hiddenInput.current) {
@@ -39,26 +46,10 @@ export function RichTextEditor({
     }
   }, []);
 
-  const updateActiveFormats = useCallback(() => {
-    const selection = document.getSelection();
-    const anchor = selection?.anchorNode;
-    if (!anchor || !editor.current?.contains(anchor)) return;
-
-    setActive(Object.fromEntries(
-      controls.map(({ command }) => [command, document.queryCommandState(command)]),
-    ));
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener("selectionchange", updateActiveFormats);
-    return () => document.removeEventListener("selectionchange", updateActiveFormats);
-  }, [updateActiveFormats]);
-
   function format(command: FormatCommand) {
     editor.current?.focus();
     document.execCommand(command);
     syncValue();
-    updateActiveFormats();
   }
 
   return (
@@ -82,17 +73,12 @@ export function RichTextEditor({
               type="button"
               disabled={pending}
               aria-label={controlLabel}
-              aria-pressed={Boolean(active[command])}
               title={controlLabel}
               onMouseDown={(event) => {
                 event.preventDefault();
               }}
               onClick={() => format(command)}
-              className={`min-h-10 min-w-10 rounded-lg border px-3 text-sm text-olive-900 transition-colors ${
-                active[command]
-                  ? "border-olive-700/30 bg-olive-100"
-                  : "border-transparent hover:border-olive-900/10 hover:bg-white"
-              }`}
+              className="min-h-10 min-w-10 rounded-lg border border-transparent px-3 text-sm text-olive-900 transition-colors hover:border-olive-900/10 hover:bg-white"
             >
               <span
                 className={command === "italic" ? "italic" : command === "underline" ? "underline" : command === "bold" ? "font-extrabold" : "font-semibold"}
@@ -104,7 +90,7 @@ export function RichTextEditor({
           ))}
         </div>
         <div
-          ref={editor}
+          ref={setEditor}
           contentEditable={!pending}
           suppressContentEditableWarning
           role="textbox"
@@ -114,8 +100,8 @@ export function RichTextEditor({
           data-placeholder={placeholder}
           onInput={syncValue}
           onBlur={syncValue}
-          className="admin-rich-text min-h-80 px-4 py-3 font-normal text-charcoal-900 outline-none"
-          dangerouslySetInnerHTML={{ __html: initialHtml }}
+          spellCheck
+          className="admin-rich-text min-h-80 cursor-text px-4 py-3 font-normal text-charcoal-900 outline-none"
         />
       </div>
       <p className="admin-help mt-2">Select text, then choose a formatting button. Press Enter twice to finish a list.</p>
