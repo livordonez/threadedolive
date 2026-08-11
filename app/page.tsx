@@ -40,7 +40,12 @@ export default async function HomePage() {
           </header>
           <div className="relative mx-auto w-full max-w-xl py-2 lg:justify-self-end" aria-hidden="true">
             <div className="absolute inset-x-[12%] bottom-[8%] h-1/2 rounded-full bg-brass-100/65 blur-3xl" />
-            <BrandMark className="relative h-auto w-full" />
+            <BrandMark
+              className="relative h-auto w-full"
+              loading="eager"
+              fetchPriority="high"
+              sizes="(min-width: 1024px) 40vw, (min-width: 640px) 576px, calc(100vw - 3rem)"
+            />
           </div>
         </div>
 
@@ -62,7 +67,7 @@ export default async function HomePage() {
                     src={image.url}
                     alt={image.alt || make.title}
                     fill
-                    priority={index < 2}
+                    preload={index === 0}
                     className="object-cover transition-transform duration-500 group-hover:scale-[1.015] motion-reduce:transition-none"
                     sizes={index === 0 ? "(max-width:1024px) 100vw, 58vw" : "(max-width:1024px) 100vw, 42vw"}
                   />

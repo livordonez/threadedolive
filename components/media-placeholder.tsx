@@ -26,12 +26,10 @@ export function MediaPlaceholder({
   image,
   aspect = "portrait",
   className,
-  priority = false,
 }: {
   image: ContentImage;
   aspect?: keyof typeof aspectStyles;
   className?: string;
-  priority?: boolean;
 }) {
   return (
     <figure
@@ -46,7 +44,6 @@ export function MediaPlaceholder({
             src={image.src}
             alt={image.alt}
             fill
-            priority={priority}
             className="object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 40vw"
             style={

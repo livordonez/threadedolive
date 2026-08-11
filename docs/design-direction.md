@@ -49,6 +49,12 @@ Review affected pages at 375, 430, 768, 1024, and 1440 pixels when practical. Ch
 
 Photography should remain the dominant visual content. A strong photograph normally needs less decoration.
 
+## Image loading
+
+- Use Next.js `preload` for one genuine photographic hero or the first archive card only. Later grid and gallery images stay lazy.
+- Every `BrandMark` instance needs an accurate `sizes` value. Above-the-fold header and admin marks load eagerly, the large homepage mark is eager with high fetch priority, and the footer mark remains lazy.
+- Keep the local raster logo optimized by `next/image`. Do not reintroduce the deprecated `priority` prop or bypass optimization with `unoptimized`.
+
 ## Accessibility invariants
 
 - `app/layout.tsx` owns the single public `<main>` landmark. Page components must not nest another `<main>` inside it.

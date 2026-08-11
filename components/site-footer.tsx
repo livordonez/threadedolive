@@ -16,7 +16,10 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-12 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-12">
         <div className="space-y-4">
           <div className="flex items-center gap-3 text-olive-900">
-            <BrandMark className="h-24 sm:h-32" />
+            <BrandMark
+              className="h-24 w-auto sm:h-32"
+              sizes="(min-width: 640px) 192px, 144px"
+            />
             <div>
               <p className="font-serif text-2xl tracking-[-0.04em]">
                 {settings.site_name}

@@ -37,7 +37,11 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
           className="flex items-center gap-3 text-olive-900 sm:gap-4"
           onClick={() => setIsOpen(false)}
         >
-          <BrandMark className="h-14 sm:h-20" />
+          <BrandMark
+            className="h-14 w-auto sm:h-20"
+            loading="eager"
+            sizes="(min-width: 640px) 120px, 84px"
+          />
           <div className="leading-tight">
             <span className="block font-serif text-xl tracking-[-0.04em] sm:text-3xl">
               {settings.site_name}
