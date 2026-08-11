@@ -25,20 +25,12 @@ export default function OpenGraphImage() {
       >
         <div
           style={{
-            position: "absolute",
-            inset: "0",
-            background:
-              "radial-gradient(circle at top left, rgba(178,139,73,0.18), transparent 28%), radial-gradient(circle at top right, rgba(180,106,96,0.10), transparent 24%)",
-          }}
-        />
-        <div
-          style={{
             display: "flex",
             width: "100%",
             borderRadius: "36px",
             overflow: "hidden",
             border: "1px solid rgba(52,77,56,0.12)",
-            background: "rgba(255,255,255,0.72)",
+            background: "#fffdf8",
           }}
         >
           <div

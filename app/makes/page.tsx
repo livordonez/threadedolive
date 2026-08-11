@@ -1,5 +1,6 @@
 import { ArchiveEmptyState } from "@/components/archive-empty-state";
 import { BrandMotif } from "@/components/brand-motif";
+import { EditorialPageHeader } from "@/components/editorial-page-header";
 import { MakeCard } from "@/components/make-card";
 import { getPublishedMakes } from "@/lib/cms-data";
 
@@ -8,18 +9,12 @@ export default async function MakesPage() {
 
   return (
     <div className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
-      <header className="max-w-4xl sm:flex sm:items-start sm:justify-between sm:gap-6">
-        <div className="w-full max-w-3xl">
-          <p className="stitch-label text-pimento-700">Makes</p>
-          <h1 className="mt-4 font-serif text-5xl leading-[0.98] tracking-[-0.035em] text-olive-900 sm:text-7xl">
-            Things I’ve Made
-          </h1>
-          <p className="mt-5 max-w-2xl text-xl leading-8 text-charcoal-700">
-            Sewing, crochet, and whatever else I’ve got going on.
-          </p>
-        </div>
-        <BrandMotif motif="granny-square" className="-mr-8 -mt-6 hidden w-44 sm:block" />
-      </header>
+      <EditorialPageHeader
+        eyebrow="Makes"
+        title="Things I’ve Made"
+        introduction="Sewing, crochet, and whatever else I’ve got going on."
+        decoration={<BrandMotif motif="granny-square" className="w-36" />}
+      />
 
       {makes.length ? (
         <div className="mt-12 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">

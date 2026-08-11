@@ -5,7 +5,7 @@ import { ArrowRightIcon } from "@/components/ui-icons";
 const moreLinks = [
   ["Makes", "/makes"],
   ["Muses", "/muses"],
-  ["Moments", "/moments"],
+  ["About", "/about"],
 ] as const;
 
 export default function NotFound() {

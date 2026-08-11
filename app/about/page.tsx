@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { LaceOverlay } from "@/components/textile-details";
+import { EditorialPageHeader } from "@/components/editorial-page-header";
 import { getAbout } from "@/lib/cms-data";
 
 export default async function AboutPage() {
@@ -7,43 +7,34 @@ export default async function AboutPage() {
 
   return (
     <article className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
-      <header className="max-w-3xl">
-        <p className="stitch-label text-pimento-700">About</p>
-        <h1 className="mt-4 font-serif text-5xl tracking-[-0.035em] text-olive-900 sm:text-7xl">
-          A Bit About Myself
-        </h1>
-      </header>
+      <EditorialPageHeader eyebrow="About" title="A Bit About Myself" />
 
-      <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative isolate">
-          <LaceOverlay className="-left-8 -top-8" />
-          <div className={`grid gap-4 ${about.images.length > 1 ? "grid-cols-2" : ""}`}>
-            {about.images.map((image, index) => (
-              <div
-                key={image.path}
-                className={`relative overflow-hidden rounded-[1.75rem] bg-olive-100 ${
-                  index === 0 ? "aspect-[4/5]" : "mt-10 aspect-[4/5]"
-                }`}
-              >
-                <Image
-                  src={image.url}
-                  alt={image.alt}
-                  fill
-                  preload={index === 0}
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                />
-              </div>
-            ))}
-            {!about.images.length ? (
-              <div className="bright-textile-placeholder grid aspect-[4/5] place-items-center rounded-[1.75rem] font-semibold text-olive-900">
-                <span className="rounded-full bg-linen-0/85 px-5 py-3">A photo soon</span>
-              </div>
-            ) : null}
+      <div className={`mt-12 grid gap-10 ${about.images.length ? "lg:grid-cols-[0.9fr_1.1fr]" : "max-w-3xl"}`}>
+        {about.images.length ? (
+          <div>
+            <div className={`grid gap-4 ${about.images.length > 1 ? "grid-cols-2" : ""}`}>
+              {about.images.map((image, index) => (
+                <div
+                  key={image.path}
+                  className={`relative overflow-hidden rounded-[1.75rem] bg-olive-100 ${
+                    index === 0 ? "aspect-[4/5]" : "mt-10 aspect-[4/5]"
+                  }`}
+                >
+                  <Image
+                    src={image.url}
+                    alt={image.alt}
+                    fill
+                    preload={index === 0}
+                    className="object-cover"
+                    sizes="(max-width: 1024px) 100vw, 45vw"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : null}
 
-        <div className="space-y-10 lg:pt-8">
+        <div className={`space-y-10 ${about.images.length ? "lg:pt-8" : ""}`}>
           <section>
             <h2 className="font-serif text-3xl text-olive-900">Hi, I’m Liv</h2>
             {about.bio ? (

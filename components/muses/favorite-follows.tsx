@@ -1,4 +1,3 @@
-import { BrandMotif } from "@/components/brand-motif";
 import { ResilientImage } from "@/components/resilient-image";
 import { ExternalLinkIcon } from "@/components/ui-icons";
 import type { CreatorCardData } from "@/lib/integrations/creators";
@@ -35,7 +34,7 @@ function CreatorAvatar({ creator, large = false }: { creator: CreatorCardData; l
 export function FavoriteFollows({ follows }: { follows: CreatorCardData[] }) {
   return (
     <section aria-labelledby="favorite-follows-title" className="border-t border-olive-900/15 pt-8 sm:pt-10">
-      <header className="relative max-w-3xl pr-0 sm:pr-28">
+      <header className="max-w-3xl">
         <p className="stitch-label text-pimento-700">Around the internet</p>
         <h2 id="favorite-follows-title" className="mt-3 max-w-2xl font-serif text-4xl leading-[1.02] tracking-[-0.04em] text-olive-900 sm:text-5xl">
           My Favorite Follows
@@ -43,7 +42,6 @@ export function FavoriteFollows({ follows }: { follows: CreatorCardData[] }) {
         <p className="mt-4 max-w-2xl text-lg leading-8 text-charcoal-700">
           People whose work keeps me looking, learning, and making.
         </p>
-        <BrandMotif motif="martini" className="absolute -right-8 -top-8 hidden w-32 sm:block" />
       </header>
 
       <ul className="mt-9 grid gap-y-8">

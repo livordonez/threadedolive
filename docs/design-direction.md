@@ -11,7 +11,7 @@ When a design choice is uncertain:
 3. Favor editorial pacing, generous whitespace, and restraint.
 4. Remove decoration that does not have a clear relationship to nearby content.
 
-Decoration is punctuation, not the foundation. A page normally needs no more than one or two prominent textile treatments.
+Decoration is punctuation, not the foundation. A page normally needs no more than one prominent motif or textile treatment. The visual canvas stays flat: no gradients, realistic shadows, backdrop blur, or simulated depth on the public site.
 
 ## Typography
 
@@ -25,17 +25,15 @@ Fonts are loaded and self-hosted through `next/font` in `app/layout.tsx`.
 
 Reusable treatments live in `components/textile-details.tsx` and `app/globals.css`:
 
-- `ScallopedEdge` for occasional section transitions.
 - `PinkedEdge` for fabric-like swatches and small cut pieces.
 - `FrayedEdge` for rare editorial notes.
-- `LaceOverlay` for restrained edge or behind-image detail.
 - `FabricSwatch` for recognizable project material metadata.
 
 Do not use every treatment on one page.
 
 ## Brand motifs
 
-Cat, granny square, and martini are the complete miniature illustration vocabulary. The source PNGs live in `public/images/brand-motifs/` and `components/brand-motif.tsx` owns their shared rendering. Keep them visually unmodified. Do not redraw, recolor, rotate, filter, soften, or reinterpret them. Preserve their PNG format and render the pixel artwork with crisp edges.
+Cat, granny square, and martini are the complete miniature illustration vocabulary. The source PNGs live in `public/images/brand-motifs/` and `components/brand-motif.tsx` owns their shared rendering. The yarn-and-needle artwork is the masthead brand mark, not a fourth page filler. Keep all supplied artwork visually unmodified. Do not redraw, recolor, rotate, filter, soften, or add effects. Preserve the mini illustrations’ PNG format and crisp pixel edges.
 
 - Keep motifs small, like signatures, marginalia, or dingbats.
 - Prefer a semantic relationship: granny square near making and textiles, cat near reading or personal notes, and martini near lifestyle or playful moments.
@@ -53,18 +51,20 @@ Photography should remain the dominant visual content. A strong photograph norma
 ## Image loading
 
 - Use Next.js `preload` for one genuine photographic hero or the first listing card only. Later grid and gallery images stay lazy.
-- Every `BrandMark` instance needs an accurate `sizes` value. Above-the-fold header and admin marks load eagerly, the large homepage mark is eager with high fetch priority, and the footer mark remains lazy.
+- Every `BrandMark` instance needs an accurate `sizes` value. The above-the-fold header and admin marks load eagerly. Do not add a large decorative copy to the homepage or footer; photography should establish the page hierarchy.
 - Keep the local raster logo optimized by `next/image`. Do not reintroduce the deprecated `priority` prop or bypass optimization with `unoptimized`.
 
 ## Public edge states
 
-`app/not-found.tsx` and `components/page-loading.tsx` share the public site's editorial spacing and restrained textile language. Keep loading UI static and lightweight, with a polite status for assistive technology. Not-found actions must point to the live Home, Makes, Muses, and Moments routes; do not revive retired portfolio or journal paths.
+`app/not-found.tsx` and `components/page-loading.tsx` share the public site's editorial spacing and restrained textile language. Keep loading UI static and lightweight, with a polite status for assistive technology. Not-found actions should reinforce the primary Home, Makes, Muses, and About information architecture.
 
 ## Main sections
 
 The main sections intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is one editorial page composed from recently pinned images, favorite follows, and the nightstand; external data stays visually subordinate to The Threaded Olive's typography and pacing. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in generic white card shells.
 
 Creator links use avatar-first, fully clickable cards. Platform and handle come from the profile URL; optional YouTube feed data may add a latest-video preview. Cards must always retain an initials fallback, a visible focus state, and a one-column phone layout. Do not add native social embeds or platform chrome.
+
+Favorite Follows are ordinary CMS records in `favorite_follows`. Admin editing lives within the Muses screen and supports one uploaded avatar, visibility, ordering, optional copy, a handle override, and an optional YouTube channel ID. The public data layer falls back to the two repository records only when the table is unavailable; an intentionally empty migrated table stays empty.
 
 ## Moment stories
 
@@ -83,7 +83,7 @@ Home, Makes, Muses, and About form the concise public navigation. `getNavigation
 
 Admin saves also write an internal `/__navigation-configured` marker row. The data layer always filters that marker out of the interface. Its presence distinguishes an intentionally hidden item from a missing legacy row despite public row-level security hiding both, so later labels, order, and visibility choices remain authoritative.
 
-The complete inline navigation starts at 1024px. Smaller widths use the menu panel so the brand and five core links never compete for horizontal space. The menu closes after a selection and when the Escape key is pressed.
+The complete inline navigation starts at 1024px. Smaller widths use the menu panel so the brand and four core links never compete for horizontal space. The menu closes after a selection and when the Escape key is pressed.
 
 ## Make posts
 

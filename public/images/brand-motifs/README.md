@@ -6,4 +6,4 @@ The final supplied artwork lives in this directory under these durable names:
 - `granny-square.png`
 - `martini.png`
 
-`components/brand-motif.tsx` is the shared decorative renderer. Keep the supplied PNG format, transparency, colors, proportions, orientation, glow, and pixel edges intact. Responsive resizing is the only visual transformation applied by the site.
+`components/brand-motif.tsx` is the shared decorative renderer. Keep the supplied PNG format, transparency, colors, proportions, orientation, and pixel edges intact. Responsive resizing is the only visual transformation applied by the site; do not add CSS shadows, glows, filters, or rotation.

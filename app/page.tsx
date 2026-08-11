@@ -1,15 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArchiveEmptyState } from "@/components/archive-empty-state";
-import { BrandMark } from "@/components/brand-mark";
-import { LaceOverlay, ScallopedEdge } from "@/components/textile-details";
 import { ArrowRightIcon } from "@/components/ui-icons";
 import { getAbout, getPublishedMakes, getSettings } from "@/lib/cms-data";
 
 const pillars = [
   ["Makes", "/makes", "Things I’ve been making"],
   ["Muses", "/muses", "Things I’m into lately"],
-  ["Moments", "/moments", "Notes from my days"],
 ] as const;
 
 export default async function HomePage() {
@@ -22,33 +19,22 @@ export default async function HomePage() {
 
   return (
     <div>
-      <section className="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:px-10 lg:px-12 lg:pb-20 lg:pt-14">
-        <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.9fr]">
-          <header className="max-w-4xl">
-            <p className="stitch-label text-pimento-700">
-              My creativity catch-all space
+      <section className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12 sm:px-10 lg:px-12 lg:pb-20 lg:pt-16">
+        <header className="max-w-4xl border-b border-olive-900/15 pb-10 sm:pb-12">
+          <p className="stitch-label text-pimento-700">
+            My creativity catch-all space
+          </p>
+          <h1 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.035em] text-olive-900 sm:text-7xl">
+            The Threaded Olive
+          </h1>
+          {settings.short_description ? (
+            <p className="mt-6 max-w-xl text-lg leading-8 text-charcoal-700">
+              {settings.short_description}
             </p>
-            <h1 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.035em] text-olive-900 sm:text-7xl">
-              The Threaded Olive
-            </h1>
-            {settings.short_description ? (
-              <p className="mt-6 max-w-xl text-lg leading-8 text-charcoal-700">
-                {settings.short_description}
-              </p>
-            ) : null}
-          </header>
-          <div className="relative mx-auto hidden w-full max-w-xl py-2 sm:block lg:justify-self-end" aria-hidden="true">
-            <div className="absolute inset-x-[12%] bottom-[8%] h-1/2 rounded-full bg-brass-100/65 blur-3xl" />
-            <BrandMark
-              className="relative h-auto w-full"
-              loading="eager"
-              fetchPriority="high"
-              sizes="(min-width: 1024px) 40vw, (min-width: 640px) 576px, calc(100vw - 3rem)"
-            />
-          </div>
-        </div>
+          ) : null}
+        </header>
 
-        <section aria-labelledby="recent-makes-title" className="mt-12">
+        <section aria-labelledby="recent-makes-title" className="mt-10 sm:mt-12">
           <h2 id="recent-makes-title" className="mb-6 font-serif text-4xl tracking-[-0.04em] text-olive-900 sm:text-5xl">
             Recent Makes
           </h2>
@@ -74,7 +60,7 @@ export default async function HomePage() {
                   ) : (
                     <div className={`${index % 2 ? "mustard-textile" : "bright-textile-placeholder"} absolute inset-0`} />
                   )}
-                  <div className="absolute inset-x-4 bottom-4 rounded-xl bg-linen-0/90 px-4 py-3 backdrop-blur-sm">
+                  <div className="absolute inset-x-4 bottom-4 rounded-xl border border-olive-900/10 bg-linen-0 px-4 py-3">
                     <p className="font-serif text-2xl text-olive-900">{make.title}</p>
                   </div>
                 </Link>
@@ -90,19 +76,15 @@ export default async function HomePage() {
         </section>
       </section>
 
-      <ScallopedEdge className="bg-olive-100" />
-      <section className="relative bg-olive-100 px-6 py-16 sm:px-10 lg:py-20">
-        <div className="relative isolate mx-auto grid w-full max-w-6xl gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-center">
-          <div className="relative mx-auto w-full max-w-sm">
-            <LaceOverlay className="-right-8 -top-8" />
-            {about.images[0] ? (
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[45%_45%_1.5rem_1.5rem]">
+      <section className="relative border-y border-olive-900/15 bg-olive-100 px-6 py-16 sm:px-10 lg:py-20">
+        <div className={`relative isolate mx-auto grid w-full gap-10 ${about.images[0] ? "max-w-6xl lg:grid-cols-[0.75fr_1.25fr] lg:items-center" : "max-w-3xl"}`}>
+          {about.images[0] ? (
+            <div className="relative mx-auto w-full max-w-sm">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
                 <Image src={about.images[0].url} alt={about.images[0].alt} fill className="object-cover" sizes="400px" />
               </div>
-            ) : (
-              <div className="cream-ticking-textile aspect-[4/5] rounded-[45%_45%_1.5rem_1.5rem]" />
-            )}
-          </div>
+            </div>
+          ) : null}
           <div>
             <p className="stitch-label text-pimento-700">About</p>
             <h2 className="mt-3 font-serif text-5xl tracking-[-0.05em] text-olive-900 sm:text-6xl">Hi, I’m Liv.</h2>
@@ -115,7 +97,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-      <ScallopedEdge flip className="bg-olive-100" />
 
       <section className="mx-auto w-full max-w-7xl px-6 py-16 sm:px-10 lg:px-12 lg:py-20">
         <div className="border-y border-olive-900/15">

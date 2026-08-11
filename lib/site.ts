@@ -5,41 +5,7 @@ export const siteConfig = {
   tagline: "Things I make, wear, read & love.",
   description:
     "A personal creative journal about making things, getting dressed, reading, and everything around it.",
-  url: "https://threadedolive.example",
-  email: "hello@threadedolive.example",
-  nav: [
-    { href: "/", label: "Home" },
-    { href: "/makes", label: "Makes" },
-    { href: "/muses", label: "Muses" },
-    { href: "/moments", label: "Moments" },
-    { href: "/about", label: "About" },
-  ],
-  socials: [
-    {
-      href: "https://example.com/threaded-olive-instagram",
-      label: "Instagram placeholder",
-    },
-    {
-      href: "https://example.com/threaded-olive-pinterest",
-      label: "Pinterest placeholder",
-    },
-    {
-      href: "mailto:hello@threadedolive.example",
-      label: "Email placeholder",
-    },
-  ],
-  contactTopics: [
-    "Questions about techniques or materials",
-    "Collaborations and editorial conversations",
-    "General notes from fellow makers",
-    "Future commission inquiries",
-  ],
-  futureFormSteps: [
-    "Choose a form service such as Formspree, Basin, or a custom Next.js route.",
-    "Replace the placeholder submit button with a real POST target.",
-    "Add spam protection and a success/error state before going live.",
-  ],
-  analyticsPlaceholderEnv: "NEXT_PUBLIC_ANALYTICS_ID",
+  url: "https://threadedolive.vercel.app",
 } as const;
 
 export const rootMetadata: Metadata = {
