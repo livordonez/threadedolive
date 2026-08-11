@@ -22,7 +22,7 @@ const navigationConfiguredHref = "/__navigation-configured";
 export const defaultSettings: SiteSettings = {
   id: "default",
   site_name: "Threaded Olive",
-  short_description: "A thoughtful archive of handmade fiber arts.",
+  short_description: "Things I make, wear, read & love.",
   instagram_url: "https://www.instagram.com/liv_ordonez/",
   pinterest_url: "https://www.pinterest.com/liv_ordonez/",
   footer_text: "Made slowly and shared thoughtfully.",
@@ -201,6 +201,10 @@ export async function getSettings() {
   const settings = data as SiteSettings | null;
   return settings ? {
     ...settings,
+    short_description:
+      settings.short_description === "A thoughtful archive of handmade fiber arts."
+        ? defaultSettings.short_description
+        : settings.short_description,
     instagram_url: settings.instagram_url || defaultSettings.instagram_url,
     pinterest_url: settings.pinterest_url || defaultSettings.pinterest_url,
   } : defaultSettings;

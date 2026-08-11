@@ -20,7 +20,7 @@ export function RecentPins({ pins }: { pins: Pin[] }) {
         <header className="max-w-sm sm:sticky sm:top-28 sm:self-start">
           <p className="stitch-label text-pimento-700">On the pinboard</p>
           <h2 id="recent-pins-title" className="mt-3 font-serif text-4xl tracking-[-0.04em] text-olive-900 sm:text-5xl">
-            Recent Pins
+            Recent pins
           </h2>
           <p className="mt-4 text-lg leading-8 text-charcoal-700">
             Colors, shapes, clothes, rooms, and small details I want to remember.
@@ -63,7 +63,7 @@ export function RecentPins({ pins }: { pins: Pin[] }) {
         ) : (
           <div className="grid min-h-64 place-items-center border-y border-olive-900/15 px-6 py-12 text-center">
             <p className="max-w-md font-serif text-2xl leading-snug text-olive-900">
-              The pinboard is resting for a moment. More inspiration is waiting on Pinterest.
+              Nothing pinned here just now. There’s more over on Pinterest.
             </p>
           </div>
         )}

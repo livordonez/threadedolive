@@ -2,17 +2,17 @@ import type { Metadata, Viewport } from "next";
 
 export const siteConfig = {
   name: "Threaded Olive",
-  tagline: "Handmade slowly. Threaded thoughtfully.",
+  tagline: "Things I make, wear, read & love.",
   description:
-    "A fiber arts portfolio centered on crochet, with explorations in sewing, knitting, embroidery, and needlepoint.",
+    "A personal creative journal about making things, getting dressed, reading, and everything around it.",
   url: "https://threadedolive.example",
   email: "hello@threadedolive.example",
   nav: [
     { href: "/", label: "Home" },
-    { href: "/portfolio", label: "Portfolio" },
-    { href: "/journal", label: "Studio Journal" },
+    { href: "/makes", label: "Makes" },
+    { href: "/muses", label: "Muses" },
+    { href: "/moments", label: "Moments" },
     { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
   ],
   socials: [
     {
@@ -63,7 +63,7 @@ export const rootMetadata: Metadata = {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name} portfolio preview`,
+        alt: `${siteConfig.name} preview`,
       },
     ],
   },
@@ -78,7 +78,7 @@ export const rootMetadata: Metadata = {
     shortcut: "/icon.svg",
     apple: "/icon.svg",
   },
-  category: "portfolio",
+  category: "personal blog",
 };
 
 export const rootViewport: Viewport = {

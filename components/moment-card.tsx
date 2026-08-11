@@ -51,7 +51,7 @@ export function MomentCard({
             </p>
           ) : null}
           <p className="mt-4 font-semibold text-olive-700 sm:hidden">
-            Read this moment →
+            Keep reading →
           </p>
         </div>
 

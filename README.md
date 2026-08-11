@@ -1,10 +1,10 @@
 # Threaded Olive
 
-A photography-first fiber arts archive with its own private, single-owner editor. Content lives in Supabase rather than repository files.
+A personal creative blog for the things Liv makes, wears, reads, and loves, with its own private single-owner editor. Content lives in Supabase rather than repository files.
 
 ## What is included
 
-- A three-part public archive: Makes at `/makes`, inspiration in Muses at `/muses`, and journal writing in Moments at `/moments`.
+- Three main sections: Makes at `/makes`, things Liv loves in Muses at `/muses`, and everyday notes in Moments at `/moments`.
 - Private editor at `/admin` for makes, muses, moments, flexible pages, about content, navigation, site settings, and photograph uploads.
 - Draft, publish, unpublish, preview, ordering, cover-photo selection, alt text, and seven intentionally small flexible-page section types.
 - Supabase Auth, Postgres row-level security, and Storage policies. Every server mutation checks the authenticated admin again.
@@ -42,7 +42,7 @@ Add the same two public Supabase environment variables to the deployment platfor
 
 ## Previous content
 
-The original MDX project and journal files remain under `content/` as an archive for manual reference while real content is entered through the editor. They are no longer public routes or runtime content sources.
+The original MDX project and journal files remain under `content/` for manual reference while real content is entered through the editor. They are no longer public routes or runtime content sources.
 
 ## Visual system
 
@@ -60,11 +60,11 @@ The public Muses composition lives in `app/muses/page.tsx`, with focused section
 
 `MUSES_PINTEREST_RSS_URL` can override the default feed URL. Keep it server-only. Pinterest's authenticated API is intentionally not used: the public RSS source is sufficient for this personal collection and avoids credential lifecycle and browser-side requests.
 
-### Favorite Follows
+### People I love following
 
 Creator records live in `data/favorite-follows.ts`. To add someone, add one object with `name`, `platform`, and `url`; `description` and `image` are optional. Use a direct, permitted image URL if adding a portrait, and add its hostname narrowly to `images.remotePatterns` in `next.config.ts`. The section treats the creator name and note as primary and the platform as small metadata.
 
-### Currently Reading
+### On my nightstand
 
 `components/muses/currently-reading.tsx` displays the normalized records returned by `lib/integrations/goodreads.ts`. The integration reads the public RSS feed for Liv's `currently-reading` shelf, supports multiple books, and revalidates hourly. Goodreads authentication and its retired public API are not required. If Goodreads is unavailable or the shelf is empty, the page renders a deliberate empty state.
 

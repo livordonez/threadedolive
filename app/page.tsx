@@ -6,8 +6,8 @@ import { LaceOverlay, ScallopedEdge } from "@/components/textile-details";
 import { getAbout, getPublishedMakes, getSettings } from "@/lib/cms-data";
 
 const pillars = [
-  ["Makes", "/makes", "What I’ve made"],
-  ["Muses", "/muses", "What is inspiring me"],
+  ["Makes", "/makes", "Things I’ve been making"],
+  ["Muses", "/muses", "Things I’m into lately"],
   ["Moments", "/moments", "Notes from my days"],
 ] as const;
 
@@ -25,12 +25,10 @@ export default async function HomePage() {
         <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.9fr]">
           <header className="max-w-4xl">
             <p className="stitch-label text-pimento-700">
-              A handmade archive
+              Made by Liv
             </p>
             <h1 className="mt-4 font-serif text-5xl leading-[0.95] tracking-[-0.035em] text-olive-900 sm:text-7xl">
-              Made by hand,
-              <br />
-              <em className="font-normal">kept with care.</em>
+              The Threaded Olive
             </h1>
             {settings.short_description ? (
               <p className="mt-6 max-w-xl text-lg leading-8 text-charcoal-700">
@@ -103,10 +101,10 @@ export default async function HomePage() {
             )}
           </div>
           <div>
-            <p className="stitch-label text-pimento-700">Meet the maker</p>
-            <h2 className="mt-3 font-serif text-5xl tracking-[-0.05em] text-olive-900 sm:text-6xl">Hi, I’m Olivia.</h2>
+            <p className="stitch-label text-pimento-700">A little about me</p>
+            <h2 className="mt-3 font-serif text-5xl tracking-[-0.05em] text-olive-900 sm:text-6xl">Hi, I’m Liv.</h2>
             <p className="mt-6 max-w-2xl whitespace-pre-line text-lg leading-9 text-charcoal-700">
-              {about.bio || "Threaded Olive is where I keep the projects, ideas, and everyday moments that shape my creative life."}
+              {about.bio || "A place for what I’m making, wearing, reading, and loving lately."}
             </p>
             <Link href="/about" className="mt-6 inline-block text-sm font-bold text-olive-700 underline decoration-olive-700/30 underline-offset-4">
               More about me →
@@ -122,7 +120,7 @@ export default async function HomePage() {
             <Link key={href} href={href} className="grid gap-2 border-b border-olive-900/15 py-7 last:border-0 sm:grid-cols-[12rem_1fr_auto] sm:items-baseline">
               <h2 className="font-serif text-4xl tracking-[-0.04em] text-olive-900">{title}</h2>
               <p className="text-charcoal-700">{description}</p>
-              <span className="text-sm font-bold text-olive-700">Explore →</span>
+              <span className="text-sm font-bold text-olive-700">Take a look →</span>
             </Link>
           ))}
         </div>

@@ -9,13 +9,12 @@ export default async function MomentsPage() {
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
       <header className="max-w-3xl">
-        <p className="stitch-label text-pimento-700">Notes from the day</p>
+        <p className="stitch-label text-pimento-700">From my days</p>
         <h1 className="mt-4 font-serif text-6xl tracking-[-0.035em] text-olive-900 sm:text-7xl">
           Moments
         </h1>
         <p className="mt-5 max-w-2xl text-xl leading-8 text-charcoal-700">
-          Small stories from the worktable and everyday life, written while
-          they’re still close.
+          Small notes on making, getting dressed, and the bits in between.
         </p>
       </header>
 
@@ -31,7 +30,7 @@ export default async function MomentsPage() {
         </div>
       ) : (
         <ArchiveEmptyState
-          label="The first moment has not been written yet."
+          label="Notes will find their way here soon."
         />
       )}
     </div>

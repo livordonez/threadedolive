@@ -4,5 +4,92 @@ import { getAbout } from "@/lib/cms-data";
 
 export default async function AboutPage() {
   const about = await getAbout();
-  return <article className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20"><header className="max-w-3xl"><p className="stitch-label text-pimento-700">About</p><h1 className="mt-4 font-serif text-5xl tracking-[-0.035em] text-olive-900 sm:text-7xl">The hands behind Threaded Olive.</h1></header><div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]"><div className="relative isolate"><LaceOverlay className="-left-8 -top-8" /><div className={`grid gap-4 ${about.images.length > 1 ? "grid-cols-2" : ""}`}>{about.images.map((image, index) => <div key={image.path} className={`relative overflow-hidden rounded-[1.75rem] bg-olive-100 ${index === 0 ? "aspect-[4/5]" : "mt-10 aspect-[4/5]"}`}><Image src={image.url} alt={image.alt} fill preload={index === 0} className="object-cover" sizes="(max-width: 1024px) 100vw, 45vw" /></div>)}{!about.images.length ? <div className="bright-textile-placeholder grid aspect-[4/5] place-items-center rounded-[1.75rem] font-semibold text-olive-900"><span className="rounded-full bg-linen-0/85 px-5 py-3">Portrait coming soon</span></div> : null}</div></div><div className="space-y-10 lg:pt-8">{about.bio ? <section><h2 className="font-serif text-3xl text-olive-900">About me</h2><p className="mt-4 whitespace-pre-line text-xl leading-9 text-charcoal-700">{about.bio}</p></section> : null}{!about.bio && !about.story ? <section><h2 className="font-serif text-4xl text-olive-900">Hi, I’m Olivia.</h2><p className="mt-4 max-w-xl text-xl leading-9 text-charcoal-700">Threaded Olive is where I keep the projects, ideas, and everyday moments that shape my creative life.</p></section> : null}{about.story ? <section><h2 className="font-serif text-3xl text-olive-900">The Threaded Olive story</h2><p className="mt-4 whitespace-pre-line text-xl leading-9 text-charcoal-700">{about.story}</p></section> : null}{about.instagram_url || about.pinterest_url ? <section><p className="stitch-label text-pimento-700">Elsewhere</p><div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">{about.instagram_url ? <a href={about.instagram_url} target="_blank" rel="noreferrer" className="font-semibold text-olive-700 underline underline-offset-4">Instagram</a> : null}{about.pinterest_url ? <a href={about.pinterest_url} target="_blank" rel="noreferrer" className="font-semibold text-olive-700 underline underline-offset-4">Pinterest</a> : null}</div></section> : null}</div></div></article>;
+
+  return (
+    <article className="mx-auto w-full max-w-6xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
+      <header className="max-w-3xl">
+        <p className="stitch-label text-pimento-700">A little about me</p>
+        <h1 className="mt-4 font-serif text-5xl tracking-[-0.035em] text-olive-900 sm:text-7xl">
+          Hi, I’m Liv.
+        </h1>
+      </header>
+
+      <div className="mt-12 grid gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative isolate">
+          <LaceOverlay className="-left-8 -top-8" />
+          <div className={`grid gap-4 ${about.images.length > 1 ? "grid-cols-2" : ""}`}>
+            {about.images.map((image, index) => (
+              <div
+                key={image.path}
+                className={`relative overflow-hidden rounded-[1.75rem] bg-olive-100 ${
+                  index === 0 ? "aspect-[4/5]" : "mt-10 aspect-[4/5]"
+                }`}
+              >
+                <Image
+                  src={image.url}
+                  alt={image.alt}
+                  fill
+                  preload={index === 0}
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                />
+              </div>
+            ))}
+            {!about.images.length ? (
+              <div className="bright-textile-placeholder grid aspect-[4/5] place-items-center rounded-[1.75rem] font-semibold text-olive-900">
+                <span className="rounded-full bg-linen-0/85 px-5 py-3">A photo soon</span>
+              </div>
+            ) : null}
+          </div>
+        </div>
+
+        <div className="space-y-10 lg:pt-8">
+          {about.bio ? (
+            <section>
+              <h2 className="font-serif text-3xl text-olive-900">About me</h2>
+              <p className="mt-4 whitespace-pre-line text-xl leading-9 text-charcoal-700">
+                {about.bio}
+              </p>
+            </section>
+          ) : null}
+
+          {!about.bio && !about.story ? (
+            <section>
+              <h2 className="font-serif text-4xl text-olive-900">Welcome to my corner.</h2>
+              <p className="mt-4 max-w-xl text-xl leading-9 text-charcoal-700">
+                This is where I keep notes on what I’m making, wearing, reading, and loving lately.
+              </p>
+            </section>
+          ) : null}
+
+          {about.story ? (
+            <section>
+              <h2 className="font-serif text-3xl text-olive-900">How Threaded Olive started</h2>
+              <p className="mt-4 whitespace-pre-line text-xl leading-9 text-charcoal-700">
+                {about.story}
+              </p>
+            </section>
+          ) : null}
+
+          {about.instagram_url || about.pinterest_url ? (
+            <section>
+              <p className="stitch-label text-pimento-700">Elsewhere</p>
+              <div className="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+                {about.instagram_url ? (
+                  <a href={about.instagram_url} target="_blank" rel="noreferrer" className="font-semibold text-olive-700 underline underline-offset-4">
+                    Instagram
+                  </a>
+                ) : null}
+                {about.pinterest_url ? (
+                  <a href={about.pinterest_url} target="_blank" rel="noreferrer" className="font-semibold text-olive-700 underline underline-offset-4">
+                    Pinterest
+                  </a>
+                ) : null}
+              </div>
+            </section>
+          ) : null}
+        </div>
+      </div>
+    </article>
+  );
 }

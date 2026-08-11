@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LinkButton } from "@/components/link-button";
 
-const archiveLinks = [
+const moreLinks = [
   ["Makes", "/makes"],
   ["Muses", "/muses"],
   ["Moments", "/moments"],
@@ -16,15 +16,14 @@ export default function NotFound() {
           This page slipped off the needle.
         </h1>
         <p className="mt-6 max-w-xl text-lg leading-8 text-charcoal-700 sm:text-xl sm:leading-9">
-          The link may be outdated, but the rest of Threaded Olive is still
-          here to explore.
+          The link may be old, but there’s plenty more to look through.
         </p>
 
         <div className="mt-8 flex flex-col items-start gap-7 sm:flex-row sm:items-center">
           <LinkButton href="/">Return home</LinkButton>
-          <nav aria-label="Explore the archives">
+          <nav aria-label="More from Threaded Olive">
             <ul className="flex flex-wrap gap-x-5 gap-y-3">
-              {archiveLinks.map(([label, href]) => (
+              {moreLinks.map(([label, href]) => (
                 <li key={href}>
                   <Link
                     href={href}

@@ -60,7 +60,7 @@ export default function OpenGraphImage() {
                 textTransform: "uppercase",
               }}
             >
-              Fiber arts portfolio
+              A creative journal by Liv
             </div>
             <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
               <div
@@ -110,8 +110,8 @@ export default function OpenGraphImage() {
                 color: "#203126",
               }}
             >
-              <span>Handmade slowly.</span>
-              <span>Threaded thoughtfully.</span>
+              <span>Things I make, wear,</span>
+              <span>read &amp; love.</span>
             </div>
             <div
               style={{

@@ -25,7 +25,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
                 {settings.site_name}
               </p>
               <p className="stitch-label text-charcoal-700">
-                Fiber arts archive
+                Made by Liv
               </p>
             </div>
           </div>
@@ -37,7 +37,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
         <div className="grid gap-8 sm:grid-cols-2">
           <div className="space-y-3">
             <p className="stitch-label text-pimento-700">
-              Connect
+              Elsewhere
             </p>
             <ul className="space-y-3 text-sm text-charcoal-700">
               {socials.map((item) => (
@@ -57,7 +57,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
 
           <div className="space-y-3">
             <p className="stitch-label text-pimento-700">
-              A closing note
+              A little note
             </p>
             <p className="text-sm leading-7 text-charcoal-700">
               {settings.footer_text}

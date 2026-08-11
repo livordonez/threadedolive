@@ -79,9 +79,9 @@ export function MomentStory({
       {bodyHtml ? (
         <section className="mt-12 grid gap-5 border-t border-olive-900/15 pt-10 sm:mt-16 sm:pt-12 lg:grid-cols-[9rem_minmax(0,1fr)] lg:gap-12">
           <div>
-            <p className="stitch-label text-pimento-700">In the journal</p>
+            <p className="stitch-label text-pimento-700">From my notebook</p>
             <h2 className="mt-2 font-serif text-3xl leading-tight tracking-[-0.025em] text-olive-900">
-              A moment kept
+              A few words
             </h2>
           </div>
           <div className="rich-text" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
@@ -125,7 +125,7 @@ export function MomentStory({
           href="/moments"
           className="font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
         >
-          ← Return to all Moments
+          ← Back to Moments
         </Link>
       </footer>
     </article>

@@ -14,12 +14,12 @@ export function CurrentlyReading({ books }: { books: ReadingBook[] }) {
     <section aria-labelledby="currently-reading-title" className="border-t border-olive-900/15 pt-8 sm:pt-10">
       <div className="grid gap-8 lg:grid-cols-[minmax(14rem,0.55fr)_minmax(0,1.45fr)] lg:gap-12">
         <header className="max-w-sm">
-          <p className="stitch-label text-pimento-700">From the nightstand</p>
+          <p className="stitch-label text-pimento-700">Reading lately</p>
           <h2 id="currently-reading-title" className="mt-3 font-serif text-4xl tracking-[-0.04em] text-olive-900 sm:text-5xl">
-            Currently Reading
+            On my nightstand
           </h2>
           <p className="mt-4 text-lg leading-8 text-charcoal-700">
-            The books keeping me company lately, pulled from my reading shelf.
+            What I’m reading right now.
           </p>
           <BrandMotif motif="cat" className="-ml-10 -mt-3 w-40" />
         </header>
@@ -61,7 +61,7 @@ export function CurrentlyReading({ books }: { books: ReadingBook[] }) {
                       rel="noreferrer"
                       className="mt-4 inline-flex min-h-11 items-center font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
                     >
-                      Reading notes <span aria-hidden="true">&nbsp;↗</span>
+                      See on Goodreads <span aria-hidden="true">&nbsp;↗</span>
                       <span className="sr-only"> on Goodreads (opens in a new tab)</span>
                     </a>
                   </div>
@@ -72,10 +72,10 @@ export function CurrentlyReading({ books }: { books: ReadingBook[] }) {
         ) : (
           <div className="border-y border-olive-900/15 py-10">
             <p className="max-w-xl font-serif text-3xl leading-snug tracking-[-0.025em] text-olive-900">
-              Nothing is tucked onto the currently-reading shelf just now.
+              Nothing on the nightstand just now.
             </p>
             <p className="mt-3 max-w-xl text-base leading-7 text-charcoal-700">
-              The next book will appear here when it lands on the nightstand.
+              The next book will show up when I start reading it.
             </p>
           </div>
         )}

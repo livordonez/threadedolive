@@ -10,12 +10,12 @@ export default async function MakesPage() {
     <div className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
       <header className="flex max-w-4xl items-start justify-between gap-6">
         <div className="max-w-3xl">
-          <p className="stitch-label text-pimento-700">Made by hand</p>
+          <p className="stitch-label text-pimento-700">What I’ve been making</p>
           <h1 className="mt-4 font-serif text-6xl tracking-[-0.035em] text-olive-900 sm:text-7xl">
             Makes
           </h1>
           <p className="mt-5 max-w-2xl text-xl leading-8 text-charcoal-700">
-            Finished pieces and the stories, materials, and lessons held inside them.
+            Sewing, crochet, and whatever else I’ve got going on.
           </p>
         </div>
         <BrandMotif motif="granny-square" className="-mr-8 -mt-6 hidden w-44 sm:block" />
@@ -28,7 +28,7 @@ export default async function MakesPage() {
           ))}
         </div>
       ) : (
-        <ArchiveEmptyState label="The first make is still being gathered." />
+        <ArchiveEmptyState label="Makes will turn up here as I finish them." />
       )}
     </div>
   );

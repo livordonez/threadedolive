@@ -20,12 +20,12 @@ function formatCompletionDate(value: string | null) {
 
 function getProjectDetails(make: Make): ProjectDetail[] {
   return [
-    { label: "Pattern", value: make.pattern },
-    { label: "Pattern designer", value: make.pattern_designer },
-    { label: "Fabric / yarn", value: make.materials },
+    { label: "The pattern", value: make.pattern },
+    { label: "By", value: make.pattern_designer },
+    { label: "What I used", value: make.materials },
     { label: "Size / tools", value: make.tool_size },
-    { label: "Modifications", value: make.modifications },
-    { label: "Date made", value: formatCompletionDate(make.completion_date) },
+    { label: "Changes I made", value: make.modifications },
+    { label: "Finished", value: formatCompletionDate(make.completion_date) },
   ].filter((detail) => detail.value);
 }
 
@@ -41,11 +41,11 @@ function ProjectDetails({
   return (
     <section className="mt-16 border-y border-olive-900/15 py-10 sm:py-12 lg:mt-20">
       <div className="grid gap-9 md:grid-cols-[10rem_minmax(0,1fr)] md:items-start lg:gap-14">
-        <FabricSwatch image={swatchImage} label="Material swatch" />
+        <FabricSwatch image={swatchImage} label="A closer look" />
         <div>
-          <p className="stitch-label text-pimento-700">Project particulars</p>
+          <p className="stitch-label text-pimento-700">The details</p>
           <h2 className="mt-2 max-w-2xl font-serif text-4xl leading-tight tracking-[-0.03em] text-olive-900 sm:text-5xl">
-            Pattern, materials &amp; changes
+            What I used &amp; changed
           </h2>
           <dl className="mt-8 grid gap-x-12 gap-y-7 sm:grid-cols-2">
             {details.map((detail) => (
@@ -58,13 +58,13 @@ function ProjectDetails({
             ))}
             {patternLink ? (
               <div className="border-t border-olive-900/10 pt-4">
-                <dt className="stitch-label text-pimento-700">Pattern link</dt>
+                <dt className="stitch-label text-pimento-700">Online</dt>
                 <dd className="mt-2">
                   <a
                     href={patternLink}
                     className="font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4"
                   >
-                    View the pattern ↗
+                    Go to pattern ↗
                   </a>
                 </dd>
               </div>
@@ -129,9 +129,9 @@ export function MakeStory({ make, isPreview = false }: { make: Make; isPreview?:
       {make.story ? (
         <section className="mt-16 grid gap-6 border-t border-olive-900/15 pt-10 lg:mt-20 lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-12 lg:pt-12">
           <div>
-            <p className="stitch-label text-pimento-700">In Olivia’s words</p>
+            <p className="stitch-label text-pimento-700">A little background</p>
             <h2 className="mt-2 font-serif text-3xl leading-tight tracking-[-0.025em] text-olive-900">
-              Story behind the make
+              About this make
             </h2>
           </div>
           <p className="max-w-[var(--content-reading)] whitespace-pre-line text-xl leading-9 text-charcoal-700">
@@ -149,7 +149,7 @@ export function MakeStory({ make, isPreview = false }: { make: Make; isPreview?:
       ) : null}
 
       {gallery.length ? (
-        <section aria-label="Project gallery" className="mt-16 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
+        <section aria-label="More photos" className="mt-16 grid gap-5 sm:grid-cols-2 lg:mt-20 lg:grid-cols-3">
           {gallery.map((image, index) => (
             <div
               key={image.path}
@@ -173,8 +173,8 @@ export function MakeStory({ make, isPreview = false }: { make: Make; isPreview?:
         <section className="mt-16 grid gap-10 border-t border-olive-900/15 pt-12 md:grid-cols-2 lg:mt-20 lg:gap-16">
           {make.process_notes ? (
             <div>
-              <p className="stitch-label text-pimento-700">From the worktable</p>
-              <h2 className="mt-2 font-serif text-3xl text-olive-900">Process notes</h2>
+              <p className="stitch-label text-pimento-700">A few notes</p>
+              <h2 className="mt-2 font-serif text-3xl text-olive-900">While I was making it</h2>
               <p className="mt-4 max-w-[var(--content-reading)] whitespace-pre-line text-lg leading-8 text-charcoal-700">
                 {make.process_notes}
               </p>

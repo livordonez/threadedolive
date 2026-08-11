@@ -6,12 +6,12 @@ export function FavoriteFollows({ follows }: { follows: FavoriteFollow[] }) {
   return (
     <section aria-labelledby="favorite-follows-title" className="border-t border-olive-900/15 pt-8 sm:pt-10">
       <header className="relative max-w-3xl pr-0 sm:pr-28">
-        <p className="stitch-label text-pimento-700">People to know</p>
+        <p className="stitch-label text-pimento-700">Around the internet</p>
         <h2 id="favorite-follows-title" className="mt-3 font-serif text-4xl tracking-[-0.04em] text-olive-900 sm:text-5xl">
-          Favorite Follows
+          People I love following
         </h2>
         <p className="mt-4 text-lg leading-8 text-charcoal-700">
-          A short list of people whose work keeps me looking, learning, and making.
+          People whose work keeps me looking, learning, and making.
         </p>
         <BrandMotif
           motif="martini"
@@ -52,7 +52,7 @@ export function FavoriteFollows({ follows }: { follows: FavoriteFollow[] }) {
               rel="noreferrer"
               className="inline-flex min-h-11 items-center justify-self-start font-semibold text-olive-700 underline decoration-olive-700/30 underline-offset-4 sm:justify-self-end"
             >
-              Visit <span aria-hidden="true">&nbsp;↗</span>
+              Have a look <span aria-hidden="true">&nbsp;↗</span>
               <span className="sr-only"> {follow.name} on {follow.platform} (opens in a new tab)</span>
             </a>
           </article>

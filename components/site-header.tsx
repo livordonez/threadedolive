@@ -47,7 +47,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
               {settings.site_name}
             </span>
             <span className="stitch-label block text-charcoal-700">
-              Fiber arts archive
+              Things I make &amp; love
             </span>
           </div>
         </Link>
