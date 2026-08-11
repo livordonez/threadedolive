@@ -63,3 +63,9 @@ Makes, Muses, and Moments are foundational archives, not optional feature links.
 Admin saves also write an internal `/__navigation-configured` marker row. The data layer always filters that marker out of the interface. Its presence distinguishes an intentionally hidden item from a missing legacy row despite public row-level security hiding both, so later labels, order, and visibility choices remain authoritative.
 
 The complete inline navigation starts at 1024px. Smaller widths use the menu panel so the brand and five core links never compete for horizontal space. The menu closes after a selection and when the Escape key is pressed.
+
+## Story Behind the Make
+
+`components/make-story.tsx` owns the public project-detail composition. Keep its hierarchy stable: project title and main photograph first, the long-form story in a separate reading-width section, then project particulars, gallery photography, and reflective notes.
+
+The first uploaded image is the hero. When project particulars exist, the second image is the material swatch and later images form the gallery; without particulars, all secondary images remain in the gallery. The particulars section stays on the warm page background so only the small pinked swatch carries fabric texture. This prevents metadata from competing with the project story or photography.

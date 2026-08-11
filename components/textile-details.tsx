@@ -18,6 +18,6 @@ export function LaceOverlay({ className }: { className?: string }) {
   return <div aria-hidden="true" className={cn("lace-overlay", className)} />;
 }
 
-export function FabricSwatch({ image, label = "Project fabric" }: { image?: CmsImage; label?: string }) {
+export function FabricSwatch({ image, label = "Material swatch" }: { image?: CmsImage; label?: string }) {
   return <figure className="w-36"><PinkedEdge className="relative aspect-square bg-olive-200 shadow-sm">{image ? <Image src={image.url} alt={image.alt || label} fill className="object-cover" sizes="144px" /> : <div className="mustard-textile h-full" />}</PinkedEdge><figcaption className="stitch-label mt-2 text-charcoal-700">{label}</figcaption></figure>;
 }
