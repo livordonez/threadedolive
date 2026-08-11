@@ -144,13 +144,6 @@ body {
   text-transform: uppercase;
 }
 
-.stitch-motif {
-  display: block;
-  flex: none;
-  overflow: visible;
-  image-rendering: pixelated;
-}
-
 /* Textile punctuation: reusable, lightweight, and intentionally occasional. */
 .scalloped-edge {
   height: 1.4rem;

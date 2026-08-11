@@ -83,9 +83,7 @@ export default async function HomePage() {
           {!featured.length ? (
             <ArchiveEmptyState
               label="Photography will gather here as makes are published."
-              motif="yarn"
               className="col-span-full mt-0"
-              swatchClassName="bright-textile-placeholder"
             />
           ) : null}
         </section>

@@ -33,15 +33,18 @@ Reusable treatments live in `components/textile-details.tsx` and `app/globals.cs
 
 Do not use every treatment on one page.
 
-## Stitch motifs
+## Brand motifs
 
-`components/stitch-motif.tsx` contains the four standard motifs: cat, books, yarn basket, and olive branch. They are intentionally crisp, low-resolution SVG marks inspired by cross-stitch charts.
+Cat, granny square, and martini are the complete miniature illustration vocabulary. Final source artwork belongs in `public/images/brand-motifs/` and must remain visually unmodified. Do not redraw, recolor, rotate, filter, soften, or reinterpret it. Preserve the supplied file format where reasonable and render raster pixel art with crisp edges.
 
-- Keep motifs small, like marginalia or dingbats.
-- Prefer a semantic relationship: books for reading/inspiration, yarn for making, olive for general branding, and the cat for occasional personality.
-- Use `ArchiveEmptyState` for the shared motif-backed empty-state treatment.
-- Empty archives use textile imagery only inside a small pinked swatch. Keep the surrounding state typographic and spacious so a temporary lack of photography does not turn a full-width fabric texture into the page's dominant visual.
-- Decorative motifs should remain hidden from assistive technology. Give a motif a `title` only when it carries meaning that is not already present in nearby text.
+- Keep motifs small, like signatures, marginalia, or dingbats.
+- Prefer a semantic relationship: granny square near making and textiles, cat near reading or personal notes, and martini near lifestyle or playful moments.
+- A page may use one motif or none. Do not place all three by default.
+- Do not introduce replacement books, yarn, olive, or miscellaneous miniature illustrations.
+- Keep archive empty states primarily typographic when a final motif does not clearly improve the composition.
+- Decorative motifs stay hidden from assistive technology unless they communicate information not already present in nearby text.
+
+The August 11, 2026 brief did not include the three source files, so their destination contains placement instructions rather than fabricated stand-ins.
 
 ## Visual QA
 
@@ -61,7 +64,7 @@ Photography should remain the dominant visual content. A strong photograph norma
 
 ## Archive indexes
 
-The three core archives intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is an unboxed multi-column pinboard that preserves uploaded image proportions and allows text-only notes. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in white card shells; textile swatches, when needed, belong only to empty or missing-media states rather than around every piece of content.
+The three core archives intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is one editorial page composed from Recent Pins, Favorite Follows, and Currently Reading; external data stays visually subordinate to Threaded Olive's typography and pacing. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in generic white card shells.
 
 ## Moment stories
 

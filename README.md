@@ -46,6 +46,32 @@ The original MDX project and journal files remain under `content/` as an archive
 
 ## Visual system
 
-The public site uses self-hosted EB Garamond as its primary editorial typeface and Silkscreen only for tiny cross-stitch-inspired labels. Textile edges and the standard cat, books, yarn, and olive motifs are reusable design primitives rather than page-specific decoration.
+The public site uses self-hosted EB Garamond as its primary editorial typeface and Silkscreen only for tiny cross-stitch-inspired labels. Textile edges are reusable design primitives rather than page-specific decoration.
 
 Read [`docs/design-direction.md`](docs/design-direction.md) before substantial visual work. It documents the durable hierarchy, typography, textile primitives, motif conventions, and responsive QA expectations that keep the site from drifting into a busier craft-store aesthetic.
+
+## Muses
+
+The public Muses composition lives in `app/muses/page.tsx`, with focused sections in `components/muses/`. External responses are parsed and normalized in `lib/integrations/`; the components never depend on Pinterest or Goodreads response fields directly.
+
+### Recent Pins
+
+`components/muses/recent-pins.tsx` renders up to nine images as an editorial collage. `lib/integrations/pinterest.ts` reads Liv's public Pinterest profile RSS feed server-side. The feed directly reflects recently saved public Pins and does not require an access token. Responses revalidate every six hours through the Next.js data cache. If the feed is unavailable or empty, published CMS Muses with images become the fallback; if neither source has images, the section shows a quiet link to Pinterest instead of an error or broken containers.
+
+`MUSES_PINTEREST_RSS_URL` can override the default feed URL. Keep it server-only. Pinterest's authenticated API is intentionally not used: the public RSS source is sufficient for this personal collection and avoids credential lifecycle and browser-side requests.
+
+### Favorite Follows
+
+Creator records live in `data/favorite-follows.ts`. To add someone, add one object with `name`, `platform`, and `url`; `description` and `image` are optional. Use a direct, permitted image URL if adding a portrait, and add its hostname narrowly to `images.remotePatterns` in `next.config.ts`. The section treats the creator name and note as primary and the platform as small metadata.
+
+### Currently Reading
+
+`components/muses/currently-reading.tsx` displays the normalized records returned by `lib/integrations/goodreads.ts`. The integration reads the public RSS feed for Liv's `currently-reading` shelf, supports multiple books, and revalidates hourly. Goodreads authentication and its retired public API are not required. If Goodreads is unavailable or the shelf is empty, the page renders a deliberate empty state.
+
+`MUSES_GOODREADS_USER_ID` can point the integration at another public profile. The default is Liv's numeric Goodreads user ID.
+
+### Brand motifs
+
+Cat, granny square, and martini are the only canonical Threaded Olive mini illustrations. Their durable location is `public/images/brand-motifs/`; usage and source-file rules are recorded in that directory's README. Keep the supplied colors, transparency, proportions, orientation, format, and crisp pixel edges unchanged. Use motifs as occasional signatures, not as gap fillers, and do not casually introduce another miniature illustration style.
+
+The final three source artwork files were not included with the August 11, 2026 implementation brief. Competing generated SVG motifs were removed rather than passed off as the final assets. To finish asset adoption, place the supplied cat, granny-square, and martini files in `public/images/brand-motifs/` under the documented names; then add a small reusable renderer only where the finished page composition benefits from one.

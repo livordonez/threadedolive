@@ -1,41 +1,45 @@
-import { ArchiveEmptyState } from "@/components/archive-empty-state";
-import { MuseCard } from "@/components/muse-card";
+import { CurrentlyReading } from "@/components/muses/currently-reading";
+import { FavoriteFollows } from "@/components/muses/favorite-follows";
+import { RecentPins } from "@/components/muses/recent-pins";
+import { favoriteFollows } from "@/data/favorite-follows";
 import { getPublishedMuses } from "@/lib/cms-data";
+import { getCurrentlyReading } from "@/lib/integrations/goodreads";
+import { getRecentPins, type Pin } from "@/lib/integrations/pinterest";
 
 export default async function MusesPage() {
-  const muses = await getPublishedMuses();
-  const firstImageIndex = muses.findIndex((muse) => muse.images[0]);
+  const [feedPins, books, muses] = await Promise.all([
+    getRecentPins(),
+    getCurrentlyReading(),
+    getPublishedMuses(),
+  ]);
+  const cmsPins: Pin[] = muses
+    .filter((muse) => Boolean(muse.images[0]))
+    .slice(0, 9)
+    .map((muse) => ({
+      image: muse.images[0].url,
+      sourceUrl: muse.source_url || "https://www.pinterest.com/liv_ordonez/",
+      title: muse.title,
+      alt: muse.images[0].alt || muse.title,
+    }));
+  const pins = feedPins.length ? feedPins : cmsPins;
 
   return (
     <div className="mx-auto w-full max-w-7xl px-6 py-14 sm:px-10 lg:px-12 lg:py-20">
       <header className="max-w-3xl">
-        <p className="stitch-label text-pimento-700">Gathered inspiration</p>
+        <p className="stitch-label text-pimento-700">Things I keep returning to</p>
         <h1 className="mt-4 font-serif text-6xl tracking-[-0.035em] text-olive-900 sm:text-7xl">
           Muses
         </h1>
         <p className="mt-5 max-w-2xl text-xl leading-8 text-charcoal-700">
-          A pinboard of colors, people, places, books, and objects that are
-          inspiring the work.
+          The images, people, and stories I’ve been loving lately—gathered in one quiet corner.
         </p>
       </header>
 
-      {muses.length ? (
-        <div className="mt-12 columns-1 gap-x-8 sm:columns-2 lg:columns-3">
-          {muses.map((muse, index) => (
-            <MuseCard
-              key={muse.id}
-              muse={muse}
-              preload={index === firstImageIndex}
-            />
-          ))}
-        </div>
-      ) : (
-        <ArchiveEmptyState
-          label="Inspiration will be pinned here."
-          motif="books"
-          swatchClassName="mustard-textile"
-        />
-      )}
+      <div className="mt-14 space-y-20 sm:mt-16 sm:space-y-24 lg:space-y-28">
+        <RecentPins pins={pins} />
+        <FavoriteFollows follows={favoriteFollows} />
+        <CurrentlyReading books={books} />
+      </div>
     </div>
   );
 }

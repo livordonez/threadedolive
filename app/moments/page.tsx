@@ -32,8 +32,6 @@ export default async function MomentsPage() {
       ) : (
         <ArchiveEmptyState
           label="The first moment has not been written yet."
-          motif="cat"
-          swatchClassName="cream-ticking-textile"
         />
       )}
     </div>
