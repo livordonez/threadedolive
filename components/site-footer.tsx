@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import { BrandMark } from "@/components/brand-mark";
 import type { SiteSettings } from "@/lib/cms-types";
 
 export function SiteFooter({ settings }: { settings: SiteSettings }) {
@@ -11,13 +12,23 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
     settings.pinterest_url ? { label: "Pinterest", href: settings.pinterest_url } : null,
   ].filter((item): item is { label: string; href: string } => Boolean(item));
   return (
-    <footer className="site-textile-footer border-t border-olive-900/15">
+    <footer className="site-textile-footer lace-footer border-t border-olive-900/15">
       <div className="mx-auto grid w-full max-w-7xl gap-10 px-6 py-12 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:px-12">
         <div className="space-y-4">
-          <p className="stitch-label text-pimento-700">Thanks for visiting</p>
-          <p className="font-serif text-3xl tracking-[-0.04em] text-olive-900">
-            {settings.site_name}
-          </p>
+          <div className="flex flex-col items-start gap-3 text-olive-900 min-[360px]:flex-row min-[360px]:items-center">
+            <BrandMark
+              className="h-24 w-auto sm:h-32"
+              sizes="(min-width: 640px) 192px, 144px"
+            />
+            <div>
+              <p className="font-serif text-2xl tracking-[-0.04em]">
+                {settings.site_name}
+              </p>
+              <p className="stitch-label text-charcoal-700">
+                Made by Liv
+              </p>
+            </div>
+          </div>
           <p className="max-w-xl text-base leading-8 text-charcoal-700">
             {settings.short_description}
           </p>
@@ -45,7 +56,9 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
           </div>
 
           <div className="space-y-3">
-            <p className="stitch-label text-pimento-700">A note from Liv</p>
+            <p className="stitch-label text-pimento-700">
+              Thanks for visiting
+            </p>
             <p className="text-sm leading-7 text-charcoal-700">
               {settings.footer_text}
             </p>

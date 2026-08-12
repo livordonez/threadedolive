@@ -11,7 +11,7 @@ When a design choice is uncertain:
 3. Favor editorial pacing, generous whitespace, and restraint.
 4. Remove decoration that does not have a clear relationship to nearby content.
 
-Decoration is punctuation, not the foundation. A page normally needs no more than one prominent motif or textile treatment. The visual canvas stays flat: no gradients, realistic shadows, backdrop blur, or simulated depth on the public site.
+Decoration is punctuation, not the foundation. A page normally needs no more than one or two prominent textile treatments.
 
 ## Typography
 
@@ -25,8 +25,10 @@ Fonts are loaded and self-hosted through `next/font` in `app/layout.tsx`.
 
 Reusable treatments live in `components/textile-details.tsx` and `app/globals.css`:
 
+- `ScallopedEdge` for occasional section transitions.
 - `PinkedEdge` for fabric-like swatches and small cut pieces.
 - `FrayedEdge` for rare editorial notes.
+- `LaceOverlay` for restrained edge or behind-image detail.
 - `FabricSwatch` for recognizable project material metadata.
 
 Do not use every treatment on one page.
@@ -51,7 +53,7 @@ Photography should remain the dominant visual content. A strong photograph norma
 ## Image loading
 
 - Use Next.js `preload` for one genuine photographic hero or the first listing card only. Later grid and gallery images stay lazy.
-- Every `BrandMark` instance needs an accurate `sizes` value. The above-the-fold header and admin marks load eagerly. Do not add a large decorative copy to the homepage or footer; photography should establish the page hierarchy.
+- Every `BrandMark` instance needs an accurate `sizes` value. Above-the-fold header and admin marks load eagerly, the large homepage mark is eager with high fetch priority, and the footer mark remains lazy.
 - Keep the local raster logo optimized by `next/image`. Do not reintroduce the deprecated `priority` prop or bypass optimization with `unoptimized`.
 
 ## Public edge states
