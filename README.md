@@ -4,7 +4,7 @@ A personal creative blog for the things Liv makes, wears, reads, and loves, with
 
 ## What is included
 
-- Concise public navigation for Home, Makes, Muses, and About. Existing Moments content remains available at `/moments` without occupying the primary navigation.
+- Concise public navigation for Home, Makes, Muses, Moments, and About.
 - Private editor at `/admin` for makes, muses, moments, flexible pages, about content, navigation, site settings, and photograph uploads.
 - Draft, publish, unpublish, preview, ordering, cover-photo selection, alt text, and seven intentionally small flexible-page section types.
 - Supabase Auth, Postgres row-level security, and Storage policies. Every server mutation checks the authenticated admin again.

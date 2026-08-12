@@ -16,7 +16,8 @@ const coreNavigation: NavigationItem[] = [
   { id: "fallback-home", label: "Home", href: "/", visible: true, display_order: 0, page_id: null },
   { id: "fallback-makes", label: "Makes", href: "/makes", visible: true, display_order: 1, page_id: null },
   { id: "fallback-muses", label: "Muses", href: "/muses", visible: true, display_order: 2, page_id: null },
-  { id: "fallback-about", label: "About", href: "/about", visible: true, display_order: 3, page_id: null },
+  { id: "fallback-moments", label: "Moments", href: "/moments", visible: true, display_order: 3, page_id: null },
+  { id: "fallback-about", label: "About", href: "/about", visible: true, display_order: 4, page_id: null },
 ];
 const navigationConfiguredHref = "/__navigation-configured";
 
@@ -257,8 +258,21 @@ export async function getNavigation(includeHidden = false) {
   if (!isSupabaseConfigured()) return coreNavigation;
   const supabase = await createSupabaseServerClient();
   const { data } = await supabase.from("navigation_items").select("*").order("display_order");
-  const navigation = withCoreNavigation(rows<NavigationItem>(data));
+  let navigation = withCoreNavigation(rows<NavigationItem>(data));
+  const momentsFallback = coreNavigation.find((item) => item.href === "/moments");
+
+  if (momentsFallback) {
+    const hasMoments = navigation.some((item) => item.href === "/moments");
+    navigation = hasMoments
+      ? navigation.map((item) =>
+          item.href === "/moments"
+            ? { ...item, visible: true, label: item.label || momentsFallback.label }
+            : item,
+        )
+      : [...navigation, momentsFallback].sort((a, b) => a.display_order - b.display_order);
+  }
+
   return includeHidden
     ? navigation
-    : navigation.filter((item) => item.visible && item.href !== "/moments");
+    : navigation.filter((item) => item.visible);
 }

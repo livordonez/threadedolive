@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Silkscreen } from "next/font/google";
+import { Caveat, EB_Garamond, Silkscreen } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SkipLink } from "@/components/skip-link";
@@ -22,6 +22,13 @@ const stitchFont = Silkscreen({
   display: "swap",
 });
 
+const journalHandFont = Caveat({
+  variable: "--font-journal-hand",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
 export const metadata: Metadata = rootMetadata;
 export const viewport = rootViewport;
 
@@ -35,7 +42,7 @@ export default async function RootLayout({
     <html
       lang="en"
       data-scroll-behavior="smooth"
-      className={`${editorialFont.variable} ${stitchFont.variable} h-full antialiased`}
+      className={`${editorialFont.variable} ${stitchFont.variable} ${journalHandFont.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col text-charcoal-900">
         <SkipLink />
