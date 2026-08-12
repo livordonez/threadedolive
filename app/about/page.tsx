@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { EditorialPageHeader } from "@/components/editorial-page-header";
+import { LaceOverlay } from "@/components/textile-details";
 import { getAbout } from "@/lib/cms-data";
 
 export default async function AboutPage() {
@@ -11,7 +12,8 @@ export default async function AboutPage() {
 
       <div className={`mt-12 grid gap-10 ${about.images.length ? "lg:grid-cols-[0.9fr_1.1fr]" : "max-w-3xl"}`}>
         {about.images.length ? (
-          <div>
+          <div className="relative isolate">
+            <LaceOverlay className="-left-8 -top-8" />
             <div className={`grid gap-4 ${about.images.length > 1 ? "grid-cols-2" : ""}`}>
               {about.images.map((image, index) => (
                 <div

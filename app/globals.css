@@ -65,16 +65,21 @@ html {
 body {
   min-height: 100vh;
   overflow-x: clip;
-  background: var(--linen-50);
+  background:
+    radial-gradient(circle at top left, rgba(209, 180, 113, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(180, 106, 96, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 22%),
+    var(--linen-50);
   color: var(--charcoal-900);
   font-family: var(--font-editorial), Georgia, serif;
   font-size: 1.0625rem;
 }
 
 .site-textile-header {
-  background-color: var(--linen-0);
-  background-image: url("/images/olive-stripe-textile.webp");
-  background-blend-mode: screen;
+  background-color: rgba(246, 239, 227, 0.94);
+  background-image:
+    linear-gradient(rgba(255, 253, 248, 0.76), rgba(255, 253, 248, 0.76)),
+    url("/images/olive-stripe-textile.webp");
   background-position: center;
   background-repeat: repeat;
   background-size: auto, 360px 360px;
@@ -82,17 +87,19 @@ body {
 
 .admin-textile-bg {
   background-color: var(--olive-900);
-  background-image: url("/images/dark-olive-twill.webp");
-  background-blend-mode: multiply;
+  background-image:
+    linear-gradient(rgba(32, 49, 38, 0.56), rgba(32, 49, 38, 0.7)),
+    url("/images/dark-olive-twill.webp");
   background-position: center;
   background-repeat: repeat;
   background-size: auto, 520px 520px;
 }
 
 .site-textile-footer {
-  background-color: var(--linen-0);
-  background-image: url("/images/cream-olive-ticking.webp");
-  background-blend-mode: screen;
+  background-color: rgba(255, 253, 248, 0.95);
+  background-image:
+    linear-gradient(rgba(255, 253, 248, 0.82), rgba(255, 253, 248, 0.88)),
+    url("/images/cream-olive-ticking.webp");
   background-position: center;
   background-repeat: repeat;
   background-size: auto, 420px 420px;
@@ -100,8 +107,9 @@ body {
 
 .bright-textile-placeholder {
   background-color: var(--olive-200);
-  background-image: url("/images/bright-olive-twill.webp");
-  background-blend-mode: soft-light;
+  background-image:
+    linear-gradient(rgba(255, 253, 248, 0.3), rgba(255, 253, 248, 0.4)),
+    url("/images/bright-olive-twill.webp");
   background-position: center;
   background-repeat: repeat;
   background-size: auto, 520px 520px;
@@ -109,8 +117,9 @@ body {
 
 .mustard-textile {
   background-color: var(--brass-300);
-  background-image: url("/images/mustard-basketweave.webp");
-  background-blend-mode: soft-light;
+  background-image:
+    linear-gradient(rgba(255, 253, 248, 0.18), rgba(126, 95, 45, 0.08)),
+    url("/images/mustard-basketweave.webp");
   background-position: center;
   background-repeat: repeat;
   background-size: auto, 520px 520px;
@@ -118,8 +127,9 @@ body {
 
 .cream-ticking-textile {
   background-color: var(--linen-0);
-  background-image: url("/images/cream-olive-ticking.webp");
-  background-blend-mode: screen;
+  background-image:
+    linear-gradient(rgba(255, 253, 248, 0.42), rgba(255, 253, 248, 0.56)),
+    url("/images/cream-olive-ticking.webp");
   background-position: center;
   background-repeat: repeat;
   background-size: auto, 420px 420px;
@@ -136,6 +146,20 @@ body {
 
 .brand-motif {
   image-rendering: pixelated;
+}
+
+/* Textile punctuation: reusable, lightweight, and intentionally occasional. */
+.scalloped-edge {
+  height: 1.4rem;
+  margin-bottom: -1px;
+  -webkit-mask: radial-gradient(1.25rem at 50% 0, #000 98%, transparent) 50% 0 / 2.45rem 100% repeat-x;
+  mask: radial-gradient(1.25rem at 50% 0, #000 98%, transparent) 50% 0 / 2.45rem 100% repeat-x;
+}
+
+.scalloped-edge-flip {
+  margin-bottom: 0;
+  margin-top: -1px;
+  transform: rotate(180deg);
 }
 
 .pinked-edge {
@@ -165,13 +189,42 @@ body {
   clip-path: polygon(1% 2%, 7% 0, 13% 2%, 21% 0, 29% 1%, 38% 0, 47% 2%, 56% 0, 67% 1%, 76% 0, 87% 2%, 99% 0, 98% 15%, 100% 28%, 98% 42%, 100% 58%, 98% 73%, 100% 87%, 98% 100%, 88% 98%, 79% 100%, 69% 98%, 58% 100%, 49% 98%, 39% 100%, 28% 98%, 17% 100%, 1% 98%, 2% 84%, 0 69%, 2% 53%, 0 39%, 2% 23%);
 }
 
+.lace-overlay {
+  position: absolute;
+  z-index: -1;
+  width: 9rem;
+  height: 9rem;
+  opacity: 0.24;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 0 28%, rgba(123, 63, 57, 0.5) 29% 32%, transparent 33%),
+    radial-gradient(circle at 0 0, transparent 0 38%, rgba(123, 63, 57, 0.34) 39% 42%, transparent 43%);
+  background-size: 2.2rem 2.2rem;
+  border-radius: 50%;
+  -webkit-mask: radial-gradient(circle, #000 0 67%, transparent 69%);
+  mask: radial-gradient(circle, #000 0 67%, transparent 69%);
+}
+
+.lace-footer {
+  position: relative;
+}
+
+.lace-footer::before {
+  position: absolute;
+  inset: -0.7rem 0 auto;
+  height: 1.1rem;
+  content: "";
+  opacity: 0.22;
+  background: radial-gradient(circle at 50% 100%, transparent 0 41%, var(--pimento-700) 43% 47%, transparent 49%) 0 0 / 1.8rem 1.1rem repeat-x;
+  pointer-events: none;
+}
+
 img {
   display: block;
   max-width: 100%;
 }
 
 ::selection {
-  background: rgba(184, 201, 178, 0.7);
+  background: rgba(180, 106, 96, 0.28);
   color: var(--charcoal-900);
 }
 

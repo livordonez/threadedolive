@@ -30,7 +30,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
 
   if (pathname.startsWith("/admin")) return null;
   return (
-    <header className="site-textile-header sticky top-0 z-40 border-b border-olive-900/15">
+    <header className="site-textile-header sticky top-0 z-40 border-b border-olive-900/15 backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between gap-2 px-4 py-3 sm:gap-4 sm:px-10 lg:px-12">
         <Link
           href="/"
@@ -62,10 +62,10 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "border-b-2 px-3 py-2 text-sm font-semibold uppercase tracking-[0.1em] transition-colors duration-200 motion-reduce:transition-none xl:px-4 xl:tracking-[0.14em]",
+                  "rounded-full px-3 py-2 text-sm font-semibold uppercase tracking-[0.1em] transition-colors duration-200 motion-reduce:transition-none xl:px-4 xl:tracking-[0.14em]",
                   active
-                    ? "border-olive-900 text-olive-900"
-                    : "border-transparent text-olive-900 hover:border-olive-900/30",
+                    ? "bg-olive-900 text-linen-0"
+                    : "text-olive-900 hover:bg-white/70",
                 )}
                 aria-current={active ? "page" : undefined}
               >
@@ -77,7 +77,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
 
         <button
           type="button"
-          className="inline-flex min-h-11 items-center border-b-2 border-olive-900/30 px-2 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-olive-900 sm:px-3 sm:tracking-[0.16em] lg:hidden"
+          className="inline-flex min-h-11 items-center rounded-full border border-olive-900/15 px-3 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-olive-900 sm:px-4 sm:tracking-[0.16em] lg:hidden"
           aria-expanded={isOpen}
           aria-controls="mobile-navigation"
           onClick={() => setIsOpen((current) => !current)}
@@ -93,7 +93,7 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
           isOpen ? "block" : "hidden",
         )}
       >
-        <nav className="flex flex-col" aria-label="Mobile">
+        <nav className="flex flex-col gap-2" aria-label="Mobile">
           {navigation.map((item) => {
             const active = isActive(pathname, item.href);
 
@@ -103,10 +103,10 @@ export function SiteHeader({ settings, navigation }: { settings: SiteSettings; n
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={cn(
-                  "border-b px-1 py-3 text-sm font-semibold uppercase tracking-[0.16em]",
+                  "rounded-[1.25rem] px-4 py-3 text-sm font-semibold uppercase tracking-[0.16em]",
                   active
-                    ? "border-olive-900 text-olive-900"
-                    : "border-olive-900/10 text-olive-900",
+                    ? "bg-olive-900 text-linen-0"
+                    : "bg-white/70 text-olive-900",
                 )}
                 aria-current={active ? "page" : undefined}
               >
