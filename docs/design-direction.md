@@ -17,6 +17,7 @@ Decoration is punctuation, not the foundation. A page normally needs no more tha
 
 - **EB Garamond** is the primary face for public headings, body copy, navigation, metadata, captions, and long-form editorial text.
 - **Silkscreen** is the cross-stitch-inspired accent. Use the shared `stitch-label` class for short labels, dates, categories, and annotations only.
+- **Caveat** (`journal-hand`) is reserved for Moments titles and journal-index labels. Do not use it site-wide.
 - Keep reading measures near `--content-reading` and avoid compensating for weak hierarchy with excessive size changes.
 
 Fonts are loaded and self-hosted through `next/font` in `app/layout.tsx`.
@@ -58,11 +59,11 @@ Photography should remain the dominant visual content. A strong photograph norma
 
 ## Public edge states
 
-`app/not-found.tsx` and `components/page-loading.tsx` share the public site's editorial spacing and restrained textile language. Keep loading UI static and lightweight, with a polite status for assistive technology. Not-found actions should reinforce the primary Home, Makes, Muses, and About information architecture.
+`app/not-found.tsx` and `components/page-loading.tsx` share the public site's editorial spacing and restrained textile language. Keep loading UI static and lightweight, with a polite status for assistive technology. Not-found actions should reinforce the primary Home, Makes, Muses, Moments, and About information architecture.
 
 ## Main sections
 
-The main sections intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is one editorial page composed from recently pinned images, favorite follows, and the nightstand; external data stays visually subordinate to The Threaded Olive's typography and pacing. Moments is a ruled journal index with generous mobile photographs and compact desktop thumbnails. Do not wrap populated Muse or Moment entries in generic white card shells.
+The main sections intentionally use different editorial rhythms while sharing typography, gutters, and image restraint. Makes is a regular photography grid. Muses is one editorial page composed from recently pinned images, favorite follows, and the nightstand; external data stays visually subordinate to The Threaded Olive's typography and pacing. Moments is a personal notebook: a lined-paper journal with sticky title/date index navigation, handwriting titles, and full entries in reverse chronological order. Do not wrap populated Muse or Moment entries in generic white card shells.
 
 Creator links use avatar-first, fully clickable cards. Platform and handle come from the profile URL; optional YouTube feed data may add a latest-video preview. Cards must always retain an initials fallback, a visible focus state, and a one-column phone layout. Do not add native social embeds or platform chrome.
 
@@ -70,7 +71,7 @@ Favorite Follows are ordinary CMS records in `favorite_follows`. Admin editing l
 
 ## Moment stories
 
-`components/moment-story.tsx` owns the journal-entry composition. Keep its sequence stable: semantic date and title, one optional frayed excerpt, the first image as a generous hero, reading-width journal text, then proportion-aware gallery images. Text-only Moments must retain the same hierarchy without substituting a decorative image placeholder. Fraying is reserved for the introductory excerpt and should not spread to the body or gallery.
+`components/moments/moments-journal.tsx` owns the Moments collection experience: sticky index (horizontal on small screens, sidebar on desktop), IntersectionObserver-based active state, hash URLs (`/moments#slug`), and lined-paper entries. `components/moments/moment-journal-entry.tsx` keeps each entry’s sequence stable: semantic date and handwriting title, one optional frayed excerpt, the first image as a generous hero, reading-width journal text, then proportion-aware gallery images. Individual `/moments/[slug]` pages remain available through `components/moment-story.tsx` for direct links and draft preview. The homepage’s latest Moment is derived from `getPublishedMoments()[0]` via `components/moments/latest-moment.tsx`. Text-only Moments must retain the same hierarchy without substituting a decorative image placeholder. Fraying is reserved for the introductory excerpt and should not spread to the body or gallery.
 
 ## Accessibility invariants
 
@@ -81,11 +82,11 @@ Favorite Follows are ordinary CMS records in `favorite_follows`. Admin editing l
 
 ## Core navigation behavior
 
-Home, Makes, Muses, and About form the concise public navigation. `getNavigation()` fills in missing core routes when an older or partially migrated Supabase project lacks their rows. Moments remains available as an editorial section without occupying the primary navigation. The admin Navigation screen retains database entries for management; saving it materializes fallback entries as ordinary rows through an `href` upsert.
+Home, Makes, Muses, Moments, and About form the concise public navigation. `getNavigation()` fills in missing core routes when an older or partially migrated Supabase project lacks their rows. Moments should appear with Makes and Muses using the same header styles. The admin Navigation screen retains database entries for management; saving it materializes fallback entries as ordinary rows through an `href` upsert.
 
 Admin saves also write an internal `/__navigation-configured` marker row. The data layer always filters that marker out of the interface. Its presence distinguishes an intentionally hidden item from a missing legacy row despite public row-level security hiding both, so later labels, order, and visibility choices remain authoritative.
 
-The complete inline navigation starts at 1024px. Smaller widths use the menu panel so the brand and four core links never compete for horizontal space. The menu closes after a selection and when the Escape key is pressed.
+The complete inline navigation starts at 1024px. Smaller widths use the menu panel so the brand and five core links never compete for horizontal space. The menu closes after a selection and when the Escape key is pressed.
 
 ## Make posts
 

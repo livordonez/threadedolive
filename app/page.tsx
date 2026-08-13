@@ -2,9 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArchiveEmptyState } from "@/components/archive-empty-state";
 import { BrandMark } from "@/components/brand-mark";
+import { LatestMoment } from "@/components/moments/latest-moment";
 import { LaceOverlay, ScallopedEdge } from "@/components/textile-details";
 import { ArrowRightIcon } from "@/components/ui-icons";
-import { getAbout, getPublishedMakes, getSettings } from "@/lib/cms-data";
+import { getAbout, getPublishedMakes, getPublishedMoments, getSettings } from "@/lib/cms-data";
 
 const pillars = [
   ["Makes", "/makes", "Things I’ve been making"],
@@ -13,12 +14,14 @@ const pillars = [
 ] as const;
 
 export default async function HomePage() {
-  const [settings, about, makes] = await Promise.all([
+  const [settings, about, makes, moments] = await Promise.all([
     getSettings(),
     getAbout(),
     getPublishedMakes(),
+    getPublishedMoments(),
   ]);
   const featured = makes.slice(0, 5);
+  const latestMoment = moments[0];
 
   return (
     <div>
@@ -88,6 +91,8 @@ export default async function HomePage() {
             ) : null}
           </div>
         </section>
+
+        {latestMoment ? <LatestMoment moment={latestMoment} /> : null}
       </section>
 
       <ScallopedEdge className="bg-olive-100" />

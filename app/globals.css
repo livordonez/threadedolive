@@ -25,6 +25,8 @@
   --page-gutter: clamp(1.5rem, 4vw, 3rem);
   --content-wide: 80rem;
   --content-reading: 68ch;
+  --journal-line: rgba(52, 77, 56, 0.14);
+  --journal-margin: rgba(180, 106, 96, 0.22);
 }
 
 @theme inline {
@@ -142,6 +144,44 @@ body {
   letter-spacing: 0.08em;
   line-height: 1.5;
   text-transform: uppercase;
+}
+
+.journal-hand {
+  font-family: var(--font-journal-hand), "Segoe Print", "Comic Sans MS", cursive;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.journal-paper {
+  position: relative;
+  background-color: var(--linen-0);
+  background-image:
+    linear-gradient(90deg, transparent 0, transparent calc(2.75rem - 1px), var(--journal-margin) calc(2.75rem - 1px), var(--journal-margin) 2.75rem, transparent 2.75rem),
+    repeating-linear-gradient(
+      transparent 0,
+      transparent calc(1.85rem - 1px),
+      var(--journal-line) calc(1.85rem - 1px),
+      var(--journal-line) 1.85rem
+    );
+  background-position: 0 0.35rem;
+  border: 1px solid rgba(52, 77, 56, 0.12);
+}
+
+.journal-paper > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 639px) {
+  .journal-paper {
+    background-image: repeating-linear-gradient(
+      transparent 0,
+      transparent calc(1.85rem - 1px),
+      var(--journal-line) calc(1.85rem - 1px),
+      var(--journal-line) 1.85rem
+    );
+  }
 }
 
 .brand-motif {
