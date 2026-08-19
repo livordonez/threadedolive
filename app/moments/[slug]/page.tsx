@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { MomentStory } from "@/components/moment-story";
+import { MomentGoogleFontsStylesheet } from "@/components/moments/moment-google-fonts-stylesheet";
 import { getAdmin } from "@/lib/admin-auth";
 import { getMomentBySlug } from "@/lib/cms-data";
+import { collectMomentFonts } from "@/lib/moment-fonts";
 
 export default async function MomentPage({
   params,
@@ -16,5 +18,10 @@ export default async function MomentPage({
 
   if (!moment) notFound();
 
-  return <MomentStory moment={moment} isPreview={mayPreview} />;
+  return (
+    <>
+      <MomentGoogleFontsStylesheet fontSlugs={collectMomentFonts([moment])} />
+      <MomentStory moment={moment} isPreview={mayPreview} />
+    </>
+  );
 }

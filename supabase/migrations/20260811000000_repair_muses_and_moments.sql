@@ -64,4 +64,8 @@ on conflict (href) do update set
 update public.navigation_items set display_order = 0 where href = '/';
 update public.navigation_items set display_order = 4 where href = '/about';
 
+alter table public.moments
+  add column if not exists title_font text not null default 'caveat',
+  add column if not exists body_font text not null default 'caveat';
+
 notify pgrst, 'reload schema';

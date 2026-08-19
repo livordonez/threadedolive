@@ -3,9 +3,11 @@ import Link from "next/link";
 import { ArchiveEmptyState } from "@/components/archive-empty-state";
 import { BrandMark } from "@/components/brand-mark";
 import { LatestMoment } from "@/components/moments/latest-moment";
+import { MomentGoogleFontsStylesheet } from "@/components/moments/moment-google-fonts-stylesheet";
 import { LaceOverlay, ScallopedEdge } from "@/components/textile-details";
 import { ArrowRightIcon } from "@/components/ui-icons";
 import { getAbout, getPublishedMakes, getPublishedMoments, getSettings } from "@/lib/cms-data";
+import { collectMomentFonts } from "@/lib/moment-fonts";
 
 const pillars = [
   ["Makes", "/makes", "Things I’ve been making"],
@@ -24,7 +26,11 @@ export default async function HomePage() {
   const latestMoment = moments[0];
 
   return (
-    <div>
+    <>
+      {latestMoment ? (
+        <MomentGoogleFontsStylesheet fontSlugs={collectMomentFonts([latestMoment])} />
+      ) : null}
+      <div>
       <section className="mx-auto w-full max-w-7xl px-6 pb-16 pt-10 sm:px-10 lg:px-12 lg:pb-20 lg:pt-14">
         <div className="grid items-center gap-8 lg:grid-cols-[1fr_0.9fr]">
           <header className="max-w-4xl">
@@ -133,6 +139,7 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }

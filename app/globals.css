@@ -146,23 +146,22 @@ body {
   text-transform: uppercase;
 }
 
-.journal-hand {
-  font-family: var(--font-journal-hand), "Segoe Print", "Comic Sans MS", cursive;
-  font-weight: 400;
-  letter-spacing: 0;
+.journal-entry-title {
+  font-weight: 500;
+  letter-spacing: -0.01em;
   line-height: 1.15;
 }
 
-.rich-text.journal-hand {
-  font-size: 1.35rem;
-  line-height: 1.75;
+.journal-entry-text {
+  font-size: 1.25rem;
+  line-height: 1.8;
 }
 
-.rich-text.journal-hand h2,
-.rich-text.journal-hand h3 {
-  font-family: var(--font-journal-hand), "Segoe Print", "Comic Sans MS", cursive;
-  font-weight: 400;
-  letter-spacing: 0;
+.rich-text.journal-entry-text h2,
+.rich-text.journal-entry-text h3 {
+  font-family: inherit;
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 .journal-paper {

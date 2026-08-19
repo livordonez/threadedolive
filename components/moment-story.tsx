@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { FrayedEdge } from "@/components/textile-details";
 import { ArrowLeftIcon } from "@/components/ui-icons";
 import type { CmsImage, Moment } from "@/lib/cms-types";
+import { momentFontFamily } from "@/lib/moment-fonts";
 import { richTextHtml } from "@/lib/rich-text";
 import { formatCalendarDate } from "@/lib/utils";
 
@@ -53,7 +54,10 @@ export function MomentStory({
         </div>
 
         <div className="max-w-4xl">
-          <h1 className="font-serif text-5xl leading-[0.95] tracking-[-0.045em] text-olive-900 sm:text-7xl lg:text-[5rem] xl:text-[5.5rem]">
+          <h1
+            className="journal-entry-title text-5xl leading-[0.95] text-olive-900 sm:text-7xl lg:text-[5rem] xl:text-[5.5rem]"
+            style={{ fontFamily: momentFontFamily(moment.title_font) }}
+          >
             {moment.title}
           </h1>
           {moment.excerpt ? (
@@ -85,7 +89,11 @@ export function MomentStory({
               A few words
             </h2>
           </div>
-          <div className="rich-text" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+          <div
+            className="rich-text journal-entry-text"
+            style={{ fontFamily: momentFontFamily(moment.body_font) }}
+            dangerouslySetInnerHTML={{ __html: bodyHtml }}
+          />
         </section>
       ) : null}
 

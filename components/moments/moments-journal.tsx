@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, startTransition } from "react";
 import { MomentJournalEntry } from "@/components/moments/moment-journal-entry";
 import type { Moment } from "@/lib/cms-types";
+import { momentFontFamily } from "@/lib/moment-fonts";
 import { cn, formatCalendarDate } from "@/lib/utils";
 
 function prefersReducedMotion() {
@@ -129,9 +130,10 @@ export function MomentsJournal({ moments }: { moments: Moment[] }) {
                 >
                   <span
                     className={cn(
-                      "journal-hand block text-xl leading-tight",
+                      "journal-entry-title block text-xl leading-tight",
                       active ? "text-linen-0" : "text-olive-900",
                     )}
+                    style={{ fontFamily: momentFontFamily(moment.title_font) }}
                   >
                     {moment.title}
                   </span>

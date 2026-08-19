@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { CSSProperties } from "react";
 import { FrayedEdge } from "@/components/textile-details";
 import type { CmsImage, Moment } from "@/lib/cms-types";
+import { momentFontFamily } from "@/lib/moment-fonts";
 import { richTextHtml } from "@/lib/rich-text";
 import { formatCalendarDate } from "@/lib/utils";
 
@@ -33,7 +34,10 @@ export function MomentJournalEntry({
         >
           {formatCalendarDate(moment.moment_date)}
         </time>
-        <h2 className="journal-hand mt-3 text-4xl text-olive-900 sm:text-5xl lg:text-[3.35rem]">
+        <h2
+          className="journal-entry-title mt-3 text-4xl text-olive-900 sm:text-5xl lg:text-[3.35rem]"
+          style={{ fontFamily: momentFontFamily(moment.title_font) }}
+        >
           {moment.title}
         </h2>
         {moment.excerpt ? (
@@ -58,7 +62,8 @@ export function MomentJournalEntry({
 
       {bodyHtml ? (
         <div
-          className="rich-text journal-hand mt-8 max-w-[var(--content-reading)] pl-0 sm:mt-10 sm:pl-8"
+          className="rich-text journal-entry-text mt-8 max-w-[var(--content-reading)] pl-0 sm:mt-10 sm:pl-8"
+          style={{ fontFamily: momentFontFamily(moment.body_font) }}
           dangerouslySetInnerHTML={{ __html: bodyHtml }}
         />
       ) : null}
