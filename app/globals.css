@@ -148,9 +148,21 @@ body {
 
 .journal-hand {
   font-family: var(--font-journal-hand), "Segoe Print", "Comic Sans MS", cursive;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+  font-weight: 400;
+  letter-spacing: 0;
   line-height: 1.15;
+}
+
+.rich-text.journal-hand {
+  font-size: 1.35rem;
+  line-height: 1.75;
+}
+
+.rich-text.journal-hand h2,
+.rich-text.journal-hand h3 {
+  font-family: var(--font-journal-hand), "Segoe Print", "Comic Sans MS", cursive;
+  font-weight: 400;
+  letter-spacing: 0;
 }
 
 .journal-paper {

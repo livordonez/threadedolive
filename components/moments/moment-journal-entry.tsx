@@ -58,7 +58,7 @@ export function MomentJournalEntry({
 
       {bodyHtml ? (
         <div
-          className="rich-text mt-8 max-w-[var(--content-reading)] pl-0 sm:mt-10 sm:pl-8"
+          className="rich-text journal-hand mt-8 max-w-[var(--content-reading)] pl-0 sm:mt-10 sm:pl-8"
           dangerouslySetInnerHTML={{ __html: bodyHtml }}
         />
       ) : null}
