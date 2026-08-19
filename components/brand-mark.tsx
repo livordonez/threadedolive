@@ -14,10 +14,10 @@ export function BrandMark({
 }) {
   return (
     <Image
-      src="/images/threaded-olive-logo-v3.webp"
+      src="/images/threaded-olive-logo-v4.webp"
       alt=""
-      width={1200}
-      height={800}
+      width={1536}
+      height={1024}
       className={cn("object-contain", className ?? "h-14 w-auto")}
       loading={loading}
       fetchPriority={fetchPriority}
