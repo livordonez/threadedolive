@@ -53,7 +53,7 @@ export function MomentStory({
         </div>
 
         <div className="max-w-4xl">
-          <h1 className="font-serif text-5xl leading-[0.95] tracking-[-0.045em] text-olive-900 sm:text-7xl lg:text-[5rem] xl:text-[5.5rem]">
+          <h1 className="journal-hand mt-0 text-5xl leading-[0.95] text-olive-900 sm:text-7xl lg:text-[5rem] xl:text-[5.5rem]">
             {moment.title}
           </h1>
           {moment.excerpt ? (
@@ -85,7 +85,7 @@ export function MomentStory({
               A few words
             </h2>
           </div>
-          <div className="rich-text" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
+          <div className="rich-text journal-hand" dangerouslySetInnerHTML={{ __html: bodyHtml }} />
         </section>
       ) : null}
 
