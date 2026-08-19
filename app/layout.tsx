@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Caveat, EB_Garamond, Silkscreen } from "next/font/google";
+import { EB_Garamond, Meow_Script, Silkscreen } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SkipLink } from "@/components/skip-link";
@@ -22,10 +22,10 @@ const stitchFont = Silkscreen({
   display: "swap",
 });
 
-const journalHandFont = Caveat({
+const journalHandFont = Meow_Script({
   variable: "--font-journal-hand",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400"],
   display: "swap",
 });
 
