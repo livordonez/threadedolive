@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { Moment } from "@/lib/cms-types";
+import { momentFontFamily } from "@/lib/moment-fonts";
 import { formatCalendarDate } from "@/lib/utils";
 import { ArrowRightIcon } from "@/components/ui-icons";
 
@@ -54,7 +55,10 @@ export function LatestMoment({ moment }: { moment: Moment }) {
           >
             {formatCalendarDate(moment.moment_date)}
           </time>
-          <h3 className="journal-hand mt-3 text-4xl text-olive-900 sm:text-5xl">
+          <h3
+            className="journal-entry-title mt-3 text-4xl text-olive-900 sm:text-5xl"
+            style={{ fontFamily: momentFontFamily(moment.title_font) }}
+          >
             {moment.title}
           </h3>
           {moment.excerpt ? (

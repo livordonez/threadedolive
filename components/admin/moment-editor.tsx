@@ -3,9 +3,74 @@
 import { deleteMomentAction, saveMomentAction } from "@/app/admin/actions";
 import { AdminActionForm, DeleteActionButton } from "@/components/admin/action-form";
 import { ImageUploader } from "@/components/admin/image-uploader";
+import { MomentFontSelect } from "@/components/admin/moment-font-select";
 import { RichTextEditor } from "@/components/admin/rich-text-editor";
 import type { Moment } from "@/lib/cms-types";
 
 export function MomentEditor({ moment, initialBodyHtml }: { moment: Moment; initialBodyHtml: string }) {
-  return <AdminActionForm action={saveMomentAction} className="space-y-8"><input type="hidden" name="id" value={moment.id} /><input type="hidden" name="status" value={moment.status} /><section className="admin-panel grid gap-5 md:grid-cols-2"><label className="admin-label md:col-span-2">Title<input name="title" defaultValue={moment.title} required className="admin-input mt-2" /></label><label className="admin-label">Page address<div className="mt-2 flex rounded-xl border border-olive-900/15 bg-white"><span className="py-3 pl-3 text-sm text-charcoal-700">/moments/</span><input name="slug" defaultValue={moment.slug} required className="min-w-0 flex-1 bg-transparent px-1 py-3 outline-none" /></div></label><label className="admin-label">Date<input type="date" name="moment_date" defaultValue={moment.moment_date} className="admin-input mt-2" /></label><label className="admin-label md:col-span-2">Short introduction<textarea name="excerpt" defaultValue={moment.excerpt} rows={3} className="admin-input mt-2" /></label><RichTextEditor name="body" label="Your moment" initialHtml={initialBodyHtml} placeholder="Write about your day, what you noticed, or what is on your mind…" /></section><section className="admin-panel"><h2 className="admin-section-title">Photos</h2><p className="admin-help">Optional. The first photo appears at the top of the entry.</p><div className="mt-5"><ImageUploader initialImages={moment.images} max={10} /></div></section><div className="sticky bottom-4 z-20 flex flex-wrap gap-3 rounded-2xl border border-olive-900/10 bg-white/95 p-4 shadow-xl"><button name="intent" value="draft" className="admin-button-secondary">Save Draft</button><button name="intent" value="publish" className="admin-button">{moment.status === "published" ? "Save Changes" : "Publish"}</button>{moment.status === "published" ? <button name="intent" value="unpublish" className="admin-button-secondary">Unpublish</button> : null}<a href={`/moments/${moment.slug}?preview=1`} target="_blank" rel="noreferrer" className="admin-button-secondary">Preview</a><DeleteActionButton action={deleteMomentAction} confirmMessage="Delete this moment permanently?" /></div></AdminActionForm>;
+  return (
+    <AdminActionForm action={saveMomentAction} className="space-y-8">
+      <input type="hidden" name="id" value={moment.id} />
+      <input type="hidden" name="status" value={moment.status} />
+      <section className="admin-panel grid gap-5 md:grid-cols-2">
+        <label className="admin-label md:col-span-2">
+          Title
+          <input name="title" defaultValue={moment.title} required className="admin-input mt-2" />
+        </label>
+        <MomentFontSelect
+          name="title_font"
+          label="Title font"
+          defaultValue={moment.title_font}
+          help="Handwriting style for this moment’s title on the journal page."
+        />
+        <MomentFontSelect
+          name="body_font"
+          label="Entry font"
+          defaultValue={moment.body_font}
+          help="Handwriting style for this moment’s written entry."
+        />
+        <label className="admin-label">
+          Page address
+          <div className="mt-2 flex rounded-xl border border-olive-900/15 bg-white">
+            <span className="py-3 pl-3 text-sm text-charcoal-700">/moments/</span>
+            <input name="slug" defaultValue={moment.slug} required className="min-w-0 flex-1 bg-transparent px-1 py-3 outline-none" />
+          </div>
+        </label>
+        <label className="admin-label">
+          Date
+          <input type="date" name="moment_date" defaultValue={moment.moment_date} className="admin-input mt-2" />
+        </label>
+        <label className="admin-label md:col-span-2">
+          Short introduction
+          <textarea name="excerpt" defaultValue={moment.excerpt} rows={3} className="admin-input mt-2" />
+        </label>
+        <RichTextEditor
+          name="body"
+          label="Your moment"
+          initialHtml={initialBodyHtml}
+          placeholder="Write about your day, what you noticed, or what is on your mind…"
+        />
+      </section>
+      <section className="admin-panel">
+        <h2 className="admin-section-title">Photos</h2>
+        <p className="admin-help">Optional. The first photo appears at the top of the entry.</p>
+        <div className="mt-5">
+          <ImageUploader initialImages={moment.images} max={10} />
+        </div>
+      </section>
+      <div className="sticky bottom-4 z-20 flex flex-wrap gap-3 rounded-2xl border border-olive-900/10 bg-white/95 p-4 shadow-xl">
+        <button name="intent" value="draft" className="admin-button-secondary">Save Draft</button>
+        <button name="intent" value="publish" className="admin-button">
+          {moment.status === "published" ? "Save Changes" : "Publish"}
+        </button>
+        {moment.status === "published" ? (
+          <button name="intent" value="unpublish" className="admin-button-secondary">Unpublish</button>
+        ) : null}
+        <a href={`/moments/${moment.slug}?preview=1`} target="_blank" rel="noreferrer" className="admin-button-secondary">
+          Preview
+        </a>
+        <DeleteActionButton action={deleteMomentAction} confirmMessage="Delete this moment permanently?" />
+      </div>
+    </AdminActionForm>
+  );
 }

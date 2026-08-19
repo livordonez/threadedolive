@@ -6,6 +6,7 @@ import { requireAdmin } from "@/lib/admin-auth";
 import type { AdminActionState } from "@/lib/admin-action-state";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { sanitizeRichTextValue } from "@/lib/rich-text";
+import { normalizeMomentFont } from "@/lib/moment-fonts";
 import type { CmsImage, NavigationItem, PageSection } from "@/lib/cms-types";
 
 const reservedSlugs = new Set(["admin", "about", "makes", "muses", "moments", "api"]);
@@ -377,6 +378,8 @@ export async function saveMomentAction(_: AdminActionState, formData: FormData):
   const { error } = await supabase.from("moments").update({
     slug: momentSlug, title: text(formData, "title") || "Untitled Moment", excerpt: text(formData, "excerpt"),
     body: sanitizeRichTextValue(text(formData, "body")), moment_date: text(formData, "moment_date") || new Date().toISOString().slice(0, 10),
+    title_font: normalizeMomentFont(text(formData, "title_font")),
+    body_font: normalizeMomentFont(text(formData, "body_font")),
     images, status, published_at: status === "published" ? new Date().toISOString() : null, updated_at: new Date().toISOString(),
   }).eq("id", id).select("id").single();
   if (error) return failed("save-moment", databaseMessage(error, "Could not save this moment. Your changes are still in the form.", "Moments are not set up in the database yet. Run the muses and moments migration in Supabase, then try again."), error);

@@ -63,6 +63,8 @@ export type Moment = {
   title: string;
   excerpt: string;
   body: string;
+  title_font?: string | null;
+  body_font?: string | null;
   moment_date: string;
   images: CmsImage[];
   status: PublishStatus;
