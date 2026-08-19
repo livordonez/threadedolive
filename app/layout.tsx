@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { EB_Garamond, Playwrite_DE_SAS, Silkscreen } from "next/font/google";
+import { EB_Garamond, Silkscreen, Special_Elite } from "next/font/google";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { SkipLink } from "@/components/skip-link";
@@ -22,8 +22,9 @@ const stitchFont = Silkscreen({
   display: "swap",
 });
 
-const journalHandFont = Playwrite_DE_SAS({
+const journalHandFont = Special_Elite({
   variable: "--font-journal-hand",
+  subsets: ["latin"],
   weight: ["400"],
   display: "swap",
 });
